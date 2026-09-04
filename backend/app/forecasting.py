@@ -1,0 +1,185 @@
+"""Transparent, lightweight forecasting helpers for user-owned tracking data."""
+from __future__ import annotations
+
+from typing import Any, Iterable
+
+
+def _linear_slope(values: list[float]) -> float:
+    """Least-squares trend per logged period; zero when history is insufficient."""
+    if len(values) < 2:
+        return 0.0
+    mean_x = (len(values) - 1) / 2
+    mean_y = sum(values) / len(values)
+    numerator = sum((index - mean_x) * (value - mean_y) for index, value in enumerate(values))
+    denominator = sum((index - mean_x) ** 2 for index in range(len(values)))
+    return numerator / denominator if denominator else 0.0
+
+
+def _money(value: float) -> float:
+    return round(max(0, value), 2)
+
+
+class ForecastingEngine:
+    """Rule-based forecasts that remain explainable in the product UI.
+
+    These projections indicate likely direction from recorded behaviour. They are
+    not financial advice and become more reliable as more dated entries are logged.
+    """
+
+    @classmethod
+    def summary(cls, financials: Iterable[Any], studies: Iterable[Any], habits: Iterable[Any], goals: Iterable[Any]) -> dict[str, Any]:
+        financials = sorted(list(financials), key=lambda record: record.created_at)
+        studies = sorted(list(studies), key=lambda record: record.created_at)
+        habits = list(habits)
+        goals = list(goals)
+
+        financial = cls._financial(financials)
+        productivity = cls._productivity(studies)
+        habit_predictions = cls._habits(habits)
+        goal_assessments = cls._goals(goals, financial, productivity, habit_predictions)
+
+        data_points = len(financials) + len(studies) + len(habits)
+        confidence = "High" if data_points >= 10 else "Medium" if data_points >= 4 else "Starter"
+        return {
+            "source": "live",
+            "confidence": confidence,
+            "data_points": data_points,
+            "financial": financial,
+            "productivity": productivity,
+            "habits": habit_predictions,
+            "goals": goal_assessments,
+            "recommendations": cls._recommendations(financial, productivity, habit_predictions, goal_assessments),
+        }
+
+    @staticmethod
+    def _financial(records: list[Any]) -> dict[str, Any]:
+        if not records:
+            return {
+                "has_data": False, "current_expenses": 0, "next_week_expenses": 0, "next_month_expenses": 0,
+                "projected_savings": 0, "expense_change_percent": 0, "trend": "Awaiting financial data",
+                "series": []
+            }
+        expenses = [float(record.monthly_expenses) for record in records]
+        incomes = [float(record.monthly_income) for record in records]
+        slope = _linear_slope(expenses)
+        # Forecast a single upcoming tracking period and cap sharp changes from sparse data.
+        bounded_slope = max(-expenses[-1] * 0.25, min(slope, expenses[-1] * 0.25))
+        predicted_expenses = _money(expenses[-1] + bounded_slope)
+        income = incomes[-1]
+        projected_savings = round(income - predicted_expenses, 2)
+        change = round((predicted_expenses - expenses[-1]) / expenses[-1] * 100, 1) if expenses[-1] else 0
+        series = [{"label": f"Period {index + 1}", "actual": round(value), "projected": None} for index, value in enumerate(expenses[-4:])]
+        series.append({"label": "Next month", "actual": None, "projected": round(predicted_expenses)})
+        return {
+            "has_data": True,
+            "current_expenses": round(expenses[-1], 2),
+            "next_week_expenses": round(predicted_expenses / 4.33, 2),
+            "next_month_expenses": predicted_expenses,
+            "projected_savings": projected_savings,
+            "expense_change_percent": change,
+            "trend": "Rising" if change > 2 else "Reducing" if change < -2 else "Stable",
+            "series": series,
+        }
+
+    @staticmethod
+    def _productivity(records: list[Any]) -> dict[str, Any]:
+        if not records:
+            return {"has_data": False, "weekly_study_hours": 0, "next_week_hours": 0, "focus_score": 0, "completion_probability": 0, "trend": "Awaiting study data"}
+        recent = records[-7:]
+        hours = [float(record.study_hours) for record in recent]
+        average_focus = sum(record.focus_rating for record in recent) / len(recent)
+        hours_per_entry = sum(hours) / len(hours)
+        projected = max(0, min(70, (hours_per_entry + _linear_slope(hours)) * 4))
+        focus_score = round(average_focus * 20)
+        completion_probability = min(97, max(35, round(45 + focus_score * 0.45 + min(projected, 20) * 0.5)))
+        return {
+            "has_data": True,
+            "weekly_study_hours": round(hours_per_entry * 4, 1),
+            "next_week_hours": round(projected, 1),
+            "focus_score": focus_score,
+            "completion_probability": completion_probability,
+            "trend": "Improving" if _linear_slope(hours) > .15 else "Needs consistency" if _linear_slope(hours) < -.15 else "Stable",
+        }
+
+    @staticmethod
+    def _habits(records: list[Any]) -> list[dict[str, Any]]:
+        if not records:
+            return []
+        result = []
+        for habit in records:
+            base = 45 + min(habit.streak, 14) * 3
+            if habit.completed_today:
+                base += 12
+            if habit.is_risk_associated:
+                base -= 18
+            likelihood = max(15, min(96, round(base)))
+            result.append({
+                "name": habit.habit_name,
+                "category": habit.category,
+                "likelihood": likelihood,
+                "streak": habit.streak,
+                "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping",
+                "recommendation": "Keep the same cue and schedule next check-in." if likelihood >= 70 else "Set a smaller daily action and schedule a reminder.",
+            })
+        return sorted(result, key=lambda habit: habit["likelihood"], reverse=True)
+
+    @staticmethod
+    def _goals(goals: list[Any], financial: dict[str, Any], productivity: dict[str, Any], habits: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        habit_likelihoods = {habit["name"].lower(): habit["likelihood"] for habit in habits}
+        assessments = []
+        for goal in goals:
+            if goal.goal_type == "FINANCIAL":
+                forecast = financial["projected_savings"] if goal.timeframe == "MONTHLY" else financial["projected_savings"] / 4.33
+                unit = "savings"
+            elif goal.goal_type == "STUDY":
+                forecast = productivity["next_week_hours"] if goal.timeframe == "WEEKLY" else productivity["next_week_hours"] * 4.33
+                unit = "study hours"
+            else:
+                forecast = habit_likelihoods.get((goal.habit_name or goal.title).lower(), 45)
+                unit = "completion likelihood"
+            target = float(goal.target_value)
+            probability = max(5, min(99, round((forecast / target) * 100))) if target else 0
+            assessments.append({
+                "id": str(goal.id), "title": goal.title, "goal_type": goal.goal_type, "timeframe": goal.timeframe,
+                "target": target, "forecast": round(forecast, 1), "probability": probability, "unit": unit,
+                "status": "On track" if probability >= 85 else "Reachable with action" if probability >= 60 else "Unlikely on current trend",
+            })
+        return assessments
+
+    @staticmethod
+    def _recommendations(financial: dict[str, Any], productivity: dict[str, Any], habits: list[dict[str, Any]], goals: list[dict[str, Any]]) -> list[dict[str, str]]:
+        recommendations = []
+        if financial["has_data"]:
+            if financial["expense_change_percent"] > 3:
+                recommendations.append({"area": "Cash flow", "message": f"Spending is projected to rise {financial['expense_change_percent']}%. Set a weekly cap of {financial['next_week_expenses']:.0f} and review the largest category before month-end."})
+            elif financial["projected_savings"] < 0:
+                recommendations.append({"area": "Cash flow", "message": "The current expense trend could create a monthly shortfall. Pause non-essential spending and protect your debt payment first."})
+        if productivity["has_data"] and productivity["focus_score"] < 75:
+            recommendations.append({"area": "Productivity", "message": "Your focus pattern is below the strong range. Protect one 60–90 minute distraction-free block on your three highest-value days."})
+        at_risk = next((habit for habit in habits if habit["likelihood"] < 70), None)
+        if at_risk:
+            recommendations.append({"area": "Habit", "message": f"{at_risk['name']} has a {at_risk['likelihood']}% continuation likelihood. Make the next action smaller and attach it to an existing routine."})
+        behind = next((goal for goal in goals if goal["probability"] < 85), None)
+        if behind:
+            recommendations.append({"area": "Goal", "message": f"{behind['title']} is {behind['status'].lower()}. Adjust the weekly plan now rather than waiting for the end of the period."})
+        return recommendations or [{"area": "Momentum", "message": "Your recorded trend is stable. Keep logging entries on the same day each week to improve forecast confidence."}]
+
+
+DEMO_SCENARIOS = {
+    "balanced": {
+        "id": "balanced", "name": "Balanced progress", "description": "A consistent month with controlled spending and strong study momentum.",
+        "financial": {"has_data": True, "current_expenses": 6800, "next_week_expenses": 1640, "next_month_expenses": 7100, "projected_savings": 1900, "expense_change_percent": 4.4, "trend": "Rising", "series": [{"label": "Jun", "actual": 6200, "projected": None}, {"label": "Jul", "actual": 6500, "projected": None}, {"label": "Aug", "actual": 6800, "projected": None}, {"label": "Sep", "actual": None, "projected": 7100}]},
+        "productivity": {"has_data": True, "weekly_study_hours": 13.5, "next_week_hours": 14.8, "focus_score": 82, "completion_probability": 88, "trend": "Improving"},
+        "habits": [{"name": "Morning exercise", "category": "Health", "likelihood": 84, "streak": 8, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Reading", "category": "Learning", "likelihood": 78, "streak": 5, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Sleep before 11 pm", "category": "Recovery", "likelihood": 62, "streak": 2, "status": "Needs support", "recommendation": "Set a smaller daily action and schedule a reminder."}],
+        "goals": [{"id": "demo-balanced-goal", "title": "Save 1,500 this month", "goal_type": "FINANCIAL", "timeframe": "MONTHLY", "target": 1500, "forecast": 1900, "probability": 99, "unit": "savings", "status": "On track"}],
+        "recommendations": [{"area": "Cash flow", "message": "Your savings target is on track. Keep weekly spending below 1,640 to preserve the buffer."}, {"area": "Habit", "message": "Move your bedtime reminder 30 minutes earlier to protect next week's focus score."}]
+    },
+    "pressure": {
+        "id": "pressure", "name": "Spending pressure", "description": "A realistic higher-expense month where one habit and one goal need intervention.",
+        "financial": {"has_data": True, "current_expenses": 6900, "next_week_expenses": 1917, "next_month_expenses": 8300, "projected_savings": -300, "expense_change_percent": 20.3, "trend": "Rising", "series": [{"label": "Jun", "actual": 4100, "projected": None}, {"label": "Jul", "actual": 5800, "projected": None}, {"label": "Aug", "actual": 6900, "projected": None}, {"label": "Sep", "actual": None, "projected": 8300}]},
+        "productivity": {"has_data": True, "weekly_study_hours": 9.5, "next_week_hours": 7.8, "focus_score": 68, "completion_probability": 64, "trend": "Needs consistency"},
+        "habits": [{"name": "Budget review", "category": "Finance", "likelihood": 74, "streak": 4, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Late-night screen time", "category": "Recovery", "likelihood": 38, "streak": 0, "status": "At risk of stopping", "recommendation": "Set a smaller daily action and schedule a reminder."}, {"name": "Study planning", "category": "Learning", "likelihood": 56, "streak": 1, "status": "Needs support", "recommendation": "Set a smaller daily action and schedule a reminder."}],
+        "goals": [{"id": "demo-pressure-goal", "title": "Save 1,000 this month", "goal_type": "FINANCIAL", "timeframe": "MONTHLY", "target": 1000, "forecast": -300, "probability": 5, "unit": "savings", "status": "Unlikely on current trend"}],
+        "recommendations": [{"area": "Cash flow", "message": "Spending may exceed income next month. Cap weekly spending at 1,650 and reduce one discretionary category now."}, {"area": "Goal", "message": "The savings goal will not be met on the current trend. Cut projected expenses by 1,300 or revise the target before month-end."}]
+    }
+}

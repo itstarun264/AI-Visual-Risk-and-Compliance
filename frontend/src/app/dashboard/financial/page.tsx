@@ -5,17 +5,11 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
+import { motion } from "framer-motion";
 import {
-  Plus,
-  Trash2,
-  AlertTriangle,
-  RefreshCw,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  TrendingDown,
-  CircleDollarSign
+  Plus, Trash2, TrendingUp, CircleDollarSign, LineChart as LineChartIcon, Activity
 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 const financialSchema = zod.object({
   monthly_income: zod.number().gt(0, "Income must be greater than zero"),
@@ -26,36 +20,14 @@ const financialSchema = zod.object({
 
 type FinancialForm = zod.infer<typeof financialSchema>;
 
-interface FinancialRecord {
-  id: string;
-  monthly_income: number;
-  monthly_expenses: number;
-  savings_goal: number;
-  total_debt: number;
-  expense_ratio: number;
-  savings_ratio: number;
-  debt_ratio: number;
-  risk_category: string;
-  compliance_status: string;
-  created_at: string;
-}
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
 export default function FinancialPage() {
-  const [records, setRecords] = useState<FinancialRecord[]>([]);
+  const [records, setRecords] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const itemsPerPage = 5;
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<FinancialForm>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FinancialForm>({
     resolver: zodResolver(financialSchema),
   });
 
@@ -74,16 +46,12 @@ export default function FinancialPage() {
     fetchRecords();
   }, []);
 
-  const [savedSuccess, setSavedSuccess] = useState(false);
-
   const onSubmit = async (data: FinancialForm) => {
     setSaving(true);
     try {
       await axios.post(`${API_URL}/financial`, data);
       reset();
       fetchRecords();
-      setSavedSuccess(true);
-      setTimeout(() => setSavedSuccess(false), 4000);
     } catch (err) {
       console.error("Failed to create record", err);
     } finally {
@@ -92,7 +60,7 @@ export default function FinancialPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this financial record?")) {
+    if (confirm("Delete this financial record?")) {
       try {
         await axios.delete(`${API_URL}/financial/${id}`);
         fetchRecords();
@@ -102,260 +70,128 @@ export default function FinancialPage() {
     }
   };
 
-  const getRiskBadge = (category: string) => {
-    switch (category) {
-      case "LOW":
-        return "bg-emerald-950/40 text-emerald-400 border border-emerald-500/20";
-      case "MEDIUM":
-        return "bg-yellow-950/40 text-yellow-400 border border-yellow-500/20";
-      case "HIGH":
-        return "bg-orange-950/40 text-orange-400 border border-orange-500/20";
-      case "CRITICAL":
-        return "bg-rose-950/40 text-rose-400 border border-rose-500/20";
-      default:
-        return "bg-slate-900 text-slate-400 border border-slate-800";
-    }
-  };
-
-  const getComplianceBadge = (status: string) => {
-    return status === "COMPLIANT"
-      ? "bg-emerald-950/40 text-emerald-400 border border-emerald-500/20"
-      : "bg-rose-950/40 text-rose-400 border border-rose-500/20";
-  };
-
-  // Search & Pagination filtering
-  const filteredRecords = records.filter(
-    (r) =>
-      r.risk_category.toLowerCase().includes(search.toLowerCase()) ||
-      r.compliance_status.toLowerCase().includes(search.toLowerCase()) ||
-      new Date(r.created_at).toLocaleDateString().includes(search)
-  );
-
-  const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
-  const paginatedRecords = filteredRecords.slice((page - 1) * itemsPerPage, page * itemsPerPage);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh]">
-        <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin" />
-        <span className="mt-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Retrieving Financial Ledger...
-        </span>
-      </div>
-    );
-  }
+  if (loading) return <div className="p-8 text-brand animate-pulse">Syncing Ledger...</div>;
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Financial Data Collection Module</h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Collect monthly financial metrics, savings goals, debt, and compute automated risk category markers.
-        </p>
+    <div className="max-w-6xl mx-auto space-y-10">
+      
+      {/* Header Section */}
+      <div className="relative glass-panel p-8 md:p-12 overflow-hidden bg-gradient-to-br from-emerald-500/10 to-transparent border-none ring-1 ring-white/10">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/20 blur-[120px] rounded-full pointer-events-none -z-10 transform translate-x-1/3 -translate-y-1/3" />
+        
+        <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-bold uppercase tracking-widest mb-4">
+              <LineChartIcon className="w-4 h-4" /> Financial Matrix
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black text-ink tracking-tight mb-2">Wealth Diagnostics</h1>
+            <p className="text-muted text-lg max-w-xl">
+              Track cash flow, detect runaway expenses, and run AI-based risk scoring on your enterprise ledger.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Form panel */}
-        <div className="glass-panel p-6 border border-slate-800 lg:col-span-1 h-fit">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Plus className="w-4 h-4 text-cyan-400" /> Log Financial Entry
-          </h4>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {savedSuccess && (
-              <div className="p-2.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs rounded-lg font-medium animate-fade-in flex items-center gap-2">
-                <span>✓ Entry saved! Main dashboard graph is updated.</span>
+        
+        {/* Input Terminal */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:col-span-1 glass-panel p-6 sm:p-8 h-fit relative overflow-hidden group"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent pointer-events-none" />
+          <h3 className="text-xl font-bold text-ink mb-6 relative z-10 flex items-center gap-2">
+            <Plus className="w-5 h-5 text-brand" /> Log Entry
+          </h3>
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative z-10">
+            {[
+              { label: "Monthly Income ($)", id: "monthly_income" as const },
+              { label: "Monthly Expenses ($)", id: "monthly_expenses" as const },
+              { label: "Savings Goal ($)", id: "savings_goal" as const },
+              { label: "Total Debt ($)", id: "total_debt" as const },
+            ].map((field) => (
+              <div key={field.id} className="space-y-1.5">
+                <label className="text-xs font-bold text-muted uppercase tracking-wider">{field.label}</label>
+                <div className="relative group/input">
+                  <input
+                    type="number"
+                    step="0.01"
+                    className="w-full h-11 pl-4 pr-4 bg-canvas/50 border border-line rounded-xl text-ink text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all group-hover/input:border-brand/50"
+                    {...register(field.id, { valueAsNumber: true })}
+                  />
+                </div>
+                {errors[field.id] && <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider">{errors[field.id]?.message}</p>}
               </div>
-            )}
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Monthly Income ($)
-              </label>
-              <input
-                type="number"
-                placeholder="8000"
-                step="0.01"
-                className="form-input w-full"
-                {...register("monthly_income", { valueAsNumber: true })}
-              />
-              {errors.monthly_income && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.monthly_income.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Monthly Expenses ($)
-              </label>
-              <input
-                type="number"
-                placeholder="4000"
-                step="0.01"
-                className="form-input w-full"
-                {...register("monthly_expenses", { valueAsNumber: true })}
-              />
-              {errors.monthly_expenses && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.monthly_expenses.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Savings Goal ($)
-              </label>
-              <input
-                type="number"
-                placeholder="1000"
-                step="0.01"
-                className="form-input w-full"
-                {...register("savings_goal", { valueAsNumber: true })}
-              />
-              {errors.savings_goal && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.savings_goal.message}</p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Total Debt ($)
-              </label>
-              <input
-                type="number"
-                placeholder="15000"
-                step="0.01"
-                className="form-input w-full"
-                {...register("total_debt", { valueAsNumber: true })}
-              />
-              {errors.total_debt && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.total_debt.message}</p>
-              )}
-            </div>
-
-            <button
-              type="submit"
-              disabled={saving}
-              className="w-full py-2 mt-2 bg-white hover:bg-slate-200 text-slate-950 font-bold rounded text-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-            >
-              {saving ? (
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-              ) : (
-                <CircleDollarSign className="w-3.5 h-3.5" />
-              )}
-              Save Financial Record
-            </button>
+            ))}
+            
+            <Button type="submit" disabled={saving} variant="glow" className="w-full mt-4">
+              {saving ? "Syncing..." : "Commit Record"}
+            </Button>
           </form>
-        </div>
+        </motion.div>
 
-        {/* Ledger panel */}
-        <div className="glass-panel p-6 border border-slate-800 lg:col-span-2 space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-              Recorded Financial History
-            </h4>
-
-            {/* Search Input */}
-            <div className="relative w-full sm:w-64">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-2.5">
-                <Search className="w-3.5 h-3.5 text-slate-500" />
-              </span>
-              <input
-                type="text"
-                placeholder="Search category/compliance..."
-                value={search}
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                  setPage(1);
-                }}
-                className="form-input w-full pl-8 py-1.5 text-xs"
-              />
-            </div>
+        {/* Ledger Display */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xl font-bold text-ink flex items-center gap-2">
+              <Activity className="w-5 h-5 text-brand" /> Ledger Stream
+            </h3>
+            <span className="text-xs font-bold text-muted bg-canvas px-3 py-1 rounded-full border border-line">{records.length} Records</span>
           </div>
 
-          <div className="overflow-x-auto border border-slate-900 rounded-lg">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-slate-950/60 text-slate-400 border-b border-slate-800">
-                  <th className="p-3 font-semibold uppercase">Date</th>
-                  <th className="p-3 font-semibold uppercase">Income</th>
-                  <th className="p-3 font-semibold uppercase">Expenses</th>
-                  <th className="p-3 font-semibold uppercase">Debt</th>
-                  <th className="p-3 font-semibold uppercase">Ratios</th>
-                  <th className="p-3 font-semibold uppercase text-center">Category</th>
-                  <th className="p-3 font-semibold uppercase text-center">Compliance</th>
-                  <th className="p-3 text-center"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-900">
-                {paginatedRecords.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className="p-8 text-center text-slate-500">
-                      No financial records found. Log your current parameters to start.
-                    </td>
-                  </tr>
-                ) : (
-                  paginatedRecords.map((rec) => (
-                    <tr key={rec.id} className="hover:bg-slate-850/20">
-                      <td className="p-3 font-mono text-[10px] text-slate-400">
-                        {new Date(rec.created_at).toLocaleDateString()}
-                      </td>
-                      <td className="p-3 font-bold text-white">${parseFloat(rec.monthly_income as any).toLocaleString()}</td>
-                      <td className="p-3 font-medium text-slate-300">${parseFloat(rec.monthly_expenses as any).toLocaleString()}</td>
-                      <td className="p-3 font-medium text-rose-300">${parseFloat(rec.total_debt as any).toLocaleString()}</td>
-                      <td className="p-3 font-mono text-[10px] text-slate-400">
-                        <div>Exp: {Math.round(rec.expense_ratio * 100)}%</div>
-                        <div className="mt-0.5">Debt: {parseFloat(rec.debt_ratio as any).toFixed(2)}x</div>
-                      </td>
-                      <td className="p-3 text-center">
-                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${getRiskBadge(rec.risk_category)}`}>
-                          {rec.risk_category}
-                        </span>
-                      </td>
-                      <td className="p-3 text-center">
-                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${getComplianceBadge(rec.compliance_status)}`}>
-                          {rec.compliance_status}
-                        </span>
-                      </td>
-                      <td className="p-3 text-center">
-                        <button
-                          onClick={() => handleDelete(rec.id)}
-                          className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-950/20 rounded border border-transparent hover:border-rose-900/30 transition-all cursor-pointer"
-                          title="Delete entry"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="flex items-center justify-between text-xs text-slate-400 mt-4 px-2">
-              <span>
-                Page <b>{page}</b> of {totalPages} ({filteredRecords.length} records)
-              </span>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => setPage(page - 1)}
-                  disabled={page === 1}
-                  className="p-1.5 rounded border border-slate-800 hover:bg-slate-800 disabled:opacity-40"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setPage(page + 1)}
-                  disabled={page === totalPages}
-                  className="p-1.5 rounded border border-slate-800 hover:bg-slate-800 disabled:opacity-40"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
+          <div className="space-y-4">
+            {records.length === 0 ? (
+              <div className="glass-panel p-12 text-center text-muted border-dashed border-2 flex flex-col items-center">
+                <CircleDollarSign className="w-12 h-12 mb-4 opacity-50" />
+                <p className="font-semibold text-lg">No Financial Data Logged</p>
+                <p className="text-sm mt-1">Initialize your ledger using the terminal.</p>
               </div>
-            </div>
-          )}
+            ) : (
+              records.map((rec, i) => (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  key={rec.id} 
+                  className="glass-panel p-5 group flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden hover:bg-canvas/50 transition-colors"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center shrink-0">
+                      <TrendingUp className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-black text-ink">IN: ${parseFloat(rec.monthly_income).toLocaleString()}</span>
+                        <span className="text-muted text-xs">/</span>
+                        <span className="text-sm font-black text-rose-500">OUT: ${parseFloat(rec.monthly_expenses).toLocaleString()}</span>
+                      </div>
+                      <div className="text-[10px] text-muted font-mono uppercase">
+                        Debt: ${parseFloat(rec.total_debt).toLocaleString()} | {new Date(rec.created_at).toLocaleString()}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2">
+                    <span className={`px-2 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase border ${
+                      rec.compliance_status === "COMPLIANT" ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20" : "bg-rose-500/10 text-rose-600 border-rose-500/20"
+                    }`}>
+                      {rec.compliance_status}
+                    </span>
+                    <button 
+                      onClick={() => handleDelete(rec.id)}
+                      className="p-1.5 text-muted hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </motion.div>
+              ))
+            )}
+          </div>
         </div>
+
       </div>
     </div>
   );

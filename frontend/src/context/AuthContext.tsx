@@ -27,7 +27,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1
 if (typeof window !== 'undefined') {
   axios.interceptors.request.use((config) => {
     const storedToken = localStorage.getItem('token');
-    if (storedToken && !config.headers.Authorization) {
+    if (storedToken) {
       config.headers.Authorization = `Bearer ${storedToken}`;
     }
     return config;

@@ -208,3 +208,23 @@ class DashboardSummaryOut(BaseModel):
     academic_risk_score: int = 0
     behavioral_risk_score: int = 0
     visual_risk_score: int = 0
+
+# ==========================================
+# FORECASTING & GOALS SCHEMAS
+# ==========================================
+class GoalCreate(BaseModel):
+    title: str = Field(..., min_length=2, max_length=180)
+    goal_type: str = Field(..., pattern="^(FINANCIAL|STUDY|HABIT)$")
+    target_value: float = Field(..., gt=0, le=1000000)
+    timeframe: str = Field(..., pattern="^(WEEKLY|MONTHLY)$")
+    habit_name: Optional[str] = Field(None, max_length=255)
+
+class GoalOut(ORMBase):
+    id: UUID
+    user_id: UUID
+    title: str
+    goal_type: str
+    target_value: float
+    timeframe: str
+    habit_name: Optional[str]
+    created_at: datetime

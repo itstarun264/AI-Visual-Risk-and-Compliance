@@ -8,7 +8,7 @@ import os
 
 from app.config import settings
 from app.database import engine, Base, get_db, fallback_mode
-from app.routers import auth, profile, financial, study, habits, risk, compliance, vision, alerts, audit, dashboard
+from app.routers import auth, profile, financial, study, habits, risk, compliance, vision, alerts, audit, dashboard, forecast
 
 # Auto-create tables on startup (makes development and docker startup robust)
 Base.metadata.create_all(bind=engine)
@@ -46,6 +46,7 @@ app.include_router(vision.router, prefix=api_prefix)
 app.include_router(alerts.router, prefix=api_prefix)
 app.include_router(audit.router, prefix=api_prefix)
 app.include_router(dashboard.router, prefix=api_prefix)
+app.include_router(forecast.router, prefix=api_prefix)
 
 @app.get("/api/v1/health")
 def health_check(db: Session = Depends(get_db)):
@@ -66,7 +67,8 @@ def health_check(db: Session = Depends(get_db)):
                 "visual_detections",
                 "alerts",
                 "user_activity_history",
-                "compliance_records"
+                "compliance_records",
+                "goals"
             ]
         }
     except Exception as e:

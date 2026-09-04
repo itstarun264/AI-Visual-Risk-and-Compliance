@@ -24,6 +24,7 @@ class User(Base):
     alerts = relationship("Alert", back_populates="user", cascade="all, delete-orphan")
     activity_history = relationship("UserActivityHistory", back_populates="user", cascade="all, delete-orphan")
     compliance_records = relationship("ComplianceRecord", back_populates="user", cascade="all, delete-orphan")
+    goals = relationship("Goal", back_populates="user", cascade="all, delete-orphan")
 
 class UserProfile(Base):
     __tablename__ = "user_profiles"
@@ -165,3 +166,18 @@ class ComplianceRecord(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     user = relationship("User", back_populates="compliance_records")
+
+
+class Goal(Base):
+    __tablename__ = "goals"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    title = Column(String(180), nullable=False)
+    goal_type = Column(String(30), nullable=False)  # FINANCIAL, STUDY, HABIT
+    target_value = Column(Float, nullable=False)
+    timeframe = Column(String(30), nullable=False)  # WEEKLY, MONTHLY
+    habit_name = Column(String(255), nullable=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
+
+    user = relationship("User", back_populates="goals")

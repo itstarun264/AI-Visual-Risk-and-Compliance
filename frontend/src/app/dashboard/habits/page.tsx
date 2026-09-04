@@ -5,17 +5,11 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
+import { motion } from "framer-motion";
 import {
-  Plus,
-  Trash2,
-  CheckCircle,
-  AlertTriangle,
-  RefreshCw,
-  Flame,
-  Search,
-  CheckSquare,
-  Square
+  Plus, Trash2, CheckCircle, AlertTriangle, RefreshCw, Flame, CheckSquare, Square, Target
 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 const habitSchema = zod.object({
   habit_name: zod.string().min(2, "Habit name must be at least 2 characters").max(255),
@@ -26,32 +20,14 @@ const habitSchema = zod.object({
 
 type HabitForm = zod.infer<typeof habitSchema>;
 
-interface HabitRecord {
-  id: string;
-  habit_name: string;
-  category: string;
-  completed_today: boolean;
-  is_risk_associated: boolean;
-  streak: number;
-  last_completed: string | null;
-  compliance_status: string;
-  created_at: string;
-}
-
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
 export default function HabitsPage() {
-  const [habits, setHabits] = useState<HabitRecord[]>([]);
+  const [habits, setHabits] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [search, setSearch] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<HabitForm>({
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<HabitForm>({
     resolver: zodResolver(habitSchema),
     defaultValues: {
       completed_today: false,
@@ -89,7 +65,6 @@ export default function HabitsPage() {
 
   const toggleCompletion = async (id: string, currentCompleted: boolean, isRisk: boolean) => {
     try {
-      // Toggle value
       await axios.put(`${API_URL}/habits/${id}`, {
         completed_today: !currentCompleted,
         is_risk_associated: isRisk
@@ -101,7 +76,7 @@ export default function HabitsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this habit?")) {
+    if (confirm("Delete this habit?")) {
       try {
         await axios.delete(`${API_URL}/habits/${id}`);
         fetchHabits();
@@ -111,224 +86,161 @@ export default function HabitsPage() {
     }
   };
 
-  const getComplianceStatusBadge = (status: string) => {
-    switch (status) {
-      case "COMPLIANT":
-        return "bg-emerald-950/40 text-emerald-400 border border-emerald-500/25";
-      case "PARTIALLY_COMPLIANT":
-        return "bg-amber-950/40 text-amber-400 border border-amber-500/25";
-      case "NON_COMPLIANT":
-        return "bg-rose-950/40 text-rose-400 border border-rose-500/25";
-      default:
-        return "bg-slate-900 text-slate-400 border border-slate-800";
-    }
-  };
-
-  const filteredHabits = habits.filter(
-    (h) =>
-      h.habit_name.toLowerCase().includes(search.toLowerCase()) ||
-      h.category.toLowerCase().includes(search.toLowerCase())
-  );
-
-  if (loading) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[50vh]">
-        <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin" />
-        <span className="mt-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">
-          Retrieving Habit Log...
-        </span>
-      </div>
-    );
-  }
+  if (loading) return <div className="p-8 text-brand animate-pulse">Syncing Habits...</div>;
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-bold text-white tracking-tight">Habit & Routine Compliance</h2>
-        <p className="text-sm text-slate-400 mt-1">
-          Track daily user habits, policy adherence, and flag potentially risk-associated behaviors.
-        </p>
+    <div className="max-w-6xl mx-auto space-y-10">
+      {/* Header Section */}
+      <div className="relative glass-panel p-8 md:p-12 overflow-hidden bg-gradient-to-br from-violet-500/10 to-transparent border-none ring-1 ring-white/10">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-500/20 blur-[120px] rounded-full pointer-events-none -z-10 transform translate-x-1/3 -translate-y-1/3" />
+        
+        <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 text-violet-600 text-xs font-bold uppercase tracking-widest mb-4">
+              <CheckCircle className="w-4 h-4" /> Routine Tracking
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black text-ink tracking-tight mb-2">Behavioral Sync</h1>
+            <p className="text-muted text-lg max-w-xl">
+              Monitor daily habits, enforce policy adherence, and flag risk-associated behaviors automatically.
+            </p>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Form Panel */}
-        <div className="glass-panel p-6 border border-slate-800 lg:col-span-1 h-fit">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-            <Plus className="w-4 h-4 text-cyan-400" /> Log Daily Habit
-          </h4>
-
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Habit Name
-              </label>
+        {/* Input Terminal */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="lg:col-span-1 glass-panel p-6 sm:p-8 h-fit relative overflow-hidden group"
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent pointer-events-none" />
+          <h3 className="text-xl font-bold text-ink mb-6 relative z-10 flex items-center gap-2">
+            <Plus className="w-5 h-5 text-brand" /> New Habit
+          </h3>
+          
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative z-10">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-muted uppercase tracking-wider">Habit Name</label>
               <input
                 type="text"
-                placeholder="Code audit / PPE verification"
-                className="form-input w-full"
+                placeholder="Morning Audit"
+                className="w-full h-11 pl-4 pr-4 bg-canvas/50 border border-line rounded-xl text-ink text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all hover:border-brand/50"
                 {...register("habit_name")}
               />
-              {errors.habit_name && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.habit_name.message}</p>
-              )}
+              {errors.habit_name && <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider">{errors.habit_name.message}</p>}
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase mb-1.5">
-                Category
-              </label>
-              <select className="form-input w-full bg-slate-950" {...register("category")}>
-                <option value="">Select category</option>
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-muted uppercase tracking-wider">Category</label>
+              <select 
+                className="w-full h-11 pl-4 pr-4 bg-canvas/50 border border-line rounded-xl text-ink text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all hover:border-brand/50"
+                {...register("category")}
+              >
+                <option value="">Select Category</option>
                 <option value="Health & Safety">Health & Safety</option>
-                <option value="Financial Compliance">Financial Compliance</option>
-                <option value="Study">Study</option>
                 <option value="Productivity">Productivity</option>
                 <option value="Security">Security</option>
-                <option value="Work Compliance">Work Compliance</option>
                 <option value="Other">Other</option>
               </select>
-              {errors.category && (
-                <p className="mt-1 text-[11px] text-red-400">{errors.category.message}</p>
-              )}
+              {errors.category && <p className="text-[10px] text-red-500 font-bold uppercase tracking-wider">{errors.category.message}</p>}
             </div>
 
             <div className="space-y-3 pt-2">
-              <label className="flex items-center gap-2.5 cursor-pointer text-xs font-medium text-slate-300">
+              <label className="flex items-center gap-3 cursor-pointer text-sm font-semibold text-ink p-3 rounded-xl border border-line hover:border-brand/30 transition-all">
                 <input
                   type="checkbox"
-                  className="rounded border-slate-800 bg-slate-900 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-slate-950 w-4 h-4"
+                  className="rounded border-slate-800 text-brand focus:ring-brand w-5 h-5"
                   {...register("completed_today")}
                 />
                 Completed Today
               </label>
 
-              <label className="flex items-center gap-2.5 cursor-pointer text-xs font-medium text-slate-300">
+              <label className="flex items-center gap-3 cursor-pointer text-sm font-semibold text-ink p-3 rounded-xl border border-line hover:border-rose-500/30 transition-all">
                 <input
                   type="checkbox"
-                  className="rounded border-slate-800 bg-slate-900 text-red-500 focus:ring-red-500 focus:ring-offset-slate-950 w-4 h-4"
+                  className="rounded border-slate-800 text-rose-500 focus:ring-rose-500 w-5 h-5"
                   {...register("is_risk_associated")}
                 />
-                Flag as Risk-Associated
+                Risk Associated Behavior
               </label>
             </div>
-
-            <button
-              type="submit"
-              disabled={saving}
-              className="w-full py-2 mt-4 bg-white hover:bg-slate-200 text-slate-950 font-bold rounded text-xs flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-            >
-              {saving ? (
-                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-              ) : (
-                <CheckSquare className="w-3.5 h-3.5" />
-              )}
-              Add Habit
-            </button>
+            
+            <Button type="submit" disabled={saving} variant="glow" className="w-full mt-4">
+              {saving ? "Syncing..." : "Add Habit"}
+            </Button>
           </form>
-        </div>
+        </motion.div>
 
-        {/* Ledger Panel */}
-        <div className="glass-panel p-6 border border-slate-800 lg:col-span-2 space-y-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider">
-              Tracked Routine Habits
-            </h4>
-
-            {/* Search Input */}
-            <div className="relative w-full sm:w-64">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-2.5">
-                <Search className="w-3.5 h-3.5 text-slate-500" />
-              </span>
-              <input
-                type="text"
-                placeholder="Search habits..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="form-input w-full pl-8 py-1.5 text-xs"
-              />
-            </div>
+        {/* Habits Display */}
+        <div className="lg:col-span-2 space-y-4">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xl font-bold text-ink flex items-center gap-2">
+              <Target className="w-5 h-5 text-brand" /> Active Routines
+            </h3>
+            <span className="text-xs font-bold text-muted bg-canvas px-3 py-1 rounded-full border border-line">{habits.length} Habits</span>
           </div>
 
-          <div className="overflow-x-auto border border-slate-900 rounded-lg">
-            <table className="w-full text-left text-xs border-collapse">
-              <thead>
-                <tr className="bg-slate-950/60 text-slate-400 border-b border-slate-800">
-                  <th className="p-3 font-semibold uppercase text-center">Complete</th>
-                  <th className="p-3 font-semibold uppercase">Habit</th>
-                  <th className="p-3 font-semibold uppercase">Category</th>
-                  <th className="p-3 font-semibold uppercase text-center">Risk Flag</th>
-                  <th className="p-3 font-semibold uppercase text-center">Streak</th>
-                  <th className="p-3 font-semibold uppercase">Last Completed</th>
-                  <th className="p-3 font-semibold uppercase text-center">Compliance</th>
-                  <th className="p-3 text-center"></th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-900">
-                {filteredHabits.length === 0 ? (
-                  <tr>
-                    <td colSpan={8} className="p-8 text-center text-slate-500">
-                      No habits tracked. Add a habit to begin compliance analysis.
-                    </td>
-                  </tr>
-                ) : (
-                  filteredHabits.map((rec) => (
-                    <tr key={rec.id} className="hover:bg-slate-850/20">
-                      <td className="p-3 text-center">
-                        <button
-                          onClick={() => toggleCompletion(rec.id, rec.completed_today, rec.is_risk_associated)}
-                          className="text-slate-400 hover:text-cyan-400 transition-all cursor-pointer inline-flex items-center justify-center"
-                          title={rec.completed_today ? "Mark incomplete" : "Mark complete"}
-                        >
-                          {rec.completed_today ? (
-                            <CheckSquare className="w-5 h-5 text-cyan-400" />
-                          ) : (
-                            <Square className="w-5 h-5 text-slate-600" />
-                          )}
-                        </button>
-                      </td>
-                      <td className="p-3 font-bold text-white">{rec.habit_name}</td>
-                      <td className="p-3 font-medium text-slate-300">{rec.category}</td>
-                      <td className="p-3 text-center">
-                        {rec.is_risk_associated ? (
-                          <span className="inline-flex items-center justify-center p-1 bg-red-950/40 border border-red-500/20 text-red-400 rounded-full" title="Risk-Associated Behavior">
-                            <AlertTriangle className="w-3.5 h-3.5" />
+          <div className="space-y-4">
+            {habits.length === 0 ? (
+              <div className="glass-panel p-12 text-center text-muted border-dashed border-2 flex flex-col items-center">
+                <CheckSquare className="w-12 h-12 mb-4 opacity-50" />
+                <p className="font-semibold text-lg">No Habits Tracked</p>
+                <p className="text-sm mt-1">Start tracking your routines.</p>
+              </div>
+            ) : (
+              habits.map((rec, i) => (
+                <motion.div 
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  key={rec.id} 
+                  className={`glass-panel p-5 group flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative overflow-hidden transition-all ${
+                    rec.completed_today ? 'border-brand/30 shadow-[0_0_15px_rgba(79,70,229,0.1)]' : 'hover:bg-canvas/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() => toggleCompletion(rec.id, rec.completed_today, rec.is_risk_associated)}
+                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border-2 transition-all hover:scale-105 active:scale-95 bg-canvas"
+                      style={{ borderColor: rec.completed_today ? 'var(--brand)' : 'var(--line)' }}
+                    >
+                      {rec.completed_today ? <CheckSquare className="w-6 h-6 text-brand" /> : <Square className="w-6 h-6 text-muted" />}
+                    </button>
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className={`text-sm font-black ${rec.completed_today ? 'text-ink' : 'text-muted'}`}>{rec.habit_name}</span>
+                        {rec.is_risk_associated && (
+                          <span className="flex items-center gap-1 bg-rose-500/10 text-rose-500 text-[10px] font-bold px-2 py-0.5 rounded-full border border-rose-500/20 uppercase tracking-widest">
+                            <AlertTriangle className="w-3 h-3" /> Risk
                           </span>
-                        ) : (
-                          <span className="text-slate-600">—</span>
                         )}
-                      </td>
-                      <td className="p-3 text-center">
-                        {rec.streak > 0 ? (
-                          <span className="inline-flex items-center gap-1 font-bold text-orange-400 bg-orange-950/30 px-2 py-0.5 rounded-full border border-orange-500/20">
-                            <Flame className="w-3.5 h-3.5 fill-orange-400" />
-                            {rec.streak}
-                          </span>
-                        ) : (
-                          <span className="text-slate-500">0</span>
-                        )}
-                      </td>
-                      <td className="p-3 font-mono text-[10px] text-slate-400">
+                      </div>
+                      <div className="text-[10px] text-muted font-mono uppercase flex items-center gap-2">
+                        {rec.category} 
+                        <span className="w-1 h-1 rounded-full bg-muted" />
                         {rec.last_completed ? new Date(rec.last_completed).toLocaleDateString() : "Never"}
-                      </td>
-                      <td className="p-3 text-center">
-                        <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold ${getComplianceStatusBadge(rec.compliance_status)}`}>
-                          {rec.compliance_status}
-                        </span>
-                      </td>
-                      <td className="p-3 text-center">
-                        <button
-                          onClick={() => handleDelete(rec.id)}
-                          className="p-1.5 text-slate-500 hover:text-rose-400 hover:bg-rose-950/20 rounded border border-transparent hover:border-rose-900/30 transition-all cursor-pointer"
-                          title="Delete habit"
-                        >
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2">
+                    {rec.streak > 0 && (
+                      <span className="inline-flex items-center gap-1 font-bold text-orange-500 bg-orange-500/10 px-3 py-1 rounded-full border border-orange-500/20 text-xs">
+                        <Flame className="w-4 h-4 fill-orange-500" />
+                        {rec.streak} Day{rec.streak > 1 ? 's' : ''}
+                      </span>
+                    )}
+                    <button 
+                      onClick={() => handleDelete(rec.id)}
+                      className="p-1.5 text-muted hover:text-rose-500 hover:bg-rose-500/10 rounded-lg transition-all"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                </motion.div>
+              ))
+            )}
           </div>
         </div>
       </div>

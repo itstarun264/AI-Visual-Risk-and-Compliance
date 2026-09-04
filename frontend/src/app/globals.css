@@ -4,28 +4,50 @@
 
 @layer base {
   :root {
-    --ink: #172033;
-    --muted: #667085;
-    --line: #e6eaf0;
-    --canvas: #f6f8fb;
-    --surface: #fff;
-    --brand: #4f46e5;
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --line: rgba(255, 255, 255, 0.08);
+    --canvas: #030712;
+    --surface: rgba(15, 23, 42, 0.4);
+    --brand: #0ea5e9;
   }
   
   .dark {
-    --ink: #f8fafc;
+    --ink: #ffffff;
     --muted: #94a3b8;
-    --line: #1e293b;
-    --canvas: #090d16;
-    --surface: #0f172a;
-    --brand: #6366f1;
+    --line: rgba(255, 255, 255, 0.08);
+    --canvas: #020617;
+    --surface: rgba(15, 23, 42, 0.6);
+    --brand: #38bdf8;
   }
   
   * { box-sizing: border-box; }
-  html { background: var(--canvas); transition: background-color 0.3s ease; }
-  body { margin: 0; min-height: 100vh; background: var(--canvas); color: var(--ink); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+  
+  @keyframes gradientMesh {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  html { 
+    background: var(--canvas); 
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(14, 165, 233, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+    background-attachment: fixed;
+    background-size: 200% 200%;
+    animation: gradientMesh 15s ease infinite;
+    transition: background-color 0.3s ease; 
+  }
+  body { margin: 0; min-height: 100vh; background: transparent; color: var(--ink); font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; transition: color 0.3s ease; }
   button, input, select, textarea { font: inherit; }
   button { cursor: pointer; }
+  select { color-scheme: dark; }
+  select option { background: #0f172a; color: #f8fafc; }
+  html:not(.dark) select { color-scheme: light; }
+  html:not(.dark) select option { background: #ffffff; color: #172033; }
   
   h1, h2, h3, h4, h5, h6 {
     font-family: "Manrope", sans-serif;
@@ -33,9 +55,28 @@
   }
 }
 
-.glass-panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 1px 2px rgba(16,24,40,.02), 0 3px 10px rgba(16,24,40,.035); transition: transform .2s, box-shadow .2s, border-color .2s, background-color 0.3s ease; }
-.glass-panel:hover { border-color: #d8deea; box-shadow: 0 10px 25px rgba(16,24,40,.06); }
-.dark .glass-panel:hover { border-color: #334155; box-shadow: 0 10px 25px rgba(0,0,0,.3); }
+.glass-panel { 
+  background: var(--surface); 
+  border: 1px solid var(--line); 
+  border-radius: 24px; 
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; 
+}
+.glass-panel:hover { 
+  border-color: var(--brand); 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02), 0 0 15px rgba(79, 70, 229, 0.1); 
+  transform: translateY(-2px);
+}
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dark .glass-panel:hover { 
+  border-color: rgba(99, 102, 241, 0.5); 
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1), 0 0 20px rgba(99, 102, 241, 0.15); 
+}
 
 .form-input { width: 100%; min-height: 42px; background: #fff; border: 1px solid #d9e0ea; color: var(--ink); border-radius: 10px; padding: 9px 12px; outline: none; font-size: 14px; transition: border-color .15s, box-shadow .15s, background-color 0.3s ease, color 0.3s ease; }
 .form-input.pl-10 { padding-left: 2.5rem !important; }

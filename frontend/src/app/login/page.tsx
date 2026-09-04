@@ -8,7 +8,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import { useAuth } from "@/context/AuthContext";
-import { ScanEye, Lock, Mail, Loader2, AlertCircle } from "lucide-react";
+import { Activity, Lock, Mail, Loader2, AlertCircle, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/Button";
 
 const loginSchema = zod.object({
   email: zod.string().email("Enter a valid email address"),
@@ -51,92 +53,110 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-page flex flex-col items-center justify-center min-h-screen px-4">
-      <div className="w-full max-w-md glass-panel p-8 relative overflow-hidden border border-cyan-500/20">
-        <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"></div>
-        <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/10 rounded-full blur-2xl"></div>
+    <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-canvas">
+      
+      {/* Background Animated Blobs */}
+      <motion.div
+        animate={{ x: [-50, 50, -50], y: [-20, 30, -20] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[10%] left-[20%] w-96 h-96 bg-brand/20 rounded-full blur-[120px] pointer-events-none"
+      />
+      <motion.div
+        animate={{ x: [50, -50, 50], y: [30, -20, 30] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute bottom-[10%] right-[20%] w-[30rem] h-[30rem] bg-violet-600/10 rounded-full blur-[150px] pointer-events-none"
+      />
 
-        <div className="flex flex-col items-center mb-8">
-          <div className="w-12 h-12 bg-cyan-950 border border-cyan-500/30 rounded-xl flex items-center justify-center mb-3">
-            <ScanEye className="w-6 h-6 text-cyan-400" />
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-[420px] px-6 z-10"
+      >
+        <Link href="/" className="flex items-center justify-center gap-2 group mb-8">
+          <div className="w-10 h-10 bg-brand rounded-xl flex items-center justify-center text-white shadow-xl shadow-brand/20">
+            <Activity size={24} />
           </div>
-          <h2 className="text-2xl font-bold tracking-tight text-white font-manrope">Operator Sign In</h2>
-          <p className="text-sm text-slate-400 mt-1 text-center font-medium">
-            AI Risk & Compliance Intelligence Platform
-          </p>
-        </div>
+          <span className="font-bold text-xl tracking-tight text-ink">Intelligence</span>
+        </Link>
 
-        {apiError && (
-          <div className="mb-6 p-4 rounded-lg bg-red-950/40 border border-red-500/30 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-            <span className="text-sm text-red-200">{apiError}</span>
+        <div className="glass-panel p-8 sm:p-10 border border-line/50 rounded-3xl shadow-2xl bg-surface/80 backdrop-blur-2xl">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-ink mb-2 tracking-tight">Welcome back</h2>
+            <p className="text-muted text-sm">Sign in to your account to continue</p>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Email Address
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <Mail className="w-4 h-4 text-slate-500" />
-              </span>
-              <input
-                type="email"
-                placeholder="inspector@compliance.ai"
-                className="form-input w-full pl-10"
-                {...register("email")}
-              />
+          {apiError && (
+            <motion.div 
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 flex items-start gap-3"
+            >
+              <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+              <span className="text-sm text-red-600 dark:text-red-400 font-medium">{apiError}</span>
+            </motion.div>
+          )}
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-ink">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+                <input
+                  type="email"
+                  placeholder="name@company.com"
+                  className="w-full h-11 pl-10 pr-4 bg-canvas/50 border border-line rounded-xl text-ink text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all"
+                  {...register("email")}
+                />
+              </div>
+              {errors.email && <p className="text-xs text-red-500 font-medium">{errors.email.message}</p>}
             </div>
-            {errors.email && (
-              <p className="mt-1 text-xs text-red-400">{errors.email.message}</p>
-            )}
-          </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
-              Password
-            </label>
-            <div className="relative">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <Lock className="w-4 h-4 text-slate-500" />
-              </span>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className="form-input w-full pl-10"
-                {...register("password")}
-              />
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold text-ink">Password</label>
+                <Link href="#" className="text-xs font-medium text-brand hover:underline">Forgot password?</Link>
+              </div>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+                <input
+                  type="password"
+                  placeholder="••••••••"
+                  className="w-full h-11 pl-10 pr-4 bg-canvas/50 border border-line rounded-xl text-ink text-sm focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand transition-all"
+                  {...register("password")}
+                />
+              </div>
+              {errors.password && <p className="text-xs text-red-500 font-medium">{errors.password.message}</p>}
             </div>
-            {errors.password && (
-              <p className="mt-1 text-xs text-red-400">{errors.password.message}</p>
-            )}
+
+            <Button
+              type="submit"
+              disabled={submitting}
+              variant="glow"
+              className="w-full mt-2 h-12 text-[15px]"
+            >
+              {submitting ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                  Signing In...
+                </>
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </>
+              )}
+            </Button>
+          </form>
+
+          <div className="mt-8 text-center text-sm text-muted font-medium">
+            Don't have an account?{" "}
+            <Link href="/register" className="text-brand hover:underline">
+              Create Account
+            </Link>
           </div>
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full py-3 mt-4 bg-gradient-to-r from-cyan-600 to-cyan-500 text-slate-950 font-bold rounded-lg shadow-lg shadow-cyan-900/20 hover:shadow-cyan-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-          >
-            {submitting ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Signing In...
-              </>
-            ) : (
-              "Sign In"
-            )}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center text-sm text-slate-400">
-          Need an account?{" "}
-          <Link href="/register" className="text-cyan-400 hover:underline">
-            Create Account
-          </Link>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
