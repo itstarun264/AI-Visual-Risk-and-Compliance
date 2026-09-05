@@ -196,3 +196,43 @@ def test_habit_compliance():
     habit = response.json()
     assert habit["streak"] == 1
     assert habit["compliance_status"] == "COMPLIANT"
+
+
+def test_dataset_import_is_separate_and_drives_analytics():
+    client.post("/api/v1/auth/register", json={
+        "name": "Dataset User", "email": "dataset@example.com",
+        "password": "password123", "confirm_password": "password123",
+    })
+    token = client.post("/api/v1/auth/login", json={"email": "dataset@example.com", "password": "password123"}).json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+    csv_data = """date,income_inr,total_expenses_inr,study_hours,focus_score,habit_completion_rate,savings_goal_progress,overall_risk_score,compliance_score,active_alerts
+2026-06-01,80000,50000,2,75,0.70,0.60,40,78,0
+2026-07-01,82000,54000,2.5,80,0.75,0.72,36,82,1
+2026-08-01,84000,58000,3,85,0.80,0.84,32,86,0
+"""
+    response = client.post(
+        "/api/v1/datasets/import",
+        headers=headers,
+        files={"file": ("activity.csv", csv_data, "text/csv")},
+        data={"name": "Activity history"},
+    )
+    assert response.status_code == 201, response.text
+    dataset = response.json()
+    assert dataset["row_count"] == 3
+    assert dataset["column_count"] == 10
+
+    # Imported rows are not copied into user-entered finance records.
+    assert client.get("/api/v1/financial", headers=headers).json() == []
+
+    dashboard = client.get(f"/api/v1/datasets/{dataset['id']}/dashboard-analysis", headers=headers)
+    assert dashboard.status_code == 200
+    assert dashboard.json()["summary"]["financial_count"] == 3
+    assert dashboard.json()["summary"]["alert_count"] == 1
+
+    forecast = client.get(f"/api/v1/datasets/{dataset['id']}/forecast-summary", headers=headers)
+    assert forecast.status_code == 200
+    result = forecast.json()
+    assert result["source"] == "dataset"
+    assert result["data_points"] == 3
+    assert result["financial"]["next_month_expenses"] > 58000
+    assert result["goals"][0]["probability"] == 84

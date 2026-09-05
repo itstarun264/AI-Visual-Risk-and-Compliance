@@ -41,24 +41,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const performAutoLogin = async () => {
-    try {
-      // Auto login as default user so the user never has to repeatedly log in
-      const res = await axios.post(`${API_URL}/auth/login`, {
-        email: "inspector@compliance.ai",
-        password: "password123"
-      });
-      const newToken = res.data.access_token;
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${newToken}`;
-      const meRes = await axios.get(`${API_URL}/auth/me`);
-      setUser(meRes.data);
-    } catch (err) {
-      console.warn("Auto-login fallback failed", err);
-    }
-  };
-
   // Initialize Auth
   useEffect(() => {
     async function loadStoredAuth() {
@@ -70,12 +52,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const res = await axios.get(`${API_URL}/auth/me`);
           setUser(res.data);
         } catch (err) {
-          console.error("Token validation failed, attempting auto-login", err);
-          await performAutoLogin();
+          console.error("Token validation failed", err);
+          localStorage.removeItem('token');
+          delete axios.defaults.headers.common['Authorization'];
+          setToken(null);
+          setUser(null);
         }
-      } else {
-        // Automatically authenticate so user does not need to fill login form
-        await performAutoLogin();
       }
       setLoading(false);
     }
@@ -89,6 +71,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const isAuthPage = publicPaths.includes(pathname || '');
       if (user && isAuthPage) {
         router.push('/dashboard');
+      } else if (!user && pathname?.startsWith('/dashboard')) {
+        router.push('/login');
       }
     }
   }, [user, pathname, loading, router]);

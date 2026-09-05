@@ -1,0 +1,366 @@
+date,user_id,financial_risk_score,academic_risk_score,behavioral_risk_score,overall_risk_score,compliance_score,risk_level,risk_factors
+2025-09-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,62,47,59,64,HIGH,High spending pressure; Low study consistency
+2025-09-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,21,26,41,78,MEDIUM,High spending pressure
+2025-09-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,62,31,55,68,MEDIUM,High spending pressure; Low study consistency
+2025-09-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,29,3,37,84,LOW,High spending pressure
+2025-09-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,75,20,16,42,79,MEDIUM,High spending pressure
+2025-09-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,36,32,47,73,MEDIUM,High spending pressure
+2025-09-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,62,32,55,68,MEDIUM,High spending pressure; Low study consistency
+2025-09-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,62,16,50,74,MEDIUM,High spending pressure; Low study consistency
+2025-09-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,37,29,47,74,MEDIUM,High spending pressure
+2025-09-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,33,3,38,83,MEDIUM,High spending pressure
+2025-09-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,32,3,38,83,MEDIUM,High spending pressure
+2025-09-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,65,62,3,47,77,MEDIUM,High spending pressure; Low study consistency
+2025-09-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,16,63,65,HIGH,High spending pressure; Low study consistency
+2025-09-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,37,33,60,65,HIGH,High spending pressure
+2025-09-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,4,60,69,HIGH,High spending pressure; Low study consistency
+2025-09-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,44,26,60,66,HIGH,High spending pressure
+2025-09-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,16,63,65,HIGH,High spending pressure; Low study consistency
+2025-09-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,35,16,55,70,MEDIUM,High spending pressure
+2025-09-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,23,3,48,77,MEDIUM,High spending pressure
+2025-09-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,26,31,56,68,MEDIUM,High spending pressure
+2025-09-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,48,16,59,68,HIGH,High spending pressure
+2025-09-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,18,64,64,HIGH,High spending pressure; Low study consistency
+2025-09-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,30,25,56,68,MEDIUM,High spending pressure
+2025-09-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,32,67,60,HIGH,High spending pressure; Low study consistency
+2025-09-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,95,62,3,59,70,HIGH,High spending pressure; Low study consistency
+2025-10-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,21,33,24,88,LOW,No material risk factors
+2025-10-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,28,17,31,86,LOW,No material risk factors
+2025-10-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,62,31,42,77,MEDIUM,Low study consistency
+2025-10-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,62,31,42,77,MEDIUM,Low study consistency
+2025-10-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,62,14,38,82,MEDIUM,Low study consistency
+2025-10-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,8,16,22,92,LOW,No material risk factors
+2025-10-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,10,31,27,86,LOW,No material risk factors
+2025-10-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,18,16,26,89,LOW,No material risk factors
+2025-10-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,45,16,34,84,LOW,No material risk factors
+2025-10-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,19,31,36,81,LOW,No material risk factors
+2025-10-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,66,55,64,MEDIUM,Low study consistency; Habit completion below target
+2025-10-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,18,17,28,88,LOW,No material risk factors
+2025-10-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,23,32,34,82,LOW,No material risk factors
+2025-10-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,3,38,83,MEDIUM,Low study consistency
+2025-10-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,3,38,83,MEDIUM,Low study consistency
+2025-10-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,31,46,74,MEDIUM,Low study consistency
+2025-10-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,16,42,79,MEDIUM,Low study consistency
+2025-10-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,18,43,78,MEDIUM,Low study consistency
+2025-10-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,35,16,34,84,LOW,No material risk factors
+2025-10-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,32,47,73,MEDIUM,Low study consistency
+2025-10-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,31,16,34,84,LOW,No material risk factors
+2025-10-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,38,3,32,87,LOW,No material risk factors
+2025-10-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,17,3,26,91,LOW,No material risk factors
+2025-10-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,31,47,73,MEDIUM,Low study consistency
+2025-10-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,62,17,44,77,MEDIUM,Low study consistency
+2025-10-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,5,15,26,90,LOW,No material risk factors
+2025-10-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,40,17,37,82,LOW,No material risk factors
+2025-10-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,22,47,41,75,MEDIUM,No material risk factors
+2025-10-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,5,31,31,84,LOW,No material risk factors
+2025-10-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,62,33,50,72,MEDIUM,Low study consistency
+2025-10-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,35,3,33,87,LOW,No material risk factors
+2025-11-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,62,16,31,86,LOW,Low study consistency
+2025-11-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,36,41,40,77,MEDIUM,No material risk factors
+2025-11-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,5,16,20,93,LOW,No material risk factors
+2025-11-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,33,3,25,92,LOW,No material risk factors
+2025-11-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,17,16,29,87,LOW,No material risk factors
+2025-11-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,18,3,22,94,LOW,No material risk factors
+2025-11-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,34,16,31,86,LOW,No material risk factors
+2025-11-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,39,62,19,40,80,MEDIUM,Low study consistency
+2025-11-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,39,5,3,19,96,LOW,No material risk factors
+2025-11-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,55,11,16,31,86,LOW,No material risk factors
+2025-11-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,3,39,83,MEDIUM,Low study consistency
+2025-11-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,10,32,31,84,LOW,No material risk factors
+2025-11-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,16,42,79,MEDIUM,Low study consistency
+2025-11-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,47,51,69,MEDIUM,Low study consistency
+2025-11-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,33,47,73,MEDIUM,Low study consistency
+2025-11-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,62,29,46,75,MEDIUM,Low study consistency
+2025-11-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,34,16,35,83,LOW,No material risk factors
+2025-11-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2025-11-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,22,31,35,81,LOW,No material risk factors
+2025-11-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,30,31,37,80,LOW,No material risk factors
+2025-11-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,18,16,30,87,LOW,No material risk factors
+2025-11-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,29,8,32,87,LOW,No material risk factors
+2025-11-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,20,28,35,82,LOW,No material risk factors
+2025-11-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,30,3,31,88,LOW,No material risk factors
+2025-11-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,18,16,31,86,LOW,No material risk factors
+2025-11-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,77,16,49,74,MEDIUM,Low study consistency
+2025-11-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,25,34,38,79,MEDIUM,No material risk factors
+2025-11-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,77,16,49,74,MEDIUM,Low study consistency
+2025-11-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,77,34,54,69,MEDIUM,Low study consistency
+2025-11-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,5,28,32,84,LOW,No material risk factors
+2025-12-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,14,3,14,99,LOW,No material risk factors
+2025-12-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,16,37,33,83,LOW,No material risk factors
+2025-12-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,77,34,47,73,MEDIUM,Low study consistency
+2025-12-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,42,16,31,86,LOW,No material risk factors
+2025-12-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,15,3,20,95,LOW,No material risk factors
+2025-12-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,33,19,31,86,LOW,No material risk factors
+2025-12-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,26,6,25,92,LOW,No material risk factors
+2025-12-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,25,31,32,83,LOW,No material risk factors
+2025-12-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,39,28,3,26,91,LOW,No material risk factors
+2025-12-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,55,77,47,59,64,HIGH,Low study consistency
+2025-12-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,15,16,28,88,LOW,No material risk factors
+2025-12-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,77,5,44,79,MEDIUM,Low study consistency
+2025-12-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,5,37,31,84,LOW,No material risk factors
+2025-12-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,17,12,28,88,LOW,No material risk factors
+2025-12-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,37,36,41,77,MEDIUM,No material risk factors
+2025-12-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,18,3,26,91,LOW,No material risk factors
+2025-12-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,33,3,31,88,LOW,No material risk factors
+2025-12-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,77,47,56,66,MEDIUM,Low study consistency
+2025-12-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,26,3,29,89,LOW,No material risk factors
+2025-12-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,77,3,45,79,MEDIUM,Low study consistency
+2025-12-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,26,14,33,85,LOW,No material risk factors
+2025-12-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,17,31,35,81,LOW,No material risk factors
+2025-12-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,22,39,39,79,MEDIUM,No material risk factors
+2025-12-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,19,49,40,76,MEDIUM,No material risk factors
+2025-12-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,12,3,25,92,LOW,No material risk factors
+2025-12-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,38,38,43,76,MEDIUM,No material risk factors
+2025-12-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,37,17,37,82,LOW,No material risk factors
+2025-12-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,19,12,31,86,LOW,No material risk factors
+2025-12-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,31,16,36,83,LOW,No material risk factors
+2025-12-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,17,34,37,80,LOW,No material risk factors
+2025-12-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,62,16,45,77,MEDIUM,Low study consistency
+2026-01-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,37,31,29,85,LOW,No material risk factors
+2026-01-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,5,16,24,90,LOW,No material risk factors
+2026-01-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,62,35,42,77,MEDIUM,Low study consistency
+2026-01-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,22,25,28,87,LOW,No material risk factors
+2026-01-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,45,16,37,82,LOW,No material risk factors
+2026-01-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,17,3,21,94,LOW,No material risk factors
+2026-01-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,62,16,39,81,MEDIUM,Low study consistency
+2026-01-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,38,31,36,81,LOW,No material risk factors
+2026-01-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,12,31,28,86,LOW,No material risk factors
+2026-01-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,62,19,46,76,MEDIUM,Low study consistency
+2026-01-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,3,38,83,MEDIUM,Low study consistency
+2026-01-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,48,51,69,MEDIUM,Low study consistency
+2026-01-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2026-01-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,16,42,79,MEDIUM,Low study consistency
+2026-01-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,38,31,39,79,MEDIUM,No material risk factors
+2026-01-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,19,16,30,87,LOW,No material risk factors
+2026-01-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,35,48,73,MEDIUM,Low study consistency
+2026-01-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,24,12,29,88,LOW,No material risk factors
+2026-01-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,19,16,29,87,LOW,No material risk factors
+2026-01-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,43,34,41,77,MEDIUM,No material risk factors
+2026-01-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,23,31,34,82,LOW,No material risk factors
+2026-01-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,18,16,29,87,LOW,No material risk factors
+2026-01-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,45,16,37,82,LOW,No material risk factors
+2026-01-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,18,43,78,MEDIUM,Low study consistency
+2026-01-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,62,14,42,79,MEDIUM,Low study consistency
+2026-01-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,26,3,28,90,LOW,No material risk factors
+2026-01-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,36,32,40,78,MEDIUM,No material risk factors
+2026-01-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,31,47,73,MEDIUM,Low study consistency
+2026-01-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,20,16,31,86,LOW,No material risk factors
+2026-01-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,39,3,34,86,LOW,No material risk factors
+2026-01-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,62,35,50,72,MEDIUM,Low study consistency
+2026-02-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,5,28,18,93,LOW,No material risk factors
+2026-02-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,16,41,79,MEDIUM,Low study consistency
+2026-02-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,32,20,16,24,90,LOW,No material risk factors
+2026-02-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,5,16,20,93,LOW,No material risk factors
+2026-02-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,62,16,38,81,MEDIUM,Low study consistency
+2026-02-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,5,16,21,92,LOW,No material risk factors
+2026-02-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,62,34,43,76,MEDIUM,Low study consistency
+2026-02-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,62,26,41,78,MEDIUM,Low study consistency
+2026-02-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,27,47,37,78,LOW,No material risk factors
+2026-02-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,5,16,27,88,LOW,No material risk factors
+2026-02-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,16,41,79,MEDIUM,Low study consistency
+2026-02-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,16,41,79,MEDIUM,Low study consistency
+2026-02-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,15,3,23,93,LOW,No material risk factors
+2026-02-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,17,41,79,MEDIUM,Low study consistency
+2026-02-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,26,44,76,MEDIUM,Low study consistency
+2026-02-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,28,3,28,90,LOW,No material risk factors
+2026-02-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,3,38,83,MEDIUM,Low study consistency
+2026-02-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,5,16,25,90,LOW,No material risk factors
+2026-02-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,3,39,83,MEDIUM,Low study consistency
+2026-02-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,19,16,30,87,LOW,No material risk factors
+2026-02-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,62,16,43,78,MEDIUM,Low study consistency
+2026-02-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,17,3,26,91,LOW,No material risk factors
+2026-02-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,16,43,78,MEDIUM,Low study consistency
+2026-02-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,16,3,26,91,LOW,No material risk factors
+2026-02-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,62,3,40,82,MEDIUM,Low study consistency
+2026-02-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,62,3,40,82,MEDIUM,Low study consistency
+2026-02-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,62,16,44,77,MEDIUM,Low study consistency
+2026-02-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,62,31,48,73,MEDIUM,Low study consistency
+2026-03-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,62,38,38,79,MEDIUM,Low study consistency
+2026-03-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,3,37,84,LOW,Low study consistency
+2026-03-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,5,16,20,93,LOW,No material risk factors
+2026-03-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,38,3,26,91,LOW,No material risk factors
+2026-03-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,21,16,30,87,LOW,No material risk factors
+2026-03-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,19,16,25,90,LOW,No material risk factors
+2026-03-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,62,20,39,81,MEDIUM,Low study consistency
+2026-03-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,5,13,21,93,LOW,No material risk factors
+2026-03-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,16,31,29,85,LOW,No material risk factors
+2026-03-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,24,16,34,84,LOW,No material risk factors
+2026-03-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,8,16,25,90,LOW,No material risk factors
+2026-03-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,34,3,29,89,LOW,No material risk factors
+2026-03-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,32,3,28,90,LOW,No material risk factors
+2026-03-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,16,41,79,MEDIUM,Low study consistency
+2026-03-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,11,37,32,82,LOW,No material risk factors
+2026-03-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,21,31,33,83,LOW,No material risk factors
+2026-03-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,18,16,28,88,LOW,No material risk factors
+2026-03-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,18,16,28,88,LOW,No material risk factors
+2026-03-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,16,41,79,MEDIUM,Low study consistency
+2026-03-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,25,31,34,82,LOW,No material risk factors
+2026-03-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,31,46,74,MEDIUM,Low study consistency
+2026-03-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,16,14,27,89,LOW,No material risk factors
+2026-03-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,15,3,24,92,LOW,No material risk factors
+2026-03-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,20,16,29,87,LOW,No material risk factors
+2026-03-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,17,16,28,88,LOW,No material risk factors
+2026-03-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,16,42,79,MEDIUM,Low study consistency
+2026-03-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,16,42,79,MEDIUM,Low study consistency
+2026-03-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,32,47,73,MEDIUM,Low study consistency
+2026-03-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,18,3,26,91,LOW,No material risk factors
+2026-03-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,31,47,73,MEDIUM,Low study consistency
+2026-03-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,19,16,30,87,LOW,No material risk factors
+2026-04-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,17,16,18,94,LOW,No material risk factors
+2026-04-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,41,45,16,35,83,LOW,No material risk factors
+2026-04-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,32,25,31,30,85,LOW,No material risk factors
+2026-04-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,62,31,42,77,MEDIUM,Low study consistency
+2026-04-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,62,3,35,85,LOW,Low study consistency
+2026-04-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,36,16,30,87,LOW,No material risk factors
+2026-04-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,21,3,23,93,LOW,No material risk factors
+2026-04-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,23,16,27,88,LOW,No material risk factors
+2026-04-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,37,31,36,81,LOW,No material risk factors
+2026-04-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,31,3,32,87,LOW,No material risk factors
+2026-04-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,3,37,84,LOW,Low study consistency
+2026-04-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,16,12,27,89,LOW,No material risk factors
+2026-04-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,15,3,24,92,LOW,No material risk factors
+2026-04-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,3,38,83,MEDIUM,Low study consistency
+2026-04-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,47,50,70,MEDIUM,Low study consistency
+2026-04-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,19,31,33,83,LOW,No material risk factors
+2026-04-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,36,31,38,79,MEDIUM,No material risk factors
+2026-04-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2026-04-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2026-04-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,21,3,26,91,LOW,No material risk factors
+2026-04-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,8,16,26,89,LOW,No material risk factors
+2026-04-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,19,32,34,82,LOW,No material risk factors
+2026-04-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,23,47,40,76,MEDIUM,No material risk factors
+2026-04-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,26,3,29,89,LOW,No material risk factors
+2026-04-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,62,31,48,73,MEDIUM,Low study consistency
+2026-04-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,29,30,38,80,MEDIUM,No material risk factors
+2026-04-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,23,16,33,85,LOW,No material risk factors
+2026-04-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,25,31,38,79,MEDIUM,No material risk factors
+2026-04-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,37,31,42,77,MEDIUM,No material risk factors
+2026-04-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,17,16,31,86,LOW,No material risk factors
+2026-05-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,28,18,22,92,LOW,No material risk factors
+2026-05-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,62,16,41,79,MEDIUM,Low study consistency
+2026-05-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,19,14,23,91,LOW,No material risk factors
+2026-05-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,62,31,41,77,MEDIUM,Low study consistency
+2026-05-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,15,3,20,95,LOW,No material risk factors
+2026-05-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,18,16,25,90,LOW,No material risk factors
+2026-05-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,20,31,30,85,LOW,No material risk factors
+2026-05-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,62,31,43,76,MEDIUM,Low study consistency
+2026-05-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,25,21,29,87,LOW,No material risk factors
+2026-05-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,77,5,47,77,MEDIUM,Low study consistency
+2026-05-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,42,18,36,83,LOW,No material risk factors
+2026-05-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,20,16,29,87,LOW,No material risk factors
+2026-05-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,77,22,48,75,MEDIUM,Low study consistency
+2026-05-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,77,47,55,66,MEDIUM,Low study consistency
+2026-05-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,18,3,25,92,LOW,No material risk factors
+2026-05-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,77,27,50,74,MEDIUM,Low study consistency; Elevated stress
+2026-05-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,38,32,39,79,MEDIUM,No material risk factors
+2026-05-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,77,10,44,79,MEDIUM,Low study consistency; Elevated stress
+2026-05-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,33,23,34,84,LOW,No material risk factors
+2026-05-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,29,3,28,90,LOW,No material risk factors
+2026-05-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,12,6,24,92,LOW,No material risk factors
+2026-05-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,13,4,24,92,LOW,No material risk factors
+2026-05-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,21,20,31,86,LOW,No material risk factors
+2026-05-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,16,31,32,84,LOW,No material risk factors
+2026-05-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,15,16,28,88,LOW,No material risk factors
+2026-05-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,27,23,34,84,LOW,No material risk factors
+2026-05-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,15,18,29,87,LOW,No material risk factors
+2026-05-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,77,21,48,75,MEDIUM,Low study consistency
+2026-05-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,77,3,43,80,MEDIUM,Low study consistency
+2026-05-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,36,38,41,77,MEDIUM,No material risk factors
+2026-05-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,38,3,32,87,LOW,No material risk factors
+2026-06-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,77,16,36,83,LOW,Low study consistency
+2026-06-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,28,16,31,86,LOW,No material risk factors
+2026-06-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,32,33,33,33,83,LOW,No material risk factors
+2026-06-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,32,77,3,37,84,LOW,Low study consistency
+2026-06-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,33,16,33,85,LOW,No material risk factors
+2026-06-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,35,33,3,25,92,LOW,No material risk factors
+2026-06-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,5,27,24,89,LOW,No material risk factors
+2026-06-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,36,77,16,43,78,MEDIUM,Low study consistency
+2026-06-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,44,16,33,85,LOW,No material risk factors
+2026-06-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,19,31,36,81,LOW,No material risk factors
+2026-06-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,41,37,34,38,79,MEDIUM,No material risk factors
+2026-06-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,38,36,39,79,MEDIUM,No material risk factors
+2026-06-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,16,3,24,92,LOW,No material risk factors
+2026-06-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,36,3,30,89,LOW,No material risk factors
+2026-06-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,48,50,47,71,MEDIUM,No material risk factors
+2026-06-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,52,47,48,71,MEDIUM,No material risk factors
+2026-06-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,23,20,32,85,LOW,No material risk factors
+2026-06-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,45,20,39,81,MEDIUM,No material risk factors
+2026-06-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,16,19,30,87,LOW,No material risk factors
+2026-06-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,77,34,53,70,MEDIUM,Low study consistency
+2026-06-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,35,15,35,84,LOW,No material risk factors
+2026-06-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,15,17,29,87,LOW,No material risk factors
+2026-06-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,17,3,26,91,LOW,No material risk factors
+2026-06-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,5,3,23,93,LOW,No material risk factors
+2026-06-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,21,3,27,90,LOW,No material risk factors
+2026-06-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,62,16,44,77,MEDIUM,Low study consistency
+2026-06-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,62,16,44,77,MEDIUM,Low study consistency
+2026-06-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,29,15,33,85,LOW,No material risk factors
+2026-06-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,8,16,28,88,LOW,No material risk factors
+2026-06-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,34,16,37,82,LOW,No material risk factors
+2026-07-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,20,5,16,14,97,LOW,No material risk factors
+2026-07-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,62,16,41,79,MEDIUM,Low study consistency
+2026-07-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,5,16,20,93,LOW,No material risk factors
+2026-07-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,62,3,34,86,LOW,Low study consistency
+2026-07-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,3,39,83,MEDIUM,Low study consistency
+2026-07-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,30,16,29,87,LOW,No material risk factors
+2026-07-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,62,16,39,81,MEDIUM,Low study consistency
+2026-07-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,25,3,24,92,LOW,No material risk factors
+2026-07-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,39,37,31,36,81,LOW,No material risk factors
+2026-07-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,54,38,31,43,76,MEDIUM,No material risk factors
+2026-07-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,18,42,79,MEDIUM,Low study consistency
+2026-07-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2026-07-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,5,31,29,85,LOW,No material risk factors
+2026-07-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,35,3,30,89,LOW,No material risk factors
+2026-07-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,28,3,29,89,LOW,No material risk factors
+2026-07-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,28,16,32,85,LOW,No material risk factors
+2026-07-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,18,16,29,87,LOW,No material risk factors
+2026-07-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,16,42,79,MEDIUM,Low study consistency
+2026-07-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,15,42,79,MEDIUM,Low study consistency
+2026-07-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,18,16,29,87,LOW,No material risk factors
+2026-07-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,34,3,31,88,LOW,No material risk factors
+2026-07-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,38,16,36,83,LOW,No material risk factors
+2026-07-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,21,47,40,76,MEDIUM,No material risk factors
+2026-07-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,31,47,73,MEDIUM,Low study consistency
+2026-07-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,35,49,72,MEDIUM,Low study consistency
+2026-07-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,49,19,3,27,90,LOW,No material risk factors
+2026-07-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,34,16,36,83,LOW,No material risk factors
+2026-07-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,35,3,32,87,LOW,No material risk factors
+2026-07-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,62,16,44,77,MEDIUM,Low study consistency
+2026-07-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,5,16,27,88,LOW,No material risk factors
+2026-07-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,51,62,63,58,62,HIGH,Low study consistency; Habit completion below target
+2026-08-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,62,18,32,85,LOW,Low study consistency
+2026-08-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,42,19,12,27,89,LOW,No material risk factors
+2026-08-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,5,3,16,98,LOW,No material risk factors
+2026-08-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,5,3,16,98,LOW,No material risk factors
+2026-08-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,44,16,37,82,LOW,No material risk factors
+2026-08-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,37,18,16,25,90,LOW,No material risk factors
+2026-08-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,33,3,27,90,LOW,No material risk factors
+2026-08-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,62,3,35,85,LOW,Low study consistency
+2026-08-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,38,12,15,24,91,LOW,No material risk factors
+2026-08-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,62,16,45,77,MEDIUM,Low study consistency
+2026-08-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,17,3,24,92,LOW,No material risk factors
+2026-08-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,16,42,79,MEDIUM,Low study consistency
+2026-08-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,3,38,83,MEDIUM,Low study consistency
+2026-08-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,31,3,29,89,LOW,No material risk factors
+2026-08-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,44,62,3,38,83,MEDIUM,Low study consistency
+2026-08-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,45,62,3,38,83,MEDIUM,Low study consistency
+2026-08-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,46,62,16,42,79,MEDIUM,Low study consistency
+2026-08-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,18,3,26,91,LOW,No material risk factors
+2026-08-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,18,3,26,91,LOW,No material risk factors
+2026-08-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,37,16,35,83,LOW,No material risk factors
+2026-08-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,26,3,28,90,LOW,No material risk factors
+2026-08-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,48,62,18,44,77,MEDIUM,Low study consistency
+2026-08-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,36,14,36,83,LOW,No material risk factors
+2026-08-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,62,3,40,82,MEDIUM,Low study consistency
+2026-08-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,50,25,16,33,85,LOW,No material risk factors
+2026-08-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,52,27,16,34,84,LOW,No material risk factors
+2026-08-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,35,16,37,82,LOW,No material risk factors
+2026-08-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,36,16,38,81,MEDIUM,No material risk factors
+2026-08-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,62,3,42,81,MEDIUM,Low study consistency
+2026-08-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,43,3,36,85,LOW,No material risk factors
+2026-08-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,53,20,16,33,85,LOW,No material risk factors
+2026-09-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,21,39,3,21,94,LOW,No material risk factors
+2026-09-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,43,15,3,23,93,LOW,No material risk factors
+2026-09-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,33,18,16,24,90,LOW,No material risk factors
+2026-09-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,34,18,16,24,90,LOW,No material risk factors
+2026-09-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,47,62,31,47,73,MEDIUM,Low study consistency

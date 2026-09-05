@@ -23,7 +23,8 @@ import {
   Search,
   Sun,
   Moon,
-  ChartNoAxesCombined
+  ChartNoAxesCombined,
+  FileUp
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -40,6 +41,7 @@ const navigationGroups: { label: string; items: SidebarItem[] }[] = [
   ]},
   { label: "Profile & data", items: [
     { name: "My Profile", href: "/dashboard/profile", icon: UserCircle },
+    { name: "Data Import", href: "/dashboard/data-import", icon: FileUp },
     { name: "Financial Data", href: "/dashboard/financial", icon: CircleDollarSign },
     { name: "Study & Focus Data", href: "/dashboard/study", icon: BookOpen },
     { name: "Habits & Compliance", href: "/dashboard/habits", icon: CheckSquare },

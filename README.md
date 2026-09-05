@@ -40,7 +40,7 @@ This platform collects user profiles, financial logs, study sessions, and daily 
 │   │   ├── services.py       # Risk, Financial, and Compliance calculation engines
 │   │   └── routers/          # Endpoint router segments (auth, profile, financial, study, habits, etc.)
 │   ├── requirements.txt      # Python dependencies
-│   ├── seed.py               # Database development seed script
+│   ├── seed.py               # Empty database initialization script
 │   ├── Dockerfile            # Backend container script
 │   └── tests/                # Automated pytest modules
 ├── frontend/                 # Next.js Application
@@ -50,7 +50,7 @@ This platform collects user profiles, financial logs, study sessions, and daily 
 │   │   ├── login/            # Authentication login forms
 │   │   ├── register/         # Authentication sign-up forms
 │   │   └── dashboard/        # Main workspace and submodules
-│   ├── src/context/          # Client AuthContext providers
+│   ├── src/context/          # Authentication and analytics data-source providers
 │   ├── package.json          # Node dependencies
 │   └── Dockerfile            # Frontend container script
 ├── docker-compose.yml        # Multi-container orchestration config
@@ -108,7 +108,7 @@ CREATE DATABASE risk_intelligence;
    ```bash
    pip install -r requirements.txt
    ```
-4. Run the seed script to initialize tables and add mock inspector data:
+4. Run the reset script to initialize empty tables:
    ```bash
    python seed.py
    ```
@@ -135,10 +135,13 @@ CREATE DATABASE risk_intelligence;
 
 ---
 
-## 🔑 Demo Account Credentials
-If you initialized the database using `seed.py`, you can log in with:
-- **Email**: `inspector@compliance.ai`
-- **Password**: `password123`
+## Analytics data sources
+
+- **My Data** uses only finance, study, habit, and goal records entered by the signed-in user.
+- **Imported Dataset** analyzes a selected CSV, XLSX, or XLS file without copying rows into My Data.
+- Use **Profile & data → Data Import** to upload, preview, activate, or remove datasets. Files may contain extra columns; analytics recognize fields such as `date`, `income_inr`, `total_expenses_inr`, `study_hours`, `focus_score`, `habit_completion_rate`, goal progress, compliance, and risk scores.
+
+No account or activity records are created by `seed.py`. Register through the application before signing in.
 
 ---
 

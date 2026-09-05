@@ -1,0 +1,2 @@
+user_id,name,email,age,occupation,risk_tolerance,compliance_policy,dataset_type,period_start,period_end
+6f168c2c-529c-4ec8-9932-90d1b493cf87,Arjun Mehta,arjun.demo@example.com,24,Graduate student and part-time analyst,Medium,Standard Compliance,Synthetic demonstration data,2025-09-06,2026-09-05

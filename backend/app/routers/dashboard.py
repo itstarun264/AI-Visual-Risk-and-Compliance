@@ -44,6 +44,7 @@ def get_dashboard_summary(
 
     active_risks = active_fin + active_vis + active_hab
     high_risks = high_fin + high_vis
+    has_user_records = financial_count + study_count + habit_count + active_vis > 0
 
     # Calculate risk level from score
     if rp.overall_risk_score <= 20:
@@ -61,13 +62,13 @@ def get_dashboard_summary(
         "financial_count": financial_count,
         "study_count": study_count,
         "habit_count": habit_count,
-        "compliance_score": rp.compliance_score,
-        "overall_risk_score": rp.overall_risk_score,
-        "overall_risk_level": overall_level,
+        "compliance_score": rp.compliance_score if has_user_records else 0,
+        "overall_risk_score": rp.overall_risk_score if has_user_records else 0,
+        "overall_risk_level": overall_level if has_user_records else "NO DATA",
         "active_risks_count": active_risks,
         "high_risks_count": high_risks,
-        "financial_risk_score": rp.financial_risk_score,
-        "academic_risk_score": rp.academic_risk_score,
-        "behavioral_risk_score": rp.behavioral_risk_score,
-        "visual_risk_score": rp.visual_risk_score
+        "financial_risk_score": rp.financial_risk_score if has_user_records else 0,
+        "academic_risk_score": rp.academic_risk_score if has_user_records else 0,
+        "behavioral_risk_score": rp.behavioral_risk_score if has_user_records else 0,
+        "visual_risk_score": rp.visual_risk_score if has_user_records else 0
     }

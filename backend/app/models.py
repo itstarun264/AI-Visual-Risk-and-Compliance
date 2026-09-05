@@ -25,6 +25,7 @@ class User(Base):
     activity_history = relationship("UserActivityHistory", back_populates="user", cascade="all, delete-orphan")
     compliance_records = relationship("ComplianceRecord", back_populates="user", cascade="all, delete-orphan")
     goals = relationship("Goal", back_populates="user", cascade="all, delete-orphan")
+    imported_datasets = relationship("ImportedDataset", back_populates="user", cascade="all, delete-orphan")
 
 class UserProfile(Base):
     __tablename__ = "user_profiles"
@@ -181,3 +182,21 @@ class Goal(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
 
     user = relationship("User", back_populates="goals")
+
+
+class ImportedDataset(Base):
+    __tablename__ = "imported_datasets"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    name = Column(String(180), nullable=False)
+    original_filename = Column(String(255), nullable=False)
+    file_type = Column(String(20), nullable=False)
+    sheet_name = Column(String(180), nullable=True)
+    row_count = Column(Integer, nullable=False)
+    column_count = Column(Integer, nullable=False)
+    columns = Column(JSON, default=list, nullable=False)
+    rows = Column(JSON, default=list, nullable=False)
+    imported_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False, index=True)
+
+    user = relationship("User", back_populates="imported_datasets")

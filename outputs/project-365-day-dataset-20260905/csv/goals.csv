@@ -1,0 +1,7 @@
+goal_id,user_id,title,goal_type,target_value,unit,timeframe,start_date,end_date,status
+f516d2da-0168-4498-a19a-15c553b92083,6f168c2c-529c-4ec8-9932-90d1b493cf87,"Save ₹18,000 each month",FINANCIAL,18000,INR,MONTHLY,2025-09-06,2026-09-05,ACTIVE
+6e2f27d3-b0a7-41af-ae04-dd93747ab1ab,6f168c2c-529c-4ec8-9932-90d1b493cf87,Study 14 hours each week,STUDY,14,hours,WEEKLY,2025-09-06,2026-09-05,ACTIVE
+942340a9-28cf-4419-a543-8fb8ad16ee20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Exercise five times each week,HABIT,5,sessions,WEEKLY,2025-09-06,2026-09-05,ACTIVE
+f8586d7f-42a8-40bb-a2c6-46993832c939,6f168c2c-529c-4ec8-9932-90d1b493cf87,Read 25 minutes each day,HABIT,25,minutes,DAILY,2025-09-06,2026-09-05,ACTIVE
+2d885db5-09de-4d36-abdc-c357a5253c90,6f168c2c-529c-4ec8-9932-90d1b493cf87,"Reduce debt by ₹96,000",FINANCIAL,96000,INR,ANNUAL,2025-09-06,2026-09-05,ACTIVE
+cb90e01c-ad24-4e88-a405-b3ab220b47ca,6f168c2c-529c-4ec8-9932-90d1b493cf87,Average at least 7.2 hours of sleep,HABIT,7.2,hours,DAILY,2025-09-06,2026-09-05,ACTIVE

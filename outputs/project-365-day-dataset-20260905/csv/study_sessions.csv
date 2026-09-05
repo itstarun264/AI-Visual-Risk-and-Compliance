@@ -1,0 +1,239 @@
+session_id,date,user_id,subject,start_time,duration_hours,focus_rating,tool,tasks_planned,tasks_completed,distractions,focus_score,learning_risk_score,risk_marker
+f67db6f5-f939-4b37-a79d-6cd847f27170,2025-09-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-09-07,2.2,4,Video and notes,2,2,2,79,21,LOW
+853c340e-f97e-4556-a7cf-5794cdb7d309,2025-09-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-09-09,1,4,Practice problems,3,3,1,79,29,LOW
+803f1fb9-2e62-4137-a1fb-5f7e4b84545f,2025-09-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-09-10,2.1,4,Video and notes,3,3,0,80,20,LOW
+a7a9c89a-b203-419a-a30a-71f1f3185b1f,2025-09-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-09-11,3.1,3,Video and notes,2,2,3,64,36,MEDIUM
+aa50970e-a922-430e-a434-54fcfdfa238f,2025-09-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-09-14,2.5,3,Video and notes,5,4,0,63,37,MEDIUM
+4d8a8ca2-ad33-458a-a093-46894a736954,2025-09-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-09-15,2.7,3,Flashcards,3,2,1,67,33,LOW
+b19d6788-6ff8-4cc1-aa01-d663eb152f62,2025-09-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-09-16,2.9,3,Practice problems,3,2,0,68,32,LOW
+ebf85a69-d960-40dd-a54c-a6d298c02316,2025-09-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-09-19,2.8,3,Practice problems,2,2,0,63,37,MEDIUM
+19dbfb1e-fd6c-4e8e-a701-1b61f56607ac,2025-09-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-09-21,1.5,3,Practice problems,4,3,0,60,44,MEDIUM
+6df1790f-8304-4257-aeb4-ab9a6bf5bb76,2025-09-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-09-23,2.7,3,Video and notes,4,3,0,65,35,MEDIUM
+53b9a211-64b2-4036-aaeb-8f0548e42d22,2025-09-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-09-24,1.5,4,Video and notes,3,3,1,81,23,LOW
+3965c718-3cea-4260-a381-59aa31cc4569,2025-09-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-09-25,1.6,4,Practice problems,3,3,1,77,26,LOW
+ff73cbf4-1e21-4ec1-a62b-6c8e980f9e75,2025-09-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-09-26,1,3,Flashcards,4,3,1,60,48,MEDIUM
+37719cee-41aa-4322-a229-c0afb8d22947,2025-09-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-09-28,1.2,4,Practice problems,6,5,1,76,30,LOW
+2d58a873-a488-45c0-a83e-0f51199ec352,2025-10-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-10-01,2.4,4,Flashcards,4,4,0,79,21,LOW
+b82a3a6f-1e0e-4a3f-a0f9-741aeeac7d14,2025-10-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-10-02,1.2,4,Flashcards,3,3,0,78,28,LOW
+611e5b50-0596-4909-a4de-47b0090e37ae,2025-10-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-06,1.5,5,Flashcards,4,4,1,96,8,SAFE
+d174e7c9-ac14-4910-a99c-0c952e8dbf54,2025-10-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-07,1.5,5,Video and notes,6,6,0,94,10,SAFE
+69c5907d-b94f-41e5-a91a-a3a1923ea1a8,2025-10-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-08,2.5,4,Practice problems,2,2,1,82,18,SAFE
+758b3486-8725-4eff-aaef-0d3011f044fd,2025-10-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-10-09,1.3,3,Video and notes,2,2,1,61,45,MEDIUM
+dd866bf2-936b-4e93-ac3b-cff181f4b370,2025-10-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-10-10,3,4,Flashcards,6,5,0,81,19,SAFE
+57f3c6d6-e000-4bca-a720-59131c0029cd,2025-10-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-12,2.6,4,Video and notes,6,5,1,82,18,SAFE
+a17302c5-68ea-4357-a90f-afc3a6450180,2025-10-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-13,1.9,4,Video and notes,6,5,2,78,23,LOW
+5cf1a086-f9d9-4332-a315-cd45ab9f0db5,2025-10-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-10-19,2.4,3,Video and notes,6,5,2,65,35,MEDIUM
+4f46951d-b170-434a-aef8-a8f239e00dcb,2025-10-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-10-21,1,4,Video and notes,4,4,1,77,31,LOW
+6a5a35ed-35b6-4239-a7d0-e47bfeb42ee4,2025-10-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-10-22,1.8,3,Flashcards,3,2,0,64,38,MEDIUM
+522eb62e-4ef7-4674-ac2a-0d92ccfbb933,2025-10-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-10-23,2.3,4,Video and notes,4,4,2,83,17,SAFE
+46cd38e9-56af-483d-a2c8-bdf85684d98e,2025-10-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-10-26,1.9,5,Video and notes,2,2,1,97,4,SAFE
+e077a40a-571b-4a38-aa13-0ef80900026d,2025-10-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-10-27,1.7,3,Video and notes,6,5,0,62,40,MEDIUM
+b1132f86-9d5a-41b1-afce-1e9fc5ce24e1,2025-10-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-10-28,2.7,4,Practice problems,2,2,0,78,22,LOW
+72da5ed4-5af8-4423-ad1d-4fcca28a1d46,2025-10-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-10-29,2.1,5,Flashcards,3,3,1,95,5,SAFE
+d32e8337-18ab-48c0-a313-ad140fc9fb22,2025-10-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-10-31,2,3,Video and notes,4,3,0,65,35,MEDIUM
+f7d51880-fc26-4f1f-a5aa-6fbddca386f0,2025-11-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-11-02,3.1,3,Video and notes,2,2,2,64,36,MEDIUM
+e75f1e9c-22d3-4a22-a62a-f7cb85bb7184,2025-11-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-11-03,2,5,Video and notes,5,5,1,97,3,SAFE
+44103a2b-e1e8-42c0-a922-3a86295caf56,2025-11-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-11-04,2.8,3,Practice problems,4,3,3,67,33,LOW
+86791250-9df8-4388-a6af-5972980cd9dd,2025-11-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-11-05,2.9,4,Video and notes,3,3,0,83,17,SAFE
+51153ee2-c11a-4c34-a2f5-41131ff5dfbb,2025-11-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-11-06,2,4,Practice problems,3,3,1,82,18,SAFE
+1ba7fe61-9570-4cba-a908-60236ecae5fe,2025-11-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-11-07,3.1,3,Flashcards,4,3,3,66,34,LOW
+0f469d60-fc95-4298-a9bd-0711bca13c5a,2025-11-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-11-09,2.9,5,Video and notes,2,2,1,100,0,SAFE
+4c0520a7-b5d7-4302-affa-cf7d185645b1,2025-11-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-11-10,1.2,5,Flashcards,2,2,1,95,11,SAFE
+15705af6-e973-4d71-a9dd-83e6f15b6424,2025-11-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-11-12,1.5,5,Practice problems,3,3,0,94,10,SAFE
+d1098466-9771-4e56-a4a9-ae0a4afc16a3,2025-11-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-11-17,3,3,Video and notes,5,4,2,66,34,LOW
+d2dd1feb-e633-4737-a1d2-8c871b4e2d0d,2025-11-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-11-19,2.1,4,Video and notes,4,4,0,78,22,LOW
+aeaadd2d-4403-468a-a4e5-d8e7eceb6a3d,2025-11-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-11-20,1.2,4,Video and notes,6,5,2,76,30,LOW
+f6068c73-6b59-44bd-a633-16514cd26197,2025-11-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-11-21,2.8,4,Flashcards,6,5,0,82,18,SAFE
+6be71124-4d4e-451a-ad92-dfc65cefebc9,2025-11-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-11-22,4.1,3,Flashcards,4,3,2,71,29,LOW
+f0a8fd8f-e555-440d-a630-89d119ea4675,2025-11-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-11-23,2.3,4,Flashcards,6,5,0,80,20,LOW
+f67ee14d-fabe-4c7e-aa56-523cbc72a2a4,2025-11-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-11-24,3.5,3,Practice problems,4,3,2,70,30,LOW
+1fb87249-1451-44d2-a06e-014c765880d2,2025-11-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-11-25,2.8,4,Practice problems,4,4,2,82,18,SAFE
+145f57aa-ef38-4496-a422-1caf3ea16b0d,2025-11-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-11-27,1.7,4,Video and notes,3,3,1,77,25,LOW
+79daf3c7-b4ee-474a-a383-dd742cb0bb02,2025-11-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-11-30,3.6,5,Flashcards,3,3,0,100,0,SAFE
+f322e0f7-3326-4b92-a8c5-6aa0d9a59da4,2025-12-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-12-01,3.4,4,Video and notes,4,4,1,86,14,SAFE
+92e3bc66-af22-440f-a87d-3e37a168b1da,2025-12-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-12-02,3.9,4,Video and notes,2,2,0,84,16,SAFE
+4eb0e09f-4b3e-40c1-abbe-160c432a2891,2025-12-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-04,1.5,3,Video and notes,2,2,3,62,42,MEDIUM
+32e2c0bf-2d08-4fe3-acb4-e777f460580a,2025-12-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-12-05,3,4,Practice problems,5,5,0,85,15,SAFE
+2e0bdc52-7c93-45d3-a4b7-42dfc254a51a,2025-12-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-12-06,3.2,3,Video and notes,5,4,2,67,33,LOW
+59ee03a6-2fce-4b09-a27d-e5f13f8379bc,2025-12-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-12-07,1.3,4,Flashcards,6,5,1,80,26,LOW
+da065456-f417-48f1-a1c0-d0cd57655bbc,2025-12-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-12-08,1.8,4,Video and notes,2,2,2,77,25,LOW
+44fcd220-dc79-4f6b-a68b-e36572d53c2a,2025-12-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-09,1.1,4,Practice problems,2,2,1,79,28,LOW
+f9fd166d-f0d3-474c-a44f-7991a86a6c2d,2025-12-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-11,3.8,4,Video and notes,5,5,1,85,15,SAFE
+c2deed7d-d51e-4a5e-abdd-583ef652597c,2025-12-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-12-13,3.3,5,Practice problems,6,6,0,99,1,SAFE
+3bc4f504-8584-4821-a2b8-7c9c3a7bff70,2025-12-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-12-14,2.7,4,Flashcards,3,3,0,83,17,SAFE
+7c978d99-8db1-4992-a8cd-45e32f8c8bc0,2025-12-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-15,2.7,3,Video and notes,4,3,0,63,37,MEDIUM
+b38ba231-f040-4173-a96b-6152f4061143,2025-12-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-12-16,2,4,Flashcards,2,2,1,82,18,SAFE
+0f70e13a-1fc1-45c2-af2e-d13248b41431,2025-12-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-12-17,2.7,3,Video and notes,4,3,1,67,33,LOW
+d36fd53f-27a2-4b74-a82c-bb6392fbb23d,2025-12-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-12-19,1.2,4,Flashcards,5,4,2,80,26,LOW
+e23937da-0873-4821-ad3a-d71ed12dc9a9,2025-12-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2025-12-21,1.4,4,Flashcards,3,3,2,79,26,LOW
+2eec15dd-bf61-4daa-a591-2777d1dd6726,2025-12-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-22,3.6,4,Flashcards,4,4,0,83,17,SAFE
+bf4f026f-c9b6-4aff-a1e8-537ec9bcdf73,2025-12-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2025-12-23,2,4,Flashcards,4,4,0,78,22,LOW
+3c5c5362-26ff-4880-ae09-0d12c0d39823,2025-12-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2025-12-24,3.7,4,Practice problems,4,4,0,81,19,SAFE
+50d8ef6c-65cc-45b8-a687-920d91b87b1d,2025-12-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-12-25,3.9,4,Practice problems,2,2,1,88,12,SAFE
+4ba022bb-cfaf-49a5-a4a0-baff271421b4,2025-12-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-12-26,2.2,3,Video and notes,3,2,2,62,38,MEDIUM
+86a43ae7-582c-4f75-ada2-0201d9f9bf03,2025-12-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-12-27,2.1,3,Video and notes,6,5,2,63,37,MEDIUM
+523d245f-85f9-4db6-a999-fa68c3836600,2025-12-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2025-12-28,2.3,4,Video and notes,3,3,2,81,19,SAFE
+00678a65-391a-4316-add2-b599ce9007fe,2025-12-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2025-12-29,4,3,Video and notes,2,2,1,69,31,LOW
+890fb1c2-0f47-4723-a7d2-e806b991cf3f,2025-12-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2025-12-30,3.7,4,Video and notes,5,5,1,83,17,SAFE
+17193baa-3dce-4aa8-a1fb-b49af3a567e5,2026-01-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-01-01,2.6,3,Flashcards,3,2,2,63,37,MEDIUM
+c3b99a0c-c1a8-4978-a903-4c5b76e6516d,2026-01-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-01-02,2.1,5,Flashcards,4,4,1,97,3,SAFE
+0dd4d4a5-ad34-4282-ab5c-e487d7f4b380,2026-01-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-01-04,1.9,4,Video and notes,6,5,2,79,22,LOW
+2a2bc784-ae23-413b-a055-2008f64fc768,2026-01-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-01-05,1.2,3,Practice problems,5,4,0,61,45,MEDIUM
+94f349bd-5c15-4887-a361-5315a5497466,2026-01-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-01-06,2.3,4,Flashcards,5,5,2,83,17,SAFE
+bb8c7633-9079-4beb-ac02-575941cda9f4,2026-01-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-01-08,2.4,3,Flashcards,2,2,1,62,38,MEDIUM
+3c8da8cb-e328-4f4e-a19d-e25e72f5b7ff,2026-01-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-01-09,1.4,5,Flashcards,6,6,1,93,12,SAFE
+1c778d93-3008-4641-ad7c-c288405aee49,2026-01-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-01-15,2.3,3,Video and notes,6,5,3,62,38,MEDIUM
+6142ab72-5be7-4527-af8c-402ad92e66a2,2026-01-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-01-16,2.4,4,Practice problems,6,5,1,81,19,SAFE
+dfe059be-a20a-40dd-a251-92df02f6b619,2026-01-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-01-18,1.6,4,Video and notes,5,4,0,79,24,LOW
+6abf1e1c-e9e5-4225-a4a3-865f3c70f4fa,2026-01-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-01-19,2.3,4,Video and notes,5,5,2,81,19,SAFE
+db10350a-8b6d-4ccb-abc5-43466d80042b,2026-01-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-01-20,1.6,3,Practice problems,3,2,3,60,43,MEDIUM
+a9102916-8384-4890-a2a6-e006d4aea697,2026-01-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-01-21,1.9,4,Flashcards,5,4,1,78,23,LOW
+e536f975-575d-4be5-a786-5f6bf829e6fb,2026-01-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-01-22,2.6,4,Video and notes,2,2,0,82,18,SAFE
+e400a5e6-5e9f-4fdd-a7ef-45444c8d03df,2026-01-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-01-23,1.2,3,Video and notes,5,4,2,61,45,MEDIUM
+f51db9ac-ccfc-448b-a858-a752f209b258,2026-01-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-01-26,1.3,4,Video and notes,6,5,2,80,26,LOW
+f1b9bd9b-8a80-47ec-ad6b-f1ac043d9a2d,2026-01-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-01-27,3.1,3,Practice problems,6,5,0,64,36,MEDIUM
+986fb7ec-3121-48cb-a1bd-1b525fcb35c6,2026-01-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-01-29,2.1,4,Video and notes,5,4,1,80,20,LOW
+91510184-b621-44a4-a44b-c5fc20e8a60f,2026-01-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-01-30,1.6,3,Flashcards,4,3,0,64,39,MEDIUM
+a330eb5c-b61a-443f-adac-efff18cb7d09,2026-02-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-02-01,2.3,5,Practice problems,4,4,1,97,3,SAFE
+6dff81b8-043b-492a-ad74-dac6617d8385,2026-02-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-02-03,2,4,Video and notes,3,3,0,80,20,LOW
+14ec9af1-1f44-401a-af4f-9b5291402cc2,2026-02-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-02-04,2.1,5,Video and notes,6,6,0,97,3,SAFE
+4cac3135-478d-47ca-a0bd-9be7c7bee81c,2026-02-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-02-06,1.9,5,Flashcards,3,3,0,97,4,SAFE
+684d3af3-19f3-4556-a899-e17750e3fb7d,2026-02-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-02-09,1.7,4,Practice problems,4,3,0,75,27,LOW
+bef5dd1b-7e9f-4260-afab-77784997b9b9,2026-02-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-02-10,3.1,5,Practice problems,6,6,0,100,0,SAFE
+4261428a-4446-4079-af3b-a2453ec7bd4a,2026-02-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-02-13,3,4,Video and notes,4,4,1,85,15,SAFE
+015a338f-c13c-45b3-a90c-4dfb3480c6fc,2026-02-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-02-16,1.1,4,Video and notes,4,4,2,79,28,LOW
+a587ee20-628f-4659-a0b9-9a377970bfbd,2026-02-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-02-18,1.9,5,Video and notes,4,4,0,97,4,SAFE
+86b63b93-0eeb-4195-aa3d-fe46da388775,2026-02-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-02-20,2.4,4,Video and notes,3,3,2,81,19,SAFE
+dac2a350-f388-421b-a73c-90a51fab5b18,2026-02-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-02-22,2.2,4,Video and notes,6,5,2,83,17,SAFE
+cd0c33c9-84bd-45fa-acf5-4712c320feb0,2026-02-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-02-24,2.8,4,Video and notes,2,2,0,84,16,SAFE
+8d3179bd-0328-4741-a503-bc9cad45bb20,2026-03-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-03-03,2.4,5,Flashcards,6,6,1,98,2,SAFE
+8e6a47d8-ebb6-4008-a057-47a4466fd2a6,2026-03-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-03-04,1.8,3,Practice problems,6,5,0,64,38,MEDIUM
+dabf7bbe-c7bd-4c76-a481-b0a08078a667,2026-03-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-03-05,1.9,4,Flashcards,6,5,0,80,21,LOW
+85458e18-8892-4d07-afc3-12e57a24359f,2026-03-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-06,2.4,4,Video and notes,4,4,0,81,19,SAFE
+2afdf804-1bf0-40e0-adb1-86c1136e2e8b,2026-03-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-03-08,1.7,5,Flashcards,3,3,0,97,5,SAFE
+8e0b4794-b8c8-454d-ad15-d1076b1f80a8,2026-03-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-03-09,1,5,Video and notes,6,6,1,92,16,SAFE
+fedbf6d5-0a37-4a6c-a83f-abe041696cde,2026-03-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-03-10,1.6,4,Practice problems,5,4,1,79,24,LOW
+53eb80a8-62cd-4ce5-a489-dae29a3eeff1,2026-03-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-03-11,1.5,5,Practice problems,3,3,0,96,8,SAFE
+cdc0d3ff-669b-4f7b-a0fd-a40f1ea7dd5c,2026-03-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-12,2.2,3,Video and notes,3,2,1,66,34,LOW
+73fa2749-8ae7-4499-a883-58d675d0aa0d,2026-03-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-13,3,3,Video and notes,3,2,0,68,32,LOW
+f23bc5f6-860f-4e1f-ac8b-ed2472c093e3,2026-03-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-03-15,1.5,5,Practice problems,4,4,1,93,11,SAFE
+bd5f4566-38a1-4819-aee7-b724a803572b,2026-03-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-03-16,2.3,4,Flashcards,5,4,0,79,21,LOW
+6082e3d6-5933-459e-aabb-6c5aa632e39c,2026-03-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-03-17,2.6,4,Video and notes,2,2,0,82,18,SAFE
+7bf4ca3d-a26c-4022-a5ff-5cf35e3e7117,2026-03-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-18,2.5,4,Flashcards,5,5,1,82,18,SAFE
+f8cad4ce-b1ad-4078-ae24-56cfbc2ee473,2026-03-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-03-20,1.8,4,Video and notes,6,5,0,77,25,LOW
+bb9907ef-d3cd-4e62-a832-e8e328c6ba48,2026-03-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-03-22,3.1,4,Video and notes,4,4,0,84,16,SAFE
+143c382b-04fc-4bd6-a947-b372011acf6e,2026-03-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-03-23,2.9,4,Video and notes,2,2,0,85,15,SAFE
+93cf6c4d-a2b3-4b1b-a740-3695a156b929,2026-03-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-03-24,2,4,Practice problems,2,2,0,80,20,LOW
+53f758c8-bb22-474f-abfb-c7ac7ad078e0,2026-03-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-03-25,3.1,4,Video and notes,3,3,1,83,17,SAFE
+f061ecbd-9b1f-459b-ade3-ed5365219026,2026-03-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-29,2,4,Flashcards,5,5,2,82,18,SAFE
+c479a5fc-17f4-46b4-afee-a62eb6d4cf44,2026-03-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-03-31,2.4,4,Video and notes,3,3,0,81,19,SAFE
+eb3d3db0-0fe2-412d-a6e8-40e2d3251d15,2026-04-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-04-01,3,4,Flashcards,5,5,0,83,17,SAFE
+3406048e-36b5-43bf-a39a-635937faeb21,2026-04-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-04-02,1.3,3,Practice problems,5,4,2,61,45,MEDIUM
+42c9bc8e-703c-4edc-a570-966d01c5e456,2026-04-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-04-03,1.8,4,Video and notes,5,4,0,77,25,LOW
+a2dce3a4-c74b-4a36-a3a0-1e8a181e6b36,2026-04-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-04-06,2.3,3,Video and notes,4,3,2,64,36,MEDIUM
+ff7dd95f-fe0a-4ac2-a9c0-4a49b9d1a050,2026-04-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-04-07,1.7,4,Practice problems,4,4,2,81,21,LOW
+9844be79-5b47-44ca-a449-3e525e151c2d,2026-04-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-04-08,1.8,4,Video and notes,4,4,2,79,23,LOW
+90742683-1368-41e6-a8b9-a32493de74df,2026-04-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-04-09,2.7,3,Video and notes,6,5,1,63,37,MEDIUM
+1e2b99e8-3242-42b9-ac9b-f10eb3730b7e,2026-04-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-04-10,3.2,3,Video and notes,5,4,1,69,31,LOW
+2f014102-a261-496d-a5c5-1ac8a06ebb48,2026-04-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-04-12,3.2,4,Video and notes,6,6,0,84,16,SAFE
+fa5cef16-bfc1-4223-ab24-43fc4f93139b,2026-04-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-04-13,3.1,4,Video and notes,6,6,1,85,15,SAFE
+c6840a60-2c23-4441-aa3a-1a1737ea54fd,2026-04-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-04-16,2.9,4,Practice problems,3,3,0,81,19,SAFE
+1dca5838-c27c-4f08-ad14-d985f8264e1b,2026-04-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-04-17,3,3,Practice problems,4,3,0,64,36,MEDIUM
+cd7e667b-7e04-44c3-a68e-addae640bbb2,2026-04-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-04-20,1.8,4,Practice problems,6,5,2,81,21,LOW
+814b3035-177d-4d44-a545-21da0f10707f,2026-04-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-04-21,1.5,5,Flashcards,2,2,0,96,8,SAFE
+90f556cb-269a-4e77-a42d-0e6a8839575b,2026-04-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-04-22,3.1,4,Practice problems,2,2,0,81,19,SAFE
+a10bbfee-d4a6-4be6-ab2f-2614536481e6,2026-04-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-04-23,2.3,4,Video and notes,5,4,1,77,23,LOW
+55cb8f38-c867-45ea-a1f6-b64350a18162,2026-04-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-04-24,1.2,4,Flashcards,5,4,1,80,26,LOW
+c473dfe4-cd57-4514-ac94-1e16d5bc80f3,2026-04-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-04-26,1.3,4,Flashcards,3,3,1,77,29,LOW
+1d49eb9d-f13e-4d2d-aa24-232455acc6d5,2026-04-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-04-27,1.7,4,Video and notes,5,4,0,79,23,LOW
+bb8a62bd-962f-4d08-ae58-2b8b0475d41c,2026-04-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-04-28,1.7,4,Flashcards,3,3,0,77,25,LOW
+80490fe4-9c03-4e96-a0ed-ee52baf5e8ec,2026-04-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-04-29,2.6,3,Flashcards,4,3,3,63,37,MEDIUM
+9f8f8aff-95f1-4340-a579-172155fe0be6,2026-04-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-04-30,2.9,4,Practice problems,2,2,1,83,17,SAFE
+65bd53e8-00c8-4614-aa2c-1e5ba73a8860,2026-05-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-05-01,1.3,4,Practice problems,2,2,0,78,28,LOW
+145bdc44-74bc-4f52-a8da-a9befa27274d,2026-05-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-05-03,2.3,4,Video and notes,3,3,1,81,19,SAFE
+ff6fa3f5-57ba-4c6a-a277-3eb37a380612,2026-05-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-05-05,3,4,Practice problems,5,5,1,85,15,SAFE
+52a5e73f-a8b9-4ed0-a24b-179de9c6fd22,2026-05-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-05-06,2.5,4,Video and notes,2,2,2,82,18,SAFE
+3733b526-000c-4dc8-a9ea-36081c707770,2026-05-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-05-07,2.8,4,Video and notes,5,4,0,80,20,LOW
+90e6447a-a2c1-4e15-a29b-76c4e251f625,2026-05-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-05-09,1.5,4,Video and notes,5,4,0,79,25,LOW
+dd79d4e3-f629-4eb7-ab02-cbef42cb2c8e,2026-05-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-05-11,1.5,3,Flashcards,5,4,1,62,42,MEDIUM
+48c0d4a6-5166-445b-a439-8eb135d97d84,2026-05-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-05-12,2,4,Video and notes,2,2,2,80,20,LOW
+d0adb476-3ee0-4605-a49d-aba8e0afcaf7,2026-05-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-05-15,2.1,4,Video and notes,6,5,1,82,18,SAFE
+0953a378-8285-4981-aca4-06fbb58b194e,2026-05-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-05-17,2.2,3,Flashcards,2,2,3,62,38,MEDIUM
+55d481f8-64e7-488b-a646-7da27f376d68,2026-05-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-05-19,3.4,3,Video and notes,2,2,1,67,33,LOW
+49bd1e24-bd5e-49cf-a746-347ac8c60d70,2026-05-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-05-20,4,3,Video and notes,2,2,0,71,29,LOW
+2825a40e-632e-4a14-a4a7-f42c2e9e798d,2026-05-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-05-21,4,4,Video and notes,5,5,0,88,12,SAFE
+ae03a210-1819-403b-a285-9da68c38114a,2026-05-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-05-22,3.6,4,Video and notes,4,4,0,87,13,SAFE
+a4db0d30-f4a1-458a-aa36-2cd49dc6506a,2026-05-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-05-23,1.9,4,Video and notes,2,2,2,80,21,LOW
+d4cf87a2-cc73-412c-a019-99cfb9e10e00,2026-05-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-05-24,3.7,4,Video and notes,6,6,0,84,16,SAFE
+a3661ea4-5563-4d84-a432-b2763ced14e8,2026-05-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-05-25,3.5,4,Flashcards,6,6,2,85,15,SAFE
+e971fe03-4810-49da-a49d-104b4bdde77e,2026-05-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-05-26,1.4,4,Practice problems,6,5,0,78,27,LOW
+d59b6596-645c-4993-a48f-3d3fc632d910,2026-05-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-05-27,3.7,4,Practice problems,6,6,0,85,15,SAFE
+702d9720-fc11-47b0-ad8c-c4292521c24f,2026-05-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-05-30,3.1,3,Flashcards,3,2,1,64,36,MEDIUM
+bd9eb61a-9dc2-46a6-a231-0c7a43c1e05d,2026-05-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-05-31,1.7,3,Flashcards,4,3,3,64,38,MEDIUM
+fd5e5ccc-d6c4-4d4c-a9e7-e57b3c5de176,2026-06-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-06-02,1.3,4,Video and notes,3,3,1,78,28,LOW
+5040d7a3-b445-415e-a745-7e0e6ab51f60,2026-06-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-06-03,1,4,Practice problems,2,2,2,75,33,LOW
+c5de20ea-5175-4db0-a784-254eb48ddafa,2026-06-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-06-05,3.4,3,Video and notes,2,2,1,67,33,LOW
+5817bdd8-7f1f-4af3-aca2-349a8aedbc3d,2026-06-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-06-06,2.6,3,Practice problems,4,3,1,67,33,LOW
+c4d558f6-2f7f-4a6d-a955-5d249fbde598,2026-06-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-06-07,2.6,5,Video and notes,3,3,0,98,2,SAFE
+c9c2d89a-8c52-4edd-a02f-6e8e496dc7e4,2026-06-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-09,1.4,3,Practice problems,6,5,2,61,44,MEDIUM
+e3e10604-eee8-48a2-a01d-71164ab38542,2026-06-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-10,2.9,4,Video and notes,6,5,2,81,19,SAFE
+2cb4d8f3-6059-46fc-a912-ee0c5f344743,2026-06-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-11,2.7,3,Practice problems,5,4,2,63,37,MEDIUM
+16ffa61a-0f87-4caf-a93d-80dc88a265f4,2026-06-12,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-06-12,2.3,3,Practice problems,4,3,3,62,38,MEDIUM
+b71332e7-de90-45d9-ac6b-dc517940438b,2026-06-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-06-13,2.6,4,Flashcards,6,6,0,84,16,SAFE
+52d1a6e4-0efe-4a32-aa5d-929be65ad373,2026-06-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-06-14,1.9,3,Flashcards,3,2,0,65,36,MEDIUM
+69da0237-2104-44a1-abc4-314db7414962,2026-06-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-06-15,1.4,3,Flashcards,6,5,2,57,48,MEDIUM
+bc60524a-f469-4880-a7c5-294051e55b78,2026-06-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-16,1,3,Practice problems,5,4,2,56,52,MEDIUM
+da927775-4ff9-4d5a-ac07-fb903b418adc,2026-06-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-06-17,1.8,4,Video and notes,6,5,2,79,23,LOW
+d504a671-5d91-40b3-ab2e-e6fbf37d041a,2026-06-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-06-18,1.2,3,Video and notes,6,5,3,61,45,MEDIUM
+e8f541d8-c058-4864-a394-d917f2f07f32,2026-06-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-06-19,3.3,4,Video and notes,5,5,0,84,16,SAFE
+92fd7579-af89-492d-afd1-2d818f544741,2026-06-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-06-21,2.4,3,Flashcards,4,3,3,65,35,MEDIUM
+36f2afc2-c70e-4f33-a220-d5e7d4b73aa2,2026-06-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-22,3.8,4,Flashcards,3,3,2,85,15,SAFE
+9efced0a-dfb4-4078-acab-944d41e7c64e,2026-06-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-23,2.2,4,Flashcards,5,5,2,83,17,SAFE
+b32c3283-86a5-4277-a7a9-f09cf1aee282,2026-06-24,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-06-24,2.3,5,Video and notes,2,2,0,100,0,SAFE
+37f86651-5cef-4dc5-aac7-e286b9d15cd8,2026-06-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-06-25,1.7,4,Flashcards,2,2,0,81,21,LOW
+614bff1c-f6ee-4f54-a58c-79614d2b8a30,2026-06-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-06-28,1.1,4,Video and notes,5,4,2,78,29,LOW
+65fa153c-6881-4b89-a4c4-be119985152f,2026-06-29,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-06-29,1.5,5,Video and notes,2,2,0,96,8,SAFE
+44bc3920-2794-43ff-a4df-1f57bde20443,2026-06-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-06-30,2.9,3,Video and notes,2,2,0,66,34,LOW
+fb0a5844-35ac-469c-ae01-95f11229fd51,2026-07-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-01,2.3,5,Video and notes,6,6,1,98,2,SAFE
+31d2e2ac-b471-4255-a536-796cdf4d7d9b,2026-07-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-03,2.6,5,Video and notes,5,5,0,99,1,SAFE
+89732cbc-9294-4dbd-a4e9-b8b475c5303e,2026-07-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-07-06,1.1,4,Video and notes,5,4,0,77,30,LOW
+2ff558fc-a273-48ba-a26f-77ccd318d9d8,2026-07-08,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-07-08,1.4,4,Practice problems,4,4,1,80,25,LOW
+3b363cac-99e4-4a72-afc5-4930e6cd5744,2026-07-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-09,2.8,3,Practice problems,3,2,2,63,37,MEDIUM
+f07c34d9-67de-46a2-a3cf-10a0a9c583c5,2026-07-10,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-07-10,2.3,3,Video and notes,4,3,2,62,38,MEDIUM
+85cc1869-975d-4ebd-a1f6-7c285d15efe4,2026-07-13,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-13,3.1,5,Video and notes,5,5,1,98,2,SAFE
+ce51b578-441c-4fc8-ae5f-53841a9154a1,2026-07-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-14,2.1,3,Practice problems,2,2,1,65,35,MEDIUM
+d7d0437b-dc11-4d1e-ab95-142e7300fcf6,2026-07-15,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-07-15,1.1,4,Video and notes,2,2,2,79,28,LOW
+6c2d96e7-682b-4e5b-ac39-1305bfaef9bf,2026-07-16,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-07-16,1.3,4,Video and notes,2,2,2,78,28,LOW
+d564e431-7250-48b4-a82a-877b15874e61,2026-07-17,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-07-17,2.6,4,Flashcards,4,4,1,82,18,SAFE
+9d08a54f-fcb4-48f7-a90c-881e3f75de59,2026-07-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-07-20,2.6,4,Video and notes,3,3,1,82,18,SAFE
+42cfd819-c5cd-4577-aff0-5a59773298c1,2026-07-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-07-21,2.3,3,Video and notes,6,5,1,66,34,LOW
+c644cb32-baed-47f7-a4c5-8a7a910d5026,2026-07-22,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-07-22,1.9,3,Practice problems,4,3,2,63,38,MEDIUM
+e609d38b-a795-4824-ac09-4c6e158cb561,2026-07-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-07-23,3.1,4,Flashcards,5,4,2,79,21,LOW
+ec4dd37c-e4e3-4f24-a3f9-b9c6011db33e,2026-07-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-07-26,1.9,4,Video and notes,2,2,2,82,19,SAFE
+1fc97ebc-0604-4807-add4-67a63480eb20,2026-07-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-07-27,3.1,3,Flashcards,3,2,1,66,34,LOW
+b2da8eea-9b14-4d9c-a76b-1211a881349d,2026-07-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-07-28,2,3,Practice problems,6,5,0,65,35,MEDIUM
+3125d202-3f49-461c-a4a1-a74cb8298753,2026-07-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-07-30,1.9,5,Practice problems,3,3,0,97,4,SAFE
+bda2280f-0229-42e6-ad8e-dff441739bde,2026-08-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-08-02,2.3,4,Practice problems,5,5,0,81,19,SAFE
+4436c479-c8c2-4d9e-a016-8979dcb13e4f,2026-08-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-08-03,3.1,5,Flashcards,5,5,1,100,0,SAFE
+a1ddaaf9-e955-4873-acc5-f9af02981576,2026-08-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-08-04,2,5,Practice problems,6,6,0,99,1,SAFE
+7b9c00dd-dfdd-4dcb-ae10-c9138396017b,2026-08-05,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-05,1.4,3,Video and notes,5,4,1,61,44,MEDIUM
+7171d069-b67b-4ccf-a4f4-1d495f86ffdd,2026-08-06,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-06,2.6,4,Video and notes,4,4,0,82,18,SAFE
+9d5a807f-e1b8-471d-ac38-eca5d694f425,2026-08-07,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-07,2.5,3,Video and notes,4,3,2,67,33,LOW
+d38e0bea-4bcf-4d59-ac9b-6dbe8c7fcf4b,2026-08-09,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-08-09,1.1,5,Practice problems,2,2,0,95,12,SAFE
+fec9773a-f944-41b8-a3e4-ba0a234f4e71,2026-08-11,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-08-11,2.3,4,Video and notes,2,2,0,83,17,SAFE
+3dedb072-cd9d-4343-ab25-7656c589a845,2026-08-14,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-08-14,3.2,3,Video and notes,2,2,2,69,31,LOW
+2b85cb6a-68c4-412e-a6c7-5db72e872fc0,2026-08-18,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-18,2,4,Practice problems,5,5,2,82,18,SAFE
+08fb4333-b68e-4868-ad7f-a058bc09d263,2026-08-19,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-19,2.1,4,Video and notes,2,2,0,82,18,SAFE
+040e3af9-f638-4086-a8fc-4d08d25c4855,2026-08-20,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-08-20,2,3,Video and notes,2,2,3,63,37,MEDIUM
+a625f3a9-374a-4238-a02b-1b37d09b45e2,2026-08-21,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-08-21,1.2,4,Flashcards,3,3,2,80,26,LOW
+2456d6f8-bb84-45e9-ac93-9b640817941a,2026-08-23,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-08-23,2.2,3,Video and notes,4,3,0,64,36,MEDIUM
+5816dfb4-0d7f-44c5-a13a-21c0a94b9ef8,2026-08-25,6f168c2c-529c-4ec8-9932-90d1b493cf87,Communication Skills,2026-08-25,1.5,4,Flashcards,5,4,2,79,25,LOW
+902c8936-43bc-4255-a8bd-059f8b0eab85,2026-08-26,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-08-26,1.4,4,Flashcards,6,5,1,78,27,LOW
+798f02bc-3b21-444a-aaf2-d66dcb3e45e1,2026-08-27,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-08-27,2.5,3,Video and notes,5,4,3,65,35,MEDIUM
+d2bf50f0-a33f-46c1-ac01-d9e609f595c7,2026-08-28,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-08-28,2.2,3,Flashcards,5,4,0,64,36,MEDIUM
+fce02460-2046-452a-a3af-993a821ad55e,2026-08-30,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-08-30,1.2,3,Flashcards,4,3,3,63,43,MEDIUM
+a778d1d3-5b6f-4280-af82-0f0ef6b527d8,2026-08-31,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Structures,2026-08-31,2.1,4,Video and notes,5,4,0,80,20,LOW
+c071b64c-6744-455c-a183-01b36302b9d5,2026-09-01,6f168c2c-529c-4ec8-9932-90d1b493cf87,System Design,2026-09-01,1.6,3,Flashcards,5,4,0,64,39,MEDIUM
+2ee9e713-c323-4d39-aa3d-0de8aa1e0df9,2026-09-02,6f168c2c-529c-4ec8-9932-90d1b493cf87,Mathematics,2026-09-02,2.9,4,Video and notes,6,6,0,85,15,SAFE
+b23bbd9f-d372-43a1-a559-9293111e5cab,2026-09-03,6f168c2c-529c-4ec8-9932-90d1b493cf87,Database Systems,2026-09-03,2.8,4,Practice problems,4,4,1,82,18,SAFE
+989e1b03-242e-4b30-a783-71aa2defe4ca,2026-09-04,6f168c2c-529c-4ec8-9932-90d1b493cf87,Data Analytics,2026-09-04,2.6,4,Video and notes,3,3,1,82,18,SAFE

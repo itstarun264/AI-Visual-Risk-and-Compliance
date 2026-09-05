@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from uuid import UUID
 
 from app.database import get_db
-from app.forecasting import DEMO_SCENARIOS, ForecastingEngine
+from app.forecasting import ForecastingEngine
 from app.models import FinancialRecord, Goal, HabitRecord, StudyRecord, User
 from app.schemas import GoalCreate, GoalOut
 from app.security import get_current_user, log_activity
@@ -19,12 +19,6 @@ def get_forecast_summary(current_user: User = Depends(get_current_user), db: Ses
         habits=db.query(HabitRecord).filter(HabitRecord.user_id == current_user.id).all(),
         goals=db.query(Goal).filter(Goal.user_id == current_user.id).order_by(Goal.created_at.desc()).all(),
     )
-
-
-@router.get("/demos")
-def get_demo_scenarios(current_user: User = Depends(get_current_user)):
-    """Read-only scenarios used to explain how the forecasts respond to patterns."""
-    return list(DEMO_SCENARIOS.values())
 
 
 @router.get("/goals", response_model=list[GoalOut])

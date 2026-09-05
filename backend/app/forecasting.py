@@ -163,23 +163,3 @@ class ForecastingEngine:
         if behind:
             recommendations.append({"area": "Goal", "message": f"{behind['title']} is {behind['status'].lower()}. Adjust the weekly plan now rather than waiting for the end of the period."})
         return recommendations or [{"area": "Momentum", "message": "Your recorded trend is stable. Keep logging entries on the same day each week to improve forecast confidence."}]
-
-
-DEMO_SCENARIOS = {
-    "balanced": {
-        "id": "balanced", "name": "Balanced progress", "description": "A consistent month with controlled spending and strong study momentum.",
-        "financial": {"has_data": True, "current_expenses": 6800, "next_week_expenses": 1640, "next_month_expenses": 7100, "projected_savings": 1900, "expense_change_percent": 4.4, "trend": "Rising", "series": [{"label": "Jun", "actual": 6200, "projected": None}, {"label": "Jul", "actual": 6500, "projected": None}, {"label": "Aug", "actual": 6800, "projected": None}, {"label": "Sep", "actual": None, "projected": 7100}]},
-        "productivity": {"has_data": True, "weekly_study_hours": 13.5, "next_week_hours": 14.8, "focus_score": 82, "completion_probability": 88, "trend": "Improving"},
-        "habits": [{"name": "Morning exercise", "category": "Health", "likelihood": 84, "streak": 8, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Reading", "category": "Learning", "likelihood": 78, "streak": 5, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Sleep before 11 pm", "category": "Recovery", "likelihood": 62, "streak": 2, "status": "Needs support", "recommendation": "Set a smaller daily action and schedule a reminder."}],
-        "goals": [{"id": "demo-balanced-goal", "title": "Save 1,500 this month", "goal_type": "FINANCIAL", "timeframe": "MONTHLY", "target": 1500, "forecast": 1900, "probability": 99, "unit": "savings", "status": "On track"}],
-        "recommendations": [{"area": "Cash flow", "message": "Your savings target is on track. Keep weekly spending below 1,640 to preserve the buffer."}, {"area": "Habit", "message": "Move your bedtime reminder 30 minutes earlier to protect next week's focus score."}]
-    },
-    "pressure": {
-        "id": "pressure", "name": "Spending pressure", "description": "A realistic higher-expense month where one habit and one goal need intervention.",
-        "financial": {"has_data": True, "current_expenses": 6900, "next_week_expenses": 1917, "next_month_expenses": 8300, "projected_savings": -300, "expense_change_percent": 20.3, "trend": "Rising", "series": [{"label": "Jun", "actual": 4100, "projected": None}, {"label": "Jul", "actual": 5800, "projected": None}, {"label": "Aug", "actual": 6900, "projected": None}, {"label": "Sep", "actual": None, "projected": 8300}]},
-        "productivity": {"has_data": True, "weekly_study_hours": 9.5, "next_week_hours": 7.8, "focus_score": 68, "completion_probability": 64, "trend": "Needs consistency"},
-        "habits": [{"name": "Budget review", "category": "Finance", "likelihood": 74, "streak": 4, "status": "Likely to continue", "recommendation": "Keep the same cue and schedule next check-in."}, {"name": "Late-night screen time", "category": "Recovery", "likelihood": 38, "streak": 0, "status": "At risk of stopping", "recommendation": "Set a smaller daily action and schedule a reminder."}, {"name": "Study planning", "category": "Learning", "likelihood": 56, "streak": 1, "status": "Needs support", "recommendation": "Set a smaller daily action and schedule a reminder."}],
-        "goals": [{"id": "demo-pressure-goal", "title": "Save 1,000 this month", "goal_type": "FINANCIAL", "timeframe": "MONTHLY", "target": 1000, "forecast": -300, "probability": 5, "unit": "savings", "status": "Unlikely on current trend"}],
-        "recommendations": [{"area": "Cash flow", "message": "Spending may exceed income next month. Cap weekly spending at 1,650 and reduce one discretionary category now."}, {"area": "Goal", "message": "The savings goal will not be met on the current trend. Cut projected expenses by 1,300 or revise the target before month-end."}]
-    }
-}

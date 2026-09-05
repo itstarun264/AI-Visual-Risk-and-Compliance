@@ -1,0 +1,25 @@
+{
+  "period": {
+    "start": "2025-09-06",
+    "end": "2026-09-05",
+    "days": 365
+  },
+  "synthetic": true,
+  "user_id": "6f168c2c-529c-4ec8-9932-90d1b493cf87",
+  "counts": {
+    "everyday_activity": 365,
+    "daily_summary": 365,
+    "finance_transactions": 600,
+    "study_sessions": 238,
+    "habit_log": 2190,
+    "goals": 6,
+    "goal_progress": 2190,
+    "risk_compliance": 365,
+    "alerts": 46,
+    "activity_history": 1283,
+    "weekly_features": 53,
+    "monthly_features": 13
+  },
+  "workbook": "C:/Users/tarun/OneDrive/Desktop/7.0/outputs/project-365-day-dataset-20260905/project-365-day-complete-dataset.xlsx",
+  "csv_directory": "C:/Users/tarun/OneDrive/Desktop/7.0/outputs/project-365-day-dataset-20260905/csv"
+}
