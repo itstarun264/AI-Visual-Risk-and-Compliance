@@ -18,11 +18,20 @@ interface ForecastSummary {
   confidence: string;
   data_points: number;
   dataset?: { id: string; name: string; original_filename: string; row_count: number };
-  financial: { has_data: boolean; current_expenses: number; next_week_expenses: number; next_month_expenses: number; projected_savings: number; expense_change_percent: number; trend: string; series: { label: string; actual: number | null; projected: number | null }[] };
-  productivity: { has_data: boolean; weekly_study_hours: number; next_week_hours: number; focus_score: number; completion_probability: number; trend: string };
-  habits: { name: string; category: string; likelihood: number; streak: number; status: string; recommendation: string }[];
+  financial: { has_data: boolean; current_expenses: number; next_week_expenses: number; next_month_expenses: number; projected_savings: number; expense_change_percent: number; trend: string; series: { label: string; actual: number | null; projected: number | null }[]; model?: ModelInfo };
+  productivity: { has_data: boolean; weekly_study_hours: number; next_week_hours: number; focus_score: number; completion_probability: number; trend: string; model?: ModelInfo };
+  habits: { name: string; category: string; likelihood: number; streak: number; status: string; recommendation: string; model?: ModelInfo }[];
   goals: { id: string; title: string; goal_type: string; timeframe: string; target: number; forecast: number; probability: number; unit: string; status: string }[];
   recommendations: { area: string; message: string }[];
+  model_summary?: { financial: string; productivity: string; habits: string; selection_method: string };
+}
+
+interface ModelInfo {
+  selected: string;
+  trained: boolean;
+  validation: { mae?: number | null; rmse?: number | null; mape?: number | null; accuracy?: number | null; precision?: number | null; recall?: number | null };
+  evaluated_models?: { name: string; mae?: number | null; rmse?: number | null; mape?: number | null; accuracy?: number | null }[];
+  note: string;
 }
 
 export default function ForecastPage() {
@@ -59,7 +68,7 @@ export default function ForecastPage() {
     { label: "Next week expenses", value: money(summary.financial.next_week_expenses), hint: "Trend-based estimate", icon: TrendingUp, color: "text-amber-500", fill: "bg-amber-500/10" },
     { label: "Next month expenses", value: money(summary.financial.next_month_expenses), hint: `${summary.financial.expense_change_percent >= 0 ? "+" : ""}${summary.financial.expense_change_percent}% change`, icon: CircleDollarSign, color: "text-rose-500", fill: "bg-rose-500/10" },
     { label: "Projected savings", value: money(summary.financial.projected_savings), hint: summary.financial.trend, icon: PiggyBank, color: "text-emerald-500", fill: "bg-emerald-500/10" },
-    { label: "Forecast confidence", value: summary.confidence, hint: `${summary.data_points} source records`, icon: BrainCircuit, color: "text-violet-500", fill: "bg-violet-500/10" },
+    { label: "Forecast confidence", value: summary.confidence, hint: summary.financial.model?.selected ?? `${summary.data_points} source records`, icon: BrainCircuit, color: "text-violet-500", fill: "bg-violet-500/10" },
   ] : [], [summary]);
 
   return <div className="mx-auto max-w-[1500px] space-y-6 pb-10">
@@ -76,6 +85,8 @@ export default function ForecastPage() {
       <section className="rounded-2xl border border-line bg-surface/80 px-4 py-3 shadow-sm"><div className="flex flex-col gap-2 text-xs sm:flex-row sm:items-center sm:justify-between"><div className="flex items-center gap-2 font-bold text-ink"><CheckCircle2 className="h-4 w-4 text-emerald-500" /> {source === "dataset" ? `${activeDataset?.name ?? "Imported dataset"} · ${summary.data_points} rows analyzed` : `${summary.data_points} user-entered records analyzed`}</div><div className="flex items-center gap-2 text-muted"><Database className="h-4 w-4 text-brand" /> {source === "dataset" ? "Imported data remains separate from My Data." : "No sample records are included."}</div></div></section>
 
       <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-5">{kpis.map((item) => <article key={item.label} className="glass-panel p-4 transition hover:-translate-y-0.5 hover:shadow-lg"><div className={`w-fit rounded-xl p-2.5 ${item.fill} ${item.color}`}><item.icon className="h-5 w-5" /></div><p className="mt-4 text-xs font-bold text-muted">{item.label}</p><p className="mt-1 text-2xl font-black tracking-tight text-ink">{item.value}</p><p className="mt-1 text-[11px] text-muted">{item.hint}</p></article>)}</section>
+
+      <section className="glass-panel overflow-hidden"><PanelTitle icon={BrainCircuit} title="Model intelligence" subtitle="Models are fitted on the selected history and evaluated on unseen recent records" /><div className="grid grid-cols-1 gap-3 px-5 pb-5 lg:grid-cols-3"><ModelCard title="Financial forecast" model={summary.financial.model} /><ModelCard title="Productivity forecast" model={summary.productivity.model} /><ModelCard title="Habit prediction" model={summary.habits[0]?.model} /></div><p className="border-t border-line px-5 py-3 text-[11px] text-muted">{summary.model_summary?.selection_method ?? "Models use chronological validation and fall back safely when history is insufficient."}</p></section>
 
       <section className="grid grid-cols-1 gap-5 xl:grid-cols-12">
         <article className="glass-panel overflow-hidden xl:col-span-8"><PanelTitle icon={TrendingUp} title="Expense forecast" subtitle="Recorded spending with the next-period projection" /><ForecastChart data={summary.financial.series} /></article>
@@ -106,3 +117,7 @@ function ForecastChart({ data }: { data: ForecastSummary["financial"]["series"] 
 function PanelTitle({ icon: Icon, title, subtitle, action }: { icon: typeof Sparkles; title: string; subtitle: string; action?: ReactNode }) { return <div className="flex items-start gap-3 p-5"><div className="rounded-xl bg-brand/10 p-2.5 text-brand"><Icon className="h-5 w-5" /></div><div><h2 className="font-black text-ink">{title}</h2><p className="mt-0.5 text-xs text-muted">{subtitle}</p></div>{action}</div>; }
 function Metric({ label, value }: { label: string; value: string }) { return <div className="rounded-xl border border-line bg-canvas/40 p-3"><p className="text-[10px] font-bold uppercase tracking-wider text-muted">{label}</p><p className="mt-1 text-xl font-black text-ink">{value}</p></div>; }
 function NoSectionData({ text }: { text: string }) { return <div className="rounded-xl border border-dashed border-line p-5 text-center text-xs text-muted">{text}</div>; }
+function ModelCard({ title, model }: { title: string; model?: ModelInfo }) {
+  const metric = model?.validation.accuracy != null ? `Accuracy ${model.validation.accuracy}%` : model?.validation.mape != null && model.validation.mape <= 100 ? `MAPE ${model.validation.mape}%` : model?.validation.rmse != null ? `RMSE ${model.validation.rmse}` : "Awaiting validation";
+  return <article className="rounded-2xl border border-line bg-canvas/40 p-4"><div className="flex items-start justify-between gap-3"><div><p className="text-[10px] font-bold uppercase tracking-wider text-muted">{title}</p><p className="mt-1 text-sm font-black text-ink">{model?.selected ?? "Unavailable"}</p></div><span className={`rounded-full border px-2 py-1 text-[9px] font-black uppercase tracking-wider ${model?.trained ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-500" : "border-amber-500/20 bg-amber-500/10 text-amber-500"}`}>{model?.trained ? "Trained" : "Fallback"}</span></div><p className="mt-3 text-xs font-black text-brand">{metric}</p>{Boolean(model?.evaluated_models?.length) && <div className="mt-2 flex flex-wrap gap-1.5">{model!.evaluated_models!.map((candidate) => <span key={candidate.name} className="rounded-md border border-line bg-surface px-1.5 py-1 text-[8px] font-bold text-muted">{candidate.name}</span>)}</div>}<p className="mt-2 text-[10px] leading-relaxed text-muted">{model?.note ?? "Add matching records to activate this model."}</p></article>;
+}

@@ -1,7 +1,9 @@
-"""Transparent, lightweight forecasting helpers for user-owned tracking data."""
+"""Validated forecasting orchestration for user-owned tracking data."""
 from __future__ import annotations
 
 from typing import Any, Iterable
+
+from app.predictive_models import forecast_study_hours, forecast_time_series
 
 
 def _linear_slope(values: list[float]) -> float:
@@ -20,10 +22,11 @@ def _money(value: float) -> float:
 
 
 class ForecastingEngine:
-    """Rule-based forecasts that remain explainable in the product UI.
+    """Select trained models when sufficient history exists and safe fallbacks otherwise.
 
     These projections indicate likely direction from recorded behaviour. They are
-    not financial advice and become more reliable as more dated entries are logged.
+    not financial advice. Validation metrics are calculated on chronological
+    holdouts so model quality remains visible and auditable.
     """
 
     @classmethod
@@ -39,7 +42,8 @@ class ForecastingEngine:
         goal_assessments = cls._goals(goals, financial, productivity, habit_predictions)
 
         data_points = len(financials) + len(studies) + len(habits)
-        confidence = "High" if data_points >= 10 else "Medium" if data_points >= 4 else "Starter"
+        trained_models = [financial.get("model", {}).get("trained"), productivity.get("model", {}).get("trained")]
+        confidence = "High" if all(trained_models) else "Medium" if any(trained_models) else "Starter"
         return {
             "source": "live",
             "confidence": confidence,
@@ -49,6 +53,12 @@ class ForecastingEngine:
             "habits": habit_predictions,
             "goals": goal_assessments,
             "recommendations": cls._recommendations(financial, productivity, habit_predictions, goal_assessments),
+            "model_summary": {
+                "financial": financial.get("model", {}).get("selected", "Unavailable"),
+                "productivity": productivity.get("model", {}).get("selected", "Unavailable"),
+                "habits": "Behavioral heuristic" if habit_predictions else "Unavailable",
+                "selection_method": "Chronological holdout validation with safe fallback for sparse histories",
+            },
         }
 
     @staticmethod
@@ -57,14 +67,15 @@ class ForecastingEngine:
             return {
                 "has_data": False, "current_expenses": 0, "next_week_expenses": 0, "next_month_expenses": 0,
                 "projected_savings": 0, "expense_change_percent": 0, "trend": "Awaiting financial data",
-                "series": []
+                "series": [],
+                "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "Add financial history to train a model."},
             }
         expenses = [float(record.monthly_expenses) for record in records]
         incomes = [float(record.monthly_income) for record in records]
-        slope = _linear_slope(expenses)
-        # Forecast a single upcoming tracking period and cap sharp changes from sparse data.
-        bounded_slope = max(-expenses[-1] * 0.25, min(slope, expenses[-1] * 0.25))
-        predicted_expenses = _money(expenses[-1] + bounded_slope)
+        forecast_result = forecast_time_series(expenses, [record.created_at for record in records], horizon=1, frequency="MS")
+        raw_prediction = forecast_result["predictions"][0]
+        # Guardrail remains active even when a trained model is selected.
+        predicted_expenses = _money(max(expenses[-1] * .75, min(raw_prediction, expenses[-1] * 1.25)))
         income = incomes[-1]
         projected_savings = round(income - predicted_expenses, 2)
         change = round((predicted_expenses - expenses[-1]) / expenses[-1] * 100, 1) if expenses[-1] else 0
@@ -79,26 +90,29 @@ class ForecastingEngine:
             "expense_change_percent": change,
             "trend": "Rising" if change > 2 else "Reducing" if change < -2 else "Stable",
             "series": series,
+            "model": forecast_result["model"],
         }
 
     @staticmethod
     def _productivity(records: list[Any]) -> dict[str, Any]:
         if not records:
-            return {"has_data": False, "weekly_study_hours": 0, "next_week_hours": 0, "focus_score": 0, "completion_probability": 0, "trend": "Awaiting study data"}
+            return {"has_data": False, "weekly_study_hours": 0, "next_week_hours": 0, "focus_score": 0, "completion_probability": 0, "trend": "Awaiting study data", "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "Add dated study history to train a model."}}
         recent = records[-7:]
         hours = [float(record.study_hours) for record in recent]
         average_focus = sum(record.focus_rating for record in recent) / len(recent)
-        hours_per_entry = sum(hours) / len(hours)
-        projected = max(0, min(70, (hours_per_entry + _linear_slope(hours)) * 4))
+        all_hours = [float(record.study_hours) for record in records]
+        forecast_result = forecast_study_hours(all_hours, [record.created_at for record in records], horizon=7)
+        projected = round(sum(forecast_result["predictions"]), 1)
         focus_score = round(average_focus * 20)
         completion_probability = min(97, max(35, round(45 + focus_score * 0.45 + min(projected, 20) * 0.5)))
         return {
             "has_data": True,
-            "weekly_study_hours": round(hours_per_entry * 4, 1),
+            "weekly_study_hours": round(sum(hours), 1),
             "next_week_hours": round(projected, 1),
             "focus_score": focus_score,
             "completion_probability": completion_probability,
             "trend": "Improving" if _linear_slope(hours) > .15 else "Needs consistency" if _linear_slope(hours) < -.15 else "Stable",
+            "model": forecast_result["model"],
         }
 
     @staticmethod
@@ -120,6 +134,7 @@ class ForecastingEngine:
                 "streak": habit.streak,
                 "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping",
                 "recommendation": "Keep the same cue and schedule next check-in." if likelihood >= 70 else "Set a smaller daily action and schedule a reminder.",
+                "model": {"selected": "Behavioral heuristic", "trained": False, "validation": {"accuracy": None}, "note": "Live habits currently store the latest state; imported daily history enables Random Forest classification."},
             })
         return sorted(result, key=lambda habit: habit["likelihood"], reverse=True)
 

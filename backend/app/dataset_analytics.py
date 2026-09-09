@@ -7,9 +7,11 @@ from the selected dataset without copying it into the user's live records.
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 from statistics import mean
 from typing import Any
+
+from app.predictive_models import forecast_study_hours, forecast_time_series, predict_habit_continuation
 
 
 ALIASES = {
@@ -148,9 +150,33 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     expense_values = [item["expenses"] for item in monthly]
     income_values = [item["income"] for item in monthly]
     current_expenses = expense_values[-1] if expense_values else 0
-    slope = _linear_slope(expense_values[-6:])
-    bounded_slope = max(-current_expenses * 0.25, min(slope, current_expenses * 0.25)) if current_expenses else 0
-    next_month = round(max(0, current_expenses + bounded_slope), 2)
+    dated_expenses = [
+        (_date_value(_value(row, "date")), _number(_value(row, "expenses")))
+        for row in ordered if _date_value(_value(row, "date")) and _value(row, "expenses") is not None
+    ]
+    use_daily_history = len(dated_expenses) >= 30 and (dated_expenses[-1][0] - dated_expenses[0][0]).days / max(1, len(dated_expenses) - 1) <= 3
+    if use_daily_history:
+        weekly_totals: dict[datetime, float] = defaultdict(float)
+        for observed, value in dated_expenses:
+            week_start = datetime(observed.year, observed.month, observed.day) - timedelta(days=observed.weekday())
+            weekly_totals[week_start] += value
+        weekly_dates = sorted(weekly_totals)
+        finance_forecast = forecast_time_series(
+            [weekly_totals[observed] for observed in weekly_dates], weekly_dates,
+            horizon=5, frequency="W",
+        )
+        next_week = round(finance_forecast["predictions"][0], 2)
+        next_month = round(mean(finance_forecast["predictions"]) * 4.33, 2)
+    elif expense_values:
+        monthly_dates = [datetime.strptime(item["month"], "%b %Y") if not item["month"].startswith("Period") else datetime(2000, min(index + 1, 12), 1) for index, item in enumerate(monthly)]
+        finance_forecast = forecast_time_series(expense_values, monthly_dates, horizon=1, frequency="MS")
+        raw_prediction = finance_forecast["predictions"][0]
+        next_month = round(max(current_expenses * .75, min(raw_prediction, current_expenses * 1.25)), 2) if current_expenses else round(raw_prediction, 2)
+        next_week = round(next_month / 4.33, 2)
+    else:
+        finance_forecast = {"model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "No financial fields were found."}, "predictions": []}
+        next_month = 0
+        next_week = 0
     projected_income = round(mean(income_values[-3:]), 2) if income_values else 0
     financial_series = [{"label": item["month"], "actual": item["expenses"], "projected": None} for item in monthly[-5:]]
     if monthly:
@@ -158,12 +184,13 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     financial = {
         "has_data": bool(expense_values),
         "current_expenses": current_expenses,
-        "next_week_expenses": round(next_month / 4.33, 2),
+        "next_week_expenses": next_week,
         "next_month_expenses": next_month,
         "projected_savings": round(projected_income - next_month, 2),
         "expense_change_percent": round((next_month - current_expenses) / current_expenses * 100, 1) if current_expenses else 0,
         "trend": "Rising" if next_month > current_expenses * 1.02 else "Reducing" if next_month < current_expenses * 0.98 else "Stable" if expense_values else "Awaiting financial data",
         "series": financial_series,
+        "model": finance_forecast["model"],
     }
 
     study_rows = [row for row in ordered if _number(_value(row, "study_hours")) > 0]
@@ -176,12 +203,20 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
             focus *= 20
         focus_values.append(focus)
     weekly_hours = round(sum(hours), 1)
-    next_week_hours = round(max(0, weekly_hours + _linear_slope(hours) * 7), 1) if hours else 0
     focus_score = round(mean(focus_values)) if focus_values else 0
+    dated_study = [
+        (_date_value(_value(row, "date")), _number(_value(row, "study_hours")))
+        for row in ordered if _date_value(_value(row, "date")) and _value(row, "study_hours") is not None
+    ]
+    study_forecast = forecast_study_hours(
+        [value for _, value in dated_study], [observed for observed, _ in dated_study], horizon=7,
+    ) if dated_study else {"predictions": [], "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "No dated study fields were found."}}
+    next_week_hours = round(sum(study_forecast["predictions"]), 1) if study_forecast["predictions"] else round(max(0, weekly_hours + _linear_slope(hours) * 7), 1) if hours else 0
     productivity = {
         "has_data": bool(hours), "weekly_study_hours": weekly_hours, "next_week_hours": next_week_hours,
         "focus_score": focus_score, "completion_probability": min(99, round(focus_score * .7 + min(next_week_hours, 20) * 1.5)) if hours else 0,
         "trend": "Improving" if hours and next_week_hours > weekly_hours + .5 else "Needs consistency" if hours and next_week_hours < weekly_hours - .5 else "Stable" if hours else "Awaiting study data",
+        "model": study_forecast["model"],
     }
 
     habit_columns = [column for column in (ordered[0].keys() if ordered else []) if column.endswith("_completed") and column != "tasks_completed"]
@@ -189,14 +224,18 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     for column in habit_columns:
         scheduled_column = column.replace("_completed", "_scheduled")
         relevant = [row for row in ordered[-30:] if scheduled_column not in row or _truthy(row.get(scheduled_column))]
-        likelihood = round(sum(1 for row in relevant if _truthy(row.get(column))) / len(relevant) * 100) if relevant else 0
+        historical = [row for row in ordered if (scheduled_column not in row or _truthy(row.get(scheduled_column))) and _date_value(_value(row, "date"))]
+        habit_prediction = predict_habit_continuation(
+            [_truthy(row.get(column)) for row in historical], [_date_value(_value(row, "date")) for row in historical],
+        ) if historical else {"likelihood": 0, "model": {"selected": "Unavailable", "trained": False, "validation": {"accuracy": None}, "evaluated_models": [], "note": "No dated habit outcomes were found."}}
+        likelihood = habit_prediction["likelihood"] if historical else round(sum(1 for row in relevant if _truthy(row.get(column))) / len(relevant) * 100) if relevant else 0
         name = column.removesuffix("_completed").replace("_", " ").title()
-        habits.append({"name": name, "category": "Imported activity", "likelihood": likelihood, "streak": round(_number(ordered[-1].get(column.replace("_completed", "_streak")))) if ordered else 0, "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping", "recommendation": "Keep the same cue and schedule." if likelihood >= 70 else "Reduce the next action and add a reminder."})
+        habits.append({"name": name, "category": "Imported activity", "likelihood": likelihood, "streak": round(_number(ordered[-1].get(column.replace("_completed", "_streak")))) if ordered else 0, "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping", "recommendation": "Keep the same cue and schedule." if likelihood >= 70 else "Reduce the next action and add a reminder.", "model": habit_prediction["model"]})
     if not habits:
         rates = [_ratio(_value(row, "habit_rate")) for row in ordered[-30:] if _value(row, "habit_rate") is not None]
         if rates:
             likelihood = round(mean(rates) * 100)
-            habits.append({"name": "Overall habit routine", "category": "Imported activity", "likelihood": likelihood, "streak": 0, "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping", "recommendation": "Keep tracking the same routines." if likelihood >= 70 else "Choose one routine to stabilize first."})
+            habits.append({"name": "Overall habit routine", "category": "Imported activity", "likelihood": likelihood, "streak": 0, "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping", "recommendation": "Keep tracking the same routines." if likelihood >= 70 else "Choose one routine to stabilize first.", "model": {"selected": "Recent completion-rate fallback", "trained": False, "validation": {"accuracy": None}, "evaluated_models": [], "note": "Per-habit daily completion columns are required to train a classifier."}})
 
     goals = []
     latest = ordered[-1] if ordered else {}
@@ -226,8 +265,15 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
         recommendations.append({"area": "Data", "message": "The imported trend is stable. Continue adding dated records to improve forecast quality."})
 
     data_points = len(rows)
+    trained_models = [financial["model"].get("trained"), productivity["model"].get("trained")] + [habit.get("model", {}).get("trained") for habit in habits]
     return {
-        "source": "dataset", "confidence": "High" if data_points >= 90 else "Medium" if data_points >= 30 else "Starter",
+        "source": "dataset", "confidence": "High" if sum(bool(value) for value in trained_models) >= 2 else "Medium" if any(trained_models) else "Starter",
         "data_points": data_points, "financial": financial, "productivity": productivity, "habits": habits[:8],
         "goals": goals[:8], "recommendations": recommendations,
+        "model_summary": {
+            "financial": financial["model"]["selected"],
+            "productivity": productivity["model"]["selected"],
+            "habits": habits[0]["model"]["selected"] if habits else "Unavailable",
+            "selection_method": "Chronological holdout validation; lowest-error time-series model selected automatically",
+        },
     }

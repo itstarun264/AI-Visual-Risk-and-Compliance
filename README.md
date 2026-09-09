@@ -143,6 +143,18 @@ CREATE DATABASE risk_intelligence;
 
 No account or activity records are created by `seed.py`. Register through the application before signing in.
 
+## Forecasting model stack
+
+Forecasting models are fitted to the selected user's records or imported dataset; ARIMA and Prophet are train-on-history models rather than downloadable pretrained checkpoints.
+
+- **Financial:** Linear Trend, ARIMA, and Prophet are evaluated on a chronological holdout. The lowest-RMSE candidate produces the next-week and next-month expense forecast.
+- **Productivity:** a Random Forest Regressor uses calendar, lag, and rolling study-hour features.
+- **Habits:** a Random Forest Classifier estimates continuation probability from dated completion history. A completion-rate baseline is retained when it validates better.
+- **Goals:** financial, study, and habit goal probabilities are calculated from the corresponding selected model's forecast.
+- **Sparse data:** explicit non-ML fallbacks remain available and do not display fabricated accuracy.
+
+The Forecasting interface displays the selected model, whether training occurred, evaluated candidates, and holdout MAE/RMSE/MAPE or classification accuracy.
+
 ---
 
 ## 🧪 Testing the Application
