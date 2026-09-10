@@ -81,7 +81,8 @@ class ForecastingEngine:
         income = incomes[-1]
         projected_savings = round(income - predicted_expenses, 2)
         change = round((predicted_expenses - expenses[-1]) / expenses[-1] * 100, 1) if expenses[-1] else 0
-        series = [{"label": f"Period {index + 1}", "actual": round(value), "projected": None} for index, value in enumerate(expenses[-4:])]
+        recent_records = records[-4:]
+        series = [{"label": record.created_at.strftime("%d %b %Y"), "actual": round(float(record.monthly_expenses)), "projected": None} for record in recent_records]
         series[-1]["projected"] = series[-1]["actual"]
         series.append({"label": "Next month", "actual": None, "projected": round(predicted_expenses)})
         return {

@@ -146,6 +146,13 @@ def test_financial_calculations():
     assert record["risk_category"] == "CRITICAL"
     assert record["compliance_status"] == "NON_COMPLIANT"
 
+    forecast = client.get("/api/v1/forecast/summary", headers=headers)
+    assert forecast.status_code == 200
+    actual_labels = [point["label"] for point in forecast.json()["financial"]["series"] if point["actual"] is not None]
+    assert actual_labels
+    assert all(not label.startswith("Period") for label in actual_labels)
+    assert all(datetime.strptime(label, "%d %b %Y") for label in actual_labels)
+
 def test_study_records():
     # Register and login
     reg_payload = {
