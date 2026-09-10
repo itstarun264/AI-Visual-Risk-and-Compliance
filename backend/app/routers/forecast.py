@@ -4,7 +4,7 @@ from uuid import UUID
 
 from app.database import get_db
 from app.forecasting import ForecastingEngine
-from app.models import FinancialRecord, Goal, HabitRecord, StudyRecord, User
+from app.models import FinancialRecord, Goal, HabitRecord, StudyRecord, UnexpectedExpense, User
 from app.schemas import GoalCreate, GoalOut
 from app.security import get_current_user, log_activity
 
@@ -18,6 +18,7 @@ def get_forecast_summary(current_user: User = Depends(get_current_user), db: Ses
         studies=db.query(StudyRecord).filter(StudyRecord.user_id == current_user.id).all(),
         habits=db.query(HabitRecord).filter(HabitRecord.user_id == current_user.id).all(),
         goals=db.query(Goal).filter(Goal.user_id == current_user.id).order_by(Goal.created_at.desc()).all(),
+        unexpected_expenses=db.query(UnexpectedExpense).filter(UnexpectedExpense.user_id == current_user.id).all(),
     )
 
 

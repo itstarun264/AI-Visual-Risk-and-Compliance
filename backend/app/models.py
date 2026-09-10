@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, DateTime, Boolean, Numeric, JSON, Text
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Date, DateTime, Boolean, Numeric, JSON, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from app.database import Base
@@ -17,6 +17,7 @@ class User(Base):
     # Relationships
     profile = relationship("UserProfile", back_populates="user", uselist=False, cascade="all, delete-orphan")
     financial_records = relationship("FinancialRecord", back_populates="user", cascade="all, delete-orphan")
+    unexpected_expenses = relationship("UnexpectedExpense", back_populates="user", cascade="all, delete-orphan")
     study_records = relationship("StudyRecord", back_populates="user", cascade="all, delete-orphan")
     habit_records = relationship("HabitRecord", back_populates="user", cascade="all, delete-orphan")
     risk_profiles = relationship("RiskProfile", back_populates="user", cascade="all, delete-orphan")
@@ -61,6 +62,20 @@ class FinancialRecord(Base):
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False, index=True)
 
     user = relationship("User", back_populates="financial_records")
+
+
+class UnexpectedExpense(Base):
+    __tablename__ = "unexpected_expenses"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    amount = Column(Numeric(12, 2), nullable=False)
+    category = Column(String(100), nullable=False, default="Other")
+    note = Column(String(255), nullable=True)
+    expense_date = Column(Date, nullable=False, index=True)
+    created_at = Column(DateTime(timezone=True), default=datetime.utcnow, nullable=False)
+
+    user = relationship("User", back_populates="unexpected_expenses")
 
 class StudyRecord(Base):
     __tablename__ = "study_records"

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.models import User, UserProfile, FinancialRecord, StudyRecord, HabitRecord, VisualDetection
+from app.models import User, UserProfile, FinancialRecord, UnexpectedExpense, StudyRecord, HabitRecord, VisualDetection
 from app.security import get_current_user
 from app.services import RiskIntelligenceEngine
 
@@ -17,6 +17,7 @@ def get_compliance_report(
         profile = UserProfile(user_id=current_user.id, compliance_policy="Standard Compliance", risk_tolerance="Medium")
 
     financials = db.query(FinancialRecord).filter(FinancialRecord.user_id == current_user.id).all()
+    unexpected_expenses = db.query(UnexpectedExpense).filter(UnexpectedExpense.user_id == current_user.id).all()
     studies = db.query(StudyRecord).filter(StudyRecord.user_id == current_user.id).all()
     habits = db.query(HabitRecord).filter(HabitRecord.user_id == current_user.id).all()
     detections = db.query(VisualDetection).filter(VisualDetection.user_id == current_user.id).all()
@@ -27,7 +28,8 @@ def get_compliance_report(
         financial_records=financials,
         study_records=studies,
         habits=habits,
-        detections=detections
+        detections=detections,
+        unexpected_expenses=unexpected_expenses,
     )
 
     # Build category breakdown scores

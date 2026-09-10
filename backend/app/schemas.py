@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field, field_validator
-from datetime import datetime
+from datetime import date, datetime
 from typing import List, Optional, Any, Dict
 from uuid import UUID
 from decimal import Decimal
@@ -83,6 +83,23 @@ class FinancialRecordOut(ORMBase):
     debt_ratio: Decimal
     risk_category: str
     compliance_status: str
+    created_at: datetime
+
+
+class UnexpectedExpenseCreate(BaseModel):
+    amount: Decimal = Field(..., gt=0)
+    category: str = Field("Other", min_length=2, max_length=100)
+    note: Optional[str] = Field(None, max_length=255)
+    expense_date: date
+
+
+class UnexpectedExpenseOut(ORMBase):
+    id: UUID
+    user_id: UUID
+    amount: Decimal
+    category: str
+    note: Optional[str]
+    expense_date: date
     created_at: datetime
 
 # ==========================================

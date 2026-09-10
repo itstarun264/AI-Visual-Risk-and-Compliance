@@ -146,12 +146,25 @@ def test_financial_calculations():
     assert record["risk_category"] == "CRITICAL"
     assert record["compliance_status"] == "NON_COMPLIANT"
 
+    unexpected = client.post("/api/v1/financial/unexpected", headers=headers, json={
+        "amount": 1000,
+        "category": "Emergency",
+        "note": "Urgent repair",
+        "expense_date": datetime.utcnow().date().isoformat(),
+    })
+    assert unexpected.status_code == 201, unexpected.text
+    assert float(unexpected.json()["amount"]) == 1000
+    assert len(client.get("/api/v1/financial/unexpected", headers=headers).json()) == 1
+
     forecast = client.get("/api/v1/forecast/summary", headers=headers)
     assert forecast.status_code == 200
+    assert forecast.json()["financial"]["current_expenses"] == 10500
     actual_labels = [point["label"] for point in forecast.json()["financial"]["series"] if point["actual"] is not None]
     assert actual_labels
+    assert len(actual_labels) == 1
     assert all(not label.startswith("Period") for label in actual_labels)
-    assert all(datetime.strptime(label, "%d %b %Y") for label in actual_labels)
+    assert all(datetime.strptime(label, "%b %Y") for label in actual_labels)
+    assert all(point["projected"] is None for point in forecast.json()["financial"]["series"] if point["actual"] is not None)
 
 def test_study_records():
     # Register and login
@@ -244,4 +257,6 @@ def test_dataset_import_is_separate_and_drives_analytics():
     assert result["financial"]["next_month_expenses"] > 58000
     assert [point["label"] for point in result["financial"]["series"] if point["actual"] is None] == ["Next month"]
     assert [point["label"] for point in result["productivity"]["series"] if point["actual"] is None] == ["Next week"]
+    assert all(point["projected"] is None for point in result["financial"]["series"] if point["actual"] is not None)
+    assert all(point["projected"] is None for point in result["productivity"]["series"] if point["actual"] is not None)
     assert result["goals"] == []

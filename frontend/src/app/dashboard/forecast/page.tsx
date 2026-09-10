@@ -34,6 +34,7 @@ interface ModelInfo {
 }
 
 interface ProjectionPoint { label: string; actual: number | null; projected: number | null }
+interface ProjectionChartPoint extends ProjectionPoint { projectionPath: number | null }
 
 interface ForecastSummary {
   source: "live" | "dataset";
@@ -74,22 +75,36 @@ export default function ForecastPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
+    const controller = new AbortController();
+    let cancelled = false;
+
     const load = async () => {
       setLoading(true);
       setError("");
+      setSummary(null);
+      if (source === "dataset" && !activeDatasetId) {
+        setLoading(false);
+        return;
+      }
       try {
-        const url = source === "dataset" && activeDatasetId ? `${API_URL}/datasets/${activeDatasetId}/forecast-summary` : `${API_URL}/forecast/summary`;
-        const response = await axios.get<ForecastSummary>(url);
+        const url = source === "dataset" ? `${API_URL}/datasets/${activeDatasetId}/forecast-summary` : `${API_URL}/forecast/summary`;
+        const response = await axios.get<ForecastSummary>(url, { signal: controller.signal });
+        if (cancelled) return;
         setSummary(response.data);
       } catch (caught: unknown) {
+        if (cancelled || axios.isCancel(caught)) return;
         const message = axios.isAxiosError(caught) ? caught.response?.data?.detail : null;
         setError(typeof message === "string" ? message : "Forecast data could not be loaded.");
         setSummary(null);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     void load();
+    return () => {
+      cancelled = true;
+      controller.abort();
+    };
   }, [source, activeDatasetId]);
 
   const statusText = useMemo(() => {
@@ -128,7 +143,7 @@ export default function ForecastPage() {
           <ForecastSection>
             <ColumnHeading title="Financial Forecasting" model={summary.financial.model} />
             <div className="grid gap-4 lg:grid-cols-[minmax(0,1.7fr)_minmax(300px,0.8fr)]">
-              <ProjectionCard title="Expense projection" subtitle="Recorded history with one next-month projection" data={summary.financial.series} valueFormatter={money} yFormatter={compactMoney} actualColor="#2563eb" projectedColor="#8b5cf6" />
+              <ProjectionCard title="Expense projection" subtitle="Recorded history with one next-month projection" data={summary.financial.series} valueFormatter={money} yFormatter={compactMoney} actualColor="#2563eb" projectedColor="#8b5cf6" actualLabel="Expense" />
               <div className="grid grid-cols-2 gap-3 self-stretch">
                 <Metric label="Current expenses" value={money(summary.financial.current_expenses)} hint="Latest recorded month" />
                 <Metric label="Next week" value={money(summary.financial.next_week_expenses)} hint="From the single forecast" />
@@ -141,7 +156,7 @@ export default function ForecastPage() {
           <ForecastSection>
             <ColumnHeading title="Study & Productivity" model={summary.productivity.model} />
             <div className="grid gap-4 lg:grid-cols-[minmax(0,1.7fr)_minmax(300px,0.8fr)]">
-              <ProjectionCard title="Weekly study hours" subtitle="Recorded weekly history with one next-week projection" data={summary.productivity.series ?? []} valueFormatter={(value) => `${value.toFixed(1)}h`} yFormatter={(value) => `${value}h`} actualColor="#10b981" projectedColor="#8b5cf6" />
+              <ProjectionCard title="Weekly study hours" subtitle="Recorded weekly history with one next-week projection" data={summary.productivity.series ?? []} valueFormatter={(value) => `${value.toFixed(1)}h`} yFormatter={(value) => `${value}h`} actualColor="#10b981" projectedColor="#8b5cf6" actualLabel="Study hours" />
               <div className="grid grid-cols-2 gap-3 self-stretch">
                 <Metric label="This week" value={`${summary.productivity.weekly_study_hours}h`} hint="Recorded total" />
                 <Metric label="Next week" value={`${summary.productivity.next_week_hours}h`} hint={summary.productivity.trend} />
@@ -184,10 +199,50 @@ function ColumnHeading({ title, model }: { title: string; model?: ModelInfo }) {
   return <div className="mb-5 flex min-h-11 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between"><h2 className="text-lg font-black text-ink">{title}</h2><div className="flex flex-wrap items-center gap-2">{quality.label && <span className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1.5 text-[9px] font-black text-emerald-500">{quality.label}</span>}<span className={`max-w-[180px] truncate rounded-lg border px-2.5 py-1.5 text-[9px] font-black ${model?.trained ? "border-violet-500/20 bg-violet-500/10 text-violet-500" : "border-line bg-canvas text-muted"}`} title={model?.selected}>{model?.selected ?? "Awaiting model"}</span></div></div>;
 }
 
-function ProjectionCard({ title, subtitle, data, valueFormatter, yFormatter, actualColor, projectedColor }: { title: string; subtitle: string; data: ProjectionPoint[]; valueFormatter: (value: number) => string; yFormatter: (value: number) => string; actualColor: string; projectedColor: string }) {
+function ProjectionCard({ title, subtitle, data, valueFormatter, yFormatter, actualColor, projectedColor, actualLabel }: { title: string; subtitle: string; data: ProjectionPoint[]; valueFormatter: (value: number) => string; yFormatter: (value: number) => string; actualColor: string; projectedColor: string; actualLabel: string }) {
   const [expanded, setExpanded] = useState(false);
-  const chart = (height: string) => data.length ? <div className={height}><ResponsiveContainer width="100%" height="100%"><LineChart data={data} margin={{ top: 14, right: 12, left: -8, bottom: 0 }}><CartesianGrid stroke="var(--line)" vertical={false} strokeDasharray="4 4" /><XAxis dataKey="label" tick={{ fill: "var(--muted)", fontSize: 9 }} axisLine={false} tickLine={false} interval="preserveStartEnd" /><YAxis tick={{ fill: "var(--muted)", fontSize: 9 }} tickFormatter={yFormatter} axisLine={false} tickLine={false} width={58} /><Tooltip contentStyle={{ background: "var(--canvas)", border: "1px solid var(--line)", borderRadius: 12, fontSize: 11 }} formatter={(value) => [valueFormatter(Number(value)), ""]} /><Legend wrapperStyle={{ fontSize: 10, paddingTop: 8 }} /><Line type="monotone" dataKey="actual" name="Actual" stroke={actualColor} strokeWidth={2.5} dot={{ r: 2.5, fill: actualColor }} connectNulls /><Line type="monotone" dataKey="projected" name="Projected" stroke={projectedColor} strokeWidth={2.5} strokeDasharray="6 4" dot={{ r: 2.5, fill: projectedColor }} connectNulls /></LineChart></ResponsiveContainer></div> : <div className={`${height} flex items-center justify-center text-center text-xs text-muted`}>Not enough records to draw this projection.</div>;
+  const lastActualIndex = data.reduce((latest, point, index) => point.actual !== null ? index : latest, -1);
+  const normalizedData = data.map((point) => ({ ...point, projected: point.actual === null ? point.projected : null }));
+  const hasFutureProjection = normalizedData.some((point, index) => index > lastActualIndex && point.projected !== null);
+  const chartData: ProjectionChartPoint[] = normalizedData.map((point, index) => ({
+    ...point,
+    projectionPath: point.projected ?? (hasFutureProjection && index === lastActualIndex ? point.actual : null),
+  }));
+
+  const chart = (height: string) => data.length ? (
+    <div className={height}>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={chartData} margin={{ top: 14, right: 12, left: -8, bottom: 0 }}>
+          <CartesianGrid stroke="var(--line)" vertical={false} strokeDasharray="4 4" />
+          <XAxis dataKey="label" tick={{ fill: "var(--muted)", fontSize: 9 }} axisLine={false} tickLine={false} interval="preserveStartEnd" />
+          <YAxis tick={{ fill: "var(--muted)", fontSize: 9 }} tickFormatter={yFormatter} axisLine={false} tickLine={false} width={58} />
+          <Tooltip content={<ProjectionTooltip valueFormatter={valueFormatter} actualColor={actualColor} projectedColor={projectedColor} actualLabel={actualLabel} />} />
+          <Legend wrapperStyle={{ fontSize: 10, paddingTop: 8 }} />
+          <Line type="monotone" dataKey="actual" name={actualLabel} stroke={actualColor} strokeWidth={2.5} dot={{ r: 2.5, fill: actualColor }} connectNulls />
+          <Line type="monotone" dataKey="projectionPath" name="Projected" stroke={projectedColor} strokeWidth={2.5} strokeDasharray="6 4" dot={false} activeDot={false} connectNulls />
+          <Line type="monotone" dataKey="projected" name="Projected value" stroke="transparent" strokeWidth={0} legendType="none" dot={{ r: 4, fill: projectedColor, stroke: projectedColor }} activeDot={{ r: 5, fill: projectedColor, stroke: projectedColor }} connectNulls />
+        </LineChart>
+      </ResponsiveContainer>
+    </div>
+  ) : <div className={`${height} flex items-center justify-center text-center text-xs text-muted`}>Not enough records to draw this projection.</div>;
   return <><div className="rounded-2xl border border-line bg-canvas/35 p-4"><div className="flex items-start justify-between gap-3"><div><h3 className="text-sm font-black text-ink">{title}</h3><p className="mt-0.5 text-[10px] text-muted">{subtitle}</p></div><button type="button" onClick={() => setExpanded(true)} disabled={!data.length} className="rounded-lg border border-line bg-surface p-2 text-muted hover:text-brand disabled:cursor-not-allowed disabled:opacity-40" aria-label={`Expand ${title}`}><Maximize2 className="h-3.5 w-3.5" /></button></div>{chart("mt-3 h-[230px]")}</div>{expanded && createPortal(<div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-md" onClick={() => setExpanded(false)}><div className="w-full max-w-[1450px] rounded-3xl border border-line bg-canvas p-5 shadow-2xl" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between"><div><h2 className="text-xl font-black text-ink">{title}</h2><p className="mt-1 text-xs text-muted">{subtitle}</p></div><button type="button" onClick={() => setExpanded(false)} className="rounded-xl border border-line p-2 text-muted hover:text-rose-500"><X className="h-4 w-4" /></button></div>{chart("mt-4 h-[72vh]")}</div></div>, document.body)}</>;
+}
+
+function ProjectionTooltip({ active, payload, valueFormatter, actualColor, projectedColor, actualLabel }: {
+  active?: boolean;
+  payload?: Array<{ payload?: ProjectionChartPoint }>;
+  valueFormatter: (value: number) => string;
+  actualColor: string;
+  projectedColor: string;
+  actualLabel: string;
+}) {
+  const point = payload?.[0]?.payload;
+  if (!active || !point) return null;
+  return <div className="min-w-36 rounded-xl border border-line bg-canvas p-3 text-xs shadow-xl">
+    <p className="mb-2 font-black text-ink">{point.label}</p>
+    {point.actual !== null && <p className="font-bold" style={{ color: actualColor }}>{actualLabel}: {valueFormatter(point.actual)}</p>}
+    {point.projected !== null && <p className="font-bold" style={{ color: projectedColor }}>Projected: {valueFormatter(point.projected)}</p>}
+  </div>;
 }
 
 function Metric({ label, value, hint }: { label: string; value: string; hint: string }) { return <div className="rounded-xl border border-line bg-canvas/30 p-3"><p className="text-[10px] font-bold text-muted">{label}</p><p className="mt-1 text-lg font-black tracking-tight text-ink sm:text-xl">{value}</p><p className="mt-1 text-[9px] font-semibold text-muted">{hint}</p></div>; }

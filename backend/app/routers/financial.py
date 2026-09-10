@@ -4,8 +4,8 @@ from uuid import UUID
 from typing import List, Optional
 
 from app.database import get_db
-from app.models import User, FinancialRecord
-from app.schemas import FinancialRecordCreate, FinancialRecordOut
+from app.models import User, FinancialRecord, UnexpectedExpense
+from app.schemas import FinancialRecordCreate, FinancialRecordOut, UnexpectedExpenseCreate, UnexpectedExpenseOut
 from app.security import get_current_user, log_activity
 from app.services import FinancialRiskEngine, RiskIntelligenceEngine
 
@@ -72,6 +72,52 @@ def list_financial_records(
         FinancialRecord.user_id == current_user.id
     ).order_by(FinancialRecord.created_at.desc()).all()
     return records
+
+
+@router.post("/unexpected", response_model=UnexpectedExpenseOut, status_code=status.HTTP_201_CREATED)
+def create_unexpected_expense(
+    expense_in: UnexpectedExpenseCreate,
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    expense = UnexpectedExpense(user_id=current_user.id, **expense_in.model_dump())
+    db.add(expense)
+    db.commit()
+    db.refresh(expense)
+    RiskIntelligenceEngine.sync_risk_profile(db=db, user_id=current_user.id)
+    log_activity(
+        db=db, user_id=current_user.id, action_type="UNEXPECTED_EXPENSE_CREATE", endpoint="/api/v1/financial/unexpected",
+        ip_address=request.client.host if request.client else None, user_agent=request.headers.get("user-agent"),
+        status_code=201, metadata={"expense_id": str(expense.id), "amount": float(expense.amount), "category": expense.category},
+    )
+    return expense
+
+
+@router.get("/unexpected", response_model=List[UnexpectedExpenseOut])
+def list_unexpected_expenses(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    return db.query(UnexpectedExpense).filter(UnexpectedExpense.user_id == current_user.id).order_by(UnexpectedExpense.expense_date.desc(), UnexpectedExpense.created_at.desc()).all()
+
+
+@router.delete("/unexpected/{id}", status_code=status.HTTP_200_OK)
+def delete_unexpected_expense(
+    id: UUID,
+    request: Request,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    expense = db.query(UnexpectedExpense).filter(UnexpectedExpense.id == id, UnexpectedExpense.user_id == current_user.id).first()
+    if not expense:
+        raise HTTPException(status_code=404, detail="Sudden expense not found")
+    db.delete(expense)
+    db.commit()
+    RiskIntelligenceEngine.sync_risk_profile(db=db, user_id=current_user.id)
+    log_activity(
+        db=db, user_id=current_user.id, action_type="UNEXPECTED_EXPENSE_DELETE", endpoint=f"/api/v1/financial/unexpected/{id}",
+        ip_address=request.client.host if request.client else None, user_agent=request.headers.get("user-agent"),
+        status_code=200, metadata={"expense_id": str(id)},
+    )
+    return {"message": "Sudden expense successfully deleted"}
 
 @router.get("/{id}", response_model=FinancialRecordOut)
 def get_financial_record(

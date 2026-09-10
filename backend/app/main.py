@@ -62,6 +62,7 @@ def health_check(db: Session = Depends(get_db)):
                 "users",
                 "user_profiles",
                 "financial_records",
+                "unexpected_expenses",
                 "study_records",
                 "habit_records",
                 "risk_profiles",

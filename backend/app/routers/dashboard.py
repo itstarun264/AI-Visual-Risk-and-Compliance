@@ -23,8 +23,8 @@ def get_dashboard_summary(
     # Active risks count:
     # 1. Financial records with risk in HIGH or CRITICAL
     latest_fin = db.query(FinancialRecord).filter(FinancialRecord.user_id == current_user.id).order_by(FinancialRecord.created_at.desc()).first()
-    active_fin = 1 if latest_fin and latest_fin.risk_category in ["HIGH", "CRITICAL"] else 0
-    high_fin = 1 if latest_fin and latest_fin.risk_category == "CRITICAL" else 0
+    active_fin = 1 if latest_fin and rp.financial_risk_score >= 75 else 0
+    high_fin = 1 if latest_fin and rp.financial_risk_score >= 95 else 0
 
     # 2. Visual detections with risk in MEDIUM, HIGH, CRITICAL
     active_vis = db.query(VisualDetection).filter(

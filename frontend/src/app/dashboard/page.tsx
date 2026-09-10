@@ -35,6 +35,7 @@ interface DashboardSummary {
 interface AlertItem { status: string }
 interface ActivityItem { action_type: string; timestamp: string; endpoint: string; status_code: number }
 interface FinancialRecordItem { created_at: string; monthly_income: string | number; monthly_expenses: string | number }
+interface UnexpectedExpenseItem { expense_date: string; amount: string | number }
 interface DatasetSeriesItem { month: string; income: number; expenses: number }
 interface DatasetDashboardResponse { summary: DashboardSummary; monthly_series: DatasetSeriesItem[] }
 
@@ -46,42 +47,56 @@ export default function DashboardPage() {
   const [activities, setActivities] = useState<ActivityItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [financialRecords, setFinancialRecords] = useState<FinancialRecordItem[]>([]);
+  const [unexpectedExpenses, setUnexpectedExpenses] = useState<UnexpectedExpenseItem[]>([]);
   const [datasetSeries, setDatasetSeries] = useState<DatasetSeriesItem[]>([]);
 
   useEffect(() => {
+    let cancelled = false;
+
     const fetchData = async () => {
       setLoading(true);
+      setSummary(null);
       try {
-        if (source === "dataset" && activeDatasetId) {
-          const response = await axios.get<DatasetDashboardResponse>(`${API_URL}/datasets/${activeDatasetId}/dashboard-analysis`);
-          setSummary(response.data.summary);
-          setDatasetSeries(response.data.monthly_series ?? []);
+        if (source === "dataset") {
           setAlerts([]);
           setActivities([]);
           setFinancialRecords([]);
+          setUnexpectedExpenses([]);
+          setDatasetSeries([]);
+          if (!activeDatasetId) return;
+          const response = await axios.get<DatasetDashboardResponse>(`${API_URL}/datasets/${activeDatasetId}/dashboard-analysis`);
+          if (cancelled) return;
+          setSummary(response.data.summary);
+          setDatasetSeries(response.data.monthly_series ?? []);
           return;
         }
-        const [summaryRes, alertsRes, auditRes, finRes] = await Promise.allSettled([
+        setDatasetSeries([]);
+        const [summaryRes, alertsRes, auditRes, finRes, unexpectedRes] = await Promise.allSettled([
           axios.get(`${API_URL}/dashboard/summary`),
           axios.get(`${API_URL}/alerts`),
           axios.get(`${API_URL}/audit?limit=5`),
           axios.get(`${API_URL}/financial`),
+          axios.get(`${API_URL}/financial/unexpected`),
         ]);
 
+        if (cancelled) return;
         if (summaryRes.status === "fulfilled") setSummary(summaryRes.value.data);
         if (alertsRes.status === "fulfilled") setAlerts((alertsRes.value.data as AlertItem[]).filter((alert) => alert.status === "UNREAD"));
         if (auditRes.status === "fulfilled") setActivities(auditRes.value.data);
         if (finRes.status === "fulfilled") setFinancialRecords(finRes.value.data);
-        setDatasetSeries([]);
+        if (unexpectedRes.status === "fulfilled") setUnexpectedExpenses(unexpectedRes.value.data);
       } catch (err) {
-        console.error("Error loading dashboard data", err);
+        if (!cancelled) console.error("Error loading dashboard data", err);
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
     if (user) {
       fetchData();
     }
+    return () => {
+      cancelled = true;
+    };
   }, [user, source, activeDatasetId]);
 
   const containerVariants: Variants = {
@@ -110,6 +125,12 @@ export default function DashboardPage() {
     acc[monthYear].Expenses += Number(r.monthly_expenses);
     return acc;
   }, {});
+  unexpectedExpenses.forEach((expense) => {
+    const date = new Date(`${expense.expense_date}T00:00:00`);
+    const monthYear = date.toLocaleDateString(undefined, { month: "short", year: "numeric" });
+    if (!groupedData[monthYear]) groupedData[monthYear] = { Income: 0, Expenses: 0, sortKey: new Date(date.getFullYear(), date.getMonth(), 1).getTime() };
+    groupedData[monthYear].Expenses += Number(expense.amount);
+  });
 
   const userChartData = Object.entries(groupedData)
     .map(([name, data]) => ({ name, Income: data.Income, Expenses: data.Expenses, sortKey: data.sortKey }))

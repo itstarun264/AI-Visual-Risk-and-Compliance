@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any, Iterable
 
 from app.predictive_models import forecast_study_hours, forecast_time_series
@@ -32,18 +32,19 @@ class ForecastingEngine:
     """
 
     @classmethod
-    def summary(cls, financials: Iterable[Any], studies: Iterable[Any], habits: Iterable[Any], goals: Iterable[Any]) -> dict[str, Any]:
+    def summary(cls, financials: Iterable[Any], studies: Iterable[Any], habits: Iterable[Any], goals: Iterable[Any], unexpected_expenses: Iterable[Any] = ()) -> dict[str, Any]:
         financials = sorted(list(financials), key=lambda record: record.created_at)
         studies = sorted(list(studies), key=lambda record: record.created_at)
         habits = list(habits)
         goals = list(goals)
+        unexpected_expenses = sorted(list(unexpected_expenses), key=lambda expense: (expense.expense_date, expense.created_at))
 
-        financial = cls._financial(financials)
+        financial = cls._financial(financials, unexpected_expenses)
         productivity = cls._productivity(studies)
         habit_predictions = cls._habits(habits)
         goal_assessments = cls._goals(goals, financial, productivity, habit_predictions)
 
-        data_points = len(financials) + len(studies) + len(habits)
+        data_points = len(financials) + len(unexpected_expenses) + len(studies) + len(habits)
         trained_models = [financial.get("model", {}).get("trained"), productivity.get("model", {}).get("trained")]
         confidence = "High" if all(trained_models) else "Medium" if any(trained_models) else "Starter"
         return {
@@ -64,26 +65,39 @@ class ForecastingEngine:
         }
 
     @staticmethod
-    def _financial(records: list[Any]) -> dict[str, Any]:
-        if not records:
+    def _financial(records: list[Any], unexpected_expenses: list[Any]) -> dict[str, Any]:
+        if not records and not unexpected_expenses:
             return {
                 "has_data": False, "current_expenses": 0, "next_week_expenses": 0, "next_month_expenses": 0,
                 "projected_savings": 0, "expense_change_percent": 0, "trend": "Awaiting financial data",
                 "series": [],
                 "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "Add financial history to train a model."},
             }
-        expenses = [float(record.monthly_expenses) for record in records]
-        incomes = [float(record.monthly_income) for record in records]
-        forecast_result = forecast_time_series(expenses, [record.created_at for record in records], horizon=1, frequency="MS")
+        monthly_records: dict[tuple[int, int], Any] = {}
+        for record in records:
+            monthly_records[(record.created_at.year, record.created_at.month)] = record
+        extra_totals: dict[tuple[int, int], float] = defaultdict(float)
+        for expense in unexpected_expenses:
+            extra_totals[(expense.expense_date.year, expense.expense_date.month)] += float(expense.amount)
+        month_keys = sorted(set(monthly_records) | set(extra_totals))
+        expenses = []
+        incomes = []
+        last_income = 0.0
+        for key in month_keys:
+            record = monthly_records.get(key)
+            if record:
+                last_income = float(record.monthly_income)
+            expenses.append((float(record.monthly_expenses) if record else 0.0) + extra_totals.get(key, 0.0))
+            incomes.append(last_income)
+        forecast_dates = [datetime(year, month, 1) for year, month in month_keys]
+        forecast_result = forecast_time_series(expenses, forecast_dates, horizon=1, frequency="MS")
         raw_prediction = forecast_result["predictions"][0]
         # Guardrail remains active even when a trained model is selected.
         predicted_expenses = _money(max(expenses[-1] * .75, min(raw_prediction, expenses[-1] * 1.25)))
         income = incomes[-1]
         projected_savings = round(income - predicted_expenses, 2)
         change = round((predicted_expenses - expenses[-1]) / expenses[-1] * 100, 1) if expenses[-1] else 0
-        recent_records = records[-4:]
-        series = [{"label": record.created_at.strftime("%d %b %Y"), "actual": round(float(record.monthly_expenses)), "projected": None} for record in recent_records]
-        series[-1]["projected"] = series[-1]["actual"]
+        series = [{"label": datetime(year, month, 1).strftime("%b %Y"), "actual": round(value), "projected": None} for (year, month), value in list(zip(month_keys, expenses))[-4:]]
         series.append({"label": "Next month", "actual": None, "projected": round(predicted_expenses)})
         return {
             "has_data": True,
@@ -116,7 +130,6 @@ class ForecastingEngine:
             weekly_totals[week_start] += float(record.study_hours)
         weekly_history = sorted(weekly_totals.items())[-6:]
         series = [{"label": observed.strftime("%d %b"), "actual": round(value, 1), "projected": None} for observed, value in weekly_history]
-        series[-1]["projected"] = series[-1]["actual"]
         series.append({"label": "Next week", "actual": None, "projected": projected})
         return {
             "has_data": True,

@@ -183,7 +183,6 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     projected_income = round(mean(income_values[-3:]), 2) if income_values else 0
     financial_series = [{"label": item["month"], "actual": item["expenses"], "projected": None} for item in monthly[-5:]]
     if monthly:
-        financial_series[-1]["projected"] = financial_series[-1]["actual"]
         financial_series.append({"label": "Next month", "actual": None, "projected": next_month})
     financial = {
         "has_data": bool(expense_values),
@@ -223,7 +222,6 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     next_week_hours = round(sum(study_forecast["predictions"]), 1) if study_forecast["predictions"] else round(max(0, weekly_hours + _linear_slope(hours) * 7), 1) if hours else 0
     productivity_series = [{"label": observed.strftime("%d %b"), "actual": round(value, 1), "projected": None} for observed, value in weekly_history]
     if productivity_series:
-        productivity_series[-1]["projected"] = productivity_series[-1]["actual"]
         productivity_series.append({"label": "Next week", "actual": None, "projected": next_week_hours})
     productivity = {
         "has_data": bool(hours), "weekly_study_hours": weekly_hours, "next_week_hours": next_week_hours,

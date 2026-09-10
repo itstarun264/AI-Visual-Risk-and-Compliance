@@ -138,6 +138,7 @@ CREATE DATABASE risk_intelligence;
 ## Analytics data sources
 
 - **My Data** uses only finance, study, habit, and goal records entered by the signed-in user.
+- **Sudden expenses** are stored separately with an amount, category, note, and expense date, then added to the matching month's dashboard total, risk calculation, and forecast history.
 - **Imported Dataset** analyzes a selected CSV, XLSX, or XLS file without copying rows into My Data.
 - Use **Profile & data → Data Import** to upload, preview, activate, or remove datasets. Files may contain extra columns; analytics recognize fields such as `date`, `income_inr`, `total_expenses_inr`, `study_hours`, `focus_score`, `habit_completion_rate`, goal progress, compliance, and risk scores.
 - **Goal status is user-only.** Imported goal-progress columns never create goals, goal-status cards, or goal recommendations. Goals must be explicitly created by the signed-in user.

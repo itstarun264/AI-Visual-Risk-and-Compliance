@@ -3,7 +3,7 @@ from typing import List, Dict, Any, Tuple
 from uuid import UUID
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
-from app.models import UserProfile, FinancialRecord, StudyRecord, HabitRecord, VisualDetection, RiskProfile, Alert
+from app.models import UserProfile, FinancialRecord, UnexpectedExpense, StudyRecord, HabitRecord, VisualDetection, RiskProfile, Alert
 
 class FinancialRiskEngine:
     @staticmethod
@@ -159,7 +159,8 @@ class RiskIntelligenceEngine:
         financial_records: List[FinancialRecord],
         study_records: List[StudyRecord],
         habits: List[HabitRecord],
-        detections: List[VisualDetection]
+        detections: List[VisualDetection],
+        unexpected_expenses: List[UnexpectedExpense] | None = None,
     ) -> Dict[str, Any]:
         """
         Combines profile settings, financials, study sessions, habits, and visual detections.
@@ -169,13 +170,24 @@ class RiskIntelligenceEngine:
         
         # 1. Financial Risk Score (0-100)
         fin_score = 0
+        current_financial_risk = "LOW"
         if financial_records:
             latest_fin = max(financial_records, key=lambda x: x.created_at)
+            month_extras = sum(
+                (expense.amount for expense in (unexpected_expenses or []) if expense.expense_date.year == latest_fin.created_at.year and expense.expense_date.month == latest_fin.created_at.month),
+                Decimal("0"),
+            )
+            _, _, _, current_financial_risk, _ = FinancialRiskEngine.calculate_metrics(
+                latest_fin.monthly_income,
+                latest_fin.monthly_expenses + month_extras,
+                latest_fin.savings_goal,
+                latest_fin.total_debt,
+            )
             risk_mapping = {"LOW": 15, "MEDIUM": 45, "HIGH": 75, "CRITICAL": 95}
-            fin_score = risk_mapping.get(latest_fin.risk_category, 15)
+            fin_score = risk_mapping.get(current_financial_risk, 15)
             
-            if latest_fin.risk_category in ["HIGH", "CRITICAL"]:
-                factors.append(f"High debt or expense ratio ({latest_fin.risk_category} Financial Risk)")
+            if current_financial_risk in ["HIGH", "CRITICAL"]:
+                factors.append(f"High debt or expense ratio ({current_financial_risk} Financial Risk)")
         else:
             fin_score = 20  # neutral/baseline
 
@@ -282,7 +294,7 @@ class RiskIntelligenceEngine:
         raw_comp_score, comp_status, violations, recommendations = ComplianceEngine.evaluate(
             policy_level=policy,
             habits=habits,
-            financial_risk=financial_records[-1].risk_category if financial_records else "LOW",
+            financial_risk=current_financial_risk,
             visual_violations_count=len(recent_detections)
         )
 
@@ -316,6 +328,7 @@ class RiskIntelligenceEngine:
 
         # Fetch records
         financials = db.query(FinancialRecord).filter(FinancialRecord.user_id == user_id).all()
+        unexpected_expenses = db.query(UnexpectedExpense).filter(UnexpectedExpense.user_id == user_id).all()
         studies = db.query(StudyRecord).filter(StudyRecord.user_id == user_id).all()
         habits = db.query(HabitRecord).filter(HabitRecord.user_id == user_id).all()
         detections = db.query(VisualDetection).filter(VisualDetection.user_id == user_id).all()
@@ -325,7 +338,8 @@ class RiskIntelligenceEngine:
             financial_records=financials,
             study_records=studies,
             habits=habits,
-            detections=detections
+            detections=detections,
+            unexpected_expenses=unexpected_expenses,
         )
 
         # Find or create risk profile
@@ -346,8 +360,7 @@ class RiskIntelligenceEngine:
         # Check if we should trigger alerts
         # 1. Critical Financial Risk
         if financials:
-            latest_fin = max(financials, key=lambda x: x.created_at)
-            if latest_fin.risk_category == "CRITICAL":
+            if results["financial_risk_score"] >= 95:
                 alert_exists = db.query(Alert).filter(
                     Alert.user_id == user_id, 
                     Alert.title == "Critical Financial Risk Detected",
@@ -358,7 +371,7 @@ class RiskIntelligenceEngine:
                         user_id=user_id,
                         severity="CRITICAL",
                         title="Critical Financial Risk Detected",
-                        description=f"Your monthly expense ratio ({float(latest_fin.expense_ratio)*100:.1f}%) and debt-to-income ({float(latest_fin.debt_ratio):.1f}x) ratios violate compliance guidelines."
+                        description="Your monthly financial risk is critical after including base spending, sudden expenses, and debt."
                     )
                     db.add(alert)
 
