@@ -140,6 +140,7 @@ CREATE DATABASE risk_intelligence;
 - **My Data** uses only finance, study, habit, and goal records entered by the signed-in user.
 - **Imported Dataset** analyzes a selected CSV, XLSX, or XLS file without copying rows into My Data.
 - Use **Profile & data → Data Import** to upload, preview, activate, or remove datasets. Files may contain extra columns; analytics recognize fields such as `date`, `income_inr`, `total_expenses_inr`, `study_hours`, `focus_score`, `habit_completion_rate`, goal progress, compliance, and risk scores.
+- **Goal status is user-only.** Imported goal-progress columns never create goals, goal-status cards, or goal recommendations. Goals must be explicitly created by the signed-in user.
 
 No account or activity records are created by `seed.py`. Register through the application before signing in.
 
@@ -150,7 +151,7 @@ Forecasting models are fitted to the selected user's records or imported dataset
 - **Financial:** Linear Trend, ARIMA, and Prophet are evaluated on a chronological holdout. The lowest-RMSE candidate produces the next-week and next-month expense forecast.
 - **Productivity:** a Random Forest Regressor uses calendar, lag, and rolling study-hour features.
 - **Habits:** a Random Forest Classifier estimates continuation probability from dated completion history. A completion-rate baseline is retained when it validates better.
-- **Goals:** financial, study, and habit goal probabilities are calculated from the corresponding selected model's forecast.
+- **Goals (My Data only):** financial, study, and habit goal probabilities are calculated from the corresponding selected model's forecast. Goal status is hidden for imported-dataset analytics.
 - **Sparse data:** explicit non-ML fallbacks remain available and do not display fabricated accuracy.
 
 The Forecasting interface displays the selected model, whether training occurred, evaluated candidates, and holdout MAE/RMSE/MAPE or classification accuracy.

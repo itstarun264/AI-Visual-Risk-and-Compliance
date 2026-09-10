@@ -1,6 +1,8 @@
 """Validated forecasting orchestration for user-owned tracking data."""
 from __future__ import annotations
 
+from collections import defaultdict
+from datetime import timedelta
 from typing import Any, Iterable
 
 from app.predictive_models import forecast_study_hours, forecast_time_series
@@ -80,6 +82,7 @@ class ForecastingEngine:
         projected_savings = round(income - predicted_expenses, 2)
         change = round((predicted_expenses - expenses[-1]) / expenses[-1] * 100, 1) if expenses[-1] else 0
         series = [{"label": f"Period {index + 1}", "actual": round(value), "projected": None} for index, value in enumerate(expenses[-4:])]
+        series[-1]["projected"] = series[-1]["actual"]
         series.append({"label": "Next month", "actual": None, "projected": round(predicted_expenses)})
         return {
             "has_data": True,
@@ -96,7 +99,7 @@ class ForecastingEngine:
     @staticmethod
     def _productivity(records: list[Any]) -> dict[str, Any]:
         if not records:
-            return {"has_data": False, "weekly_study_hours": 0, "next_week_hours": 0, "focus_score": 0, "completion_probability": 0, "trend": "Awaiting study data", "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "Add dated study history to train a model."}}
+            return {"has_data": False, "weekly_study_hours": 0, "next_week_hours": 0, "focus_score": 0, "completion_probability": 0, "trend": "Awaiting study data", "series": [], "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "Add dated study history to train a model."}}
         recent = records[-7:]
         hours = [float(record.study_hours) for record in recent]
         average_focus = sum(record.focus_rating for record in recent) / len(recent)
@@ -105,6 +108,15 @@ class ForecastingEngine:
         projected = round(sum(forecast_result["predictions"]), 1)
         focus_score = round(average_focus * 20)
         completion_probability = min(97, max(35, round(45 + focus_score * 0.45 + min(projected, 20) * 0.5)))
+        weekly_totals: dict[Any, float] = defaultdict(float)
+        for record in records:
+            observed = record.created_at
+            week_start = (observed - timedelta(days=observed.weekday())).date()
+            weekly_totals[week_start] += float(record.study_hours)
+        weekly_history = sorted(weekly_totals.items())[-6:]
+        series = [{"label": observed.strftime("%d %b"), "actual": round(value, 1), "projected": None} for observed, value in weekly_history]
+        series[-1]["projected"] = series[-1]["actual"]
+        series.append({"label": "Next week", "actual": None, "projected": projected})
         return {
             "has_data": True,
             "weekly_study_hours": round(sum(hours), 1),
@@ -113,6 +125,7 @@ class ForecastingEngine:
             "completion_probability": completion_probability,
             "trend": "Improving" if _linear_slope(hours) > .15 else "Needs consistency" if _linear_slope(hours) < -.15 else "Stable",
             "model": forecast_result["model"],
+            "series": series,
         }
 
     @staticmethod

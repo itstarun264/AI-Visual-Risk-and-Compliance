@@ -6,6 +6,7 @@ from the selected dataset without copying it into the user's live records.
 """
 from __future__ import annotations
 
+from calendar import monthrange
 from collections import defaultdict
 from datetime import date, datetime, timedelta
 from statistics import mean
@@ -147,27 +148,29 @@ def dashboard_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
 def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     ordered = _ordered_rows(rows)
     monthly = _monthly_series(ordered)
-    expense_values = [item["expenses"] for item in monthly]
-    income_values = [item["income"] for item in monthly]
-    current_expenses = expense_values[-1] if expense_values else 0
     dated_expenses = [
         (_date_value(_value(row, "date")), _number(_value(row, "expenses")))
         for row in ordered if _date_value(_value(row, "date")) and _value(row, "expenses") is not None
     ]
     use_daily_history = len(dated_expenses) >= 30 and (dated_expenses[-1][0] - dated_expenses[0][0]).days / max(1, len(dated_expenses) - 1) <= 3
     if use_daily_history:
-        weekly_totals: dict[datetime, float] = defaultdict(float)
-        for observed, value in dated_expenses:
-            week_start = datetime(observed.year, observed.month, observed.day) - timedelta(days=observed.weekday())
-            weekly_totals[week_start] += value
-        weekly_dates = sorted(weekly_totals)
-        finance_forecast = forecast_time_series(
-            [weekly_totals[observed] for observed in weekly_dates], weekly_dates,
-            horizon=5, frequency="W",
-        )
-        next_week = round(finance_forecast["predictions"][0], 2)
-        next_month = round(mean(finance_forecast["predictions"]) * 4.33, 2)
-    elif expense_values:
+        observed_days: dict[tuple[int, int], set[int]] = defaultdict(set)
+        for observed, _ in dated_expenses:
+            observed_days[(observed.year, observed.month)].add(observed.day)
+        complete_months = []
+        for item in monthly:
+            observed_month = datetime.strptime(item["month"], "%b %Y")
+            expected_days = monthrange(observed_month.year, observed_month.month)[1]
+            if len(observed_days[(observed_month.year, observed_month.month)]) == expected_days:
+                complete_months.append(item)
+        # Partial boundary months distort totals and validation; train only on
+        # complete calendar months when an upload contains daily observations.
+        if len(complete_months) >= 6:
+            monthly = complete_months
+    expense_values = [item["expenses"] for item in monthly]
+    income_values = [item["income"] for item in monthly]
+    current_expenses = expense_values[-1] if expense_values else 0
+    if expense_values:
         monthly_dates = [datetime.strptime(item["month"], "%b %Y") if not item["month"].startswith("Period") else datetime(2000, min(index + 1, 12), 1) for index, item in enumerate(monthly)]
         finance_forecast = forecast_time_series(expense_values, monthly_dates, horizon=1, frequency="MS")
         raw_prediction = finance_forecast["predictions"][0]
@@ -180,6 +183,7 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     projected_income = round(mean(income_values[-3:]), 2) if income_values else 0
     financial_series = [{"label": item["month"], "actual": item["expenses"], "projected": None} for item in monthly[-5:]]
     if monthly:
+        financial_series[-1]["projected"] = financial_series[-1]["actual"]
         financial_series.append({"label": "Next month", "actual": None, "projected": next_month})
     financial = {
         "has_data": bool(expense_values),
@@ -202,7 +206,6 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
         if "focus_rating" in row and "focus_score" not in row:
             focus *= 20
         focus_values.append(focus)
-    weekly_hours = round(sum(hours), 1)
     focus_score = round(mean(focus_values)) if focus_values else 0
     dated_study = [
         (_date_value(_value(row, "date")), _number(_value(row, "study_hours")))
@@ -211,12 +214,23 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     study_forecast = forecast_study_hours(
         [value for _, value in dated_study], [observed for observed, _ in dated_study], horizon=7,
     ) if dated_study else {"predictions": [], "model": {"selected": "Unavailable", "trained": False, "validation": {"mae": None, "rmse": None, "mape": None}, "evaluated_models": [], "note": "No dated study fields were found."}}
+    study_weekly_totals: dict[datetime, float] = defaultdict(float)
+    for observed, value in dated_study:
+        week_start = datetime(observed.year, observed.month, observed.day) - timedelta(days=observed.weekday())
+        study_weekly_totals[week_start] += value
+    weekly_history = sorted(study_weekly_totals.items())[-6:]
+    weekly_hours = round(weekly_history[-1][1], 1) if weekly_history else round(sum(hours), 1)
     next_week_hours = round(sum(study_forecast["predictions"]), 1) if study_forecast["predictions"] else round(max(0, weekly_hours + _linear_slope(hours) * 7), 1) if hours else 0
+    productivity_series = [{"label": observed.strftime("%d %b"), "actual": round(value, 1), "projected": None} for observed, value in weekly_history]
+    if productivity_series:
+        productivity_series[-1]["projected"] = productivity_series[-1]["actual"]
+        productivity_series.append({"label": "Next week", "actual": None, "projected": next_week_hours})
     productivity = {
         "has_data": bool(hours), "weekly_study_hours": weekly_hours, "next_week_hours": next_week_hours,
         "focus_score": focus_score, "completion_probability": min(99, round(focus_score * .7 + min(next_week_hours, 20) * 1.5)) if hours else 0,
         "trend": "Improving" if hours and next_week_hours > weekly_hours + .5 else "Needs consistency" if hours and next_week_hours < weekly_hours - .5 else "Stable" if hours else "Awaiting study data",
         "model": study_forecast["model"],
+        "series": productivity_series,
     }
 
     habit_columns = [column for column in (ordered[0].keys() if ordered else []) if column.endswith("_completed") and column != "tasks_completed"]
@@ -237,18 +251,10 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
             likelihood = round(mean(rates) * 100)
             habits.append({"name": "Overall habit routine", "category": "Imported activity", "likelihood": likelihood, "streak": 0, "status": "Likely to continue" if likelihood >= 70 else "Needs support" if likelihood >= 45 else "At risk of stopping", "recommendation": "Keep tracking the same routines." if likelihood >= 70 else "Choose one routine to stabilize first.", "model": {"selected": "Recent completion-rate fallback", "trained": False, "validation": {"accuracy": None}, "evaluated_models": [], "note": "Per-habit daily completion columns are required to train a classifier."}})
 
-    goals = []
-    latest = ordered[-1] if ordered else {}
-    for column in latest:
-        if column.endswith("_goal_progress"):
-            progress = _ratio(latest[column])
-            probability = max(0, min(99, round(progress * 100)))
-            title = column.removesuffix("_progress").replace("_", " ").title()
-            goals.append({"id": column, "title": title, "goal_type": "IMPORTED", "timeframe": "CURRENT", "target": 100, "forecast": probability, "probability": probability, "unit": "progress", "status": "On track" if probability >= 85 else "Reachable with action" if probability >= 60 else "Unlikely on current trend"})
-    if not goals and _value(latest, "goal") is not None:
-        progress = _number(_value(latest, "goal"))
-        probability = max(0, min(99, round(progress if progress > 1 else progress * 100)))
-        goals.append({"id": "overall_goal", "title": "Overall goal progress", "goal_type": "IMPORTED", "timeframe": "CURRENT", "target": 100, "forecast": probability, "probability": probability, "unit": "progress", "status": "On track" if probability >= 85 else "Reachable with action" if probability >= 60 else "Unlikely on current trend"})
+    # Goal status belongs only to goals explicitly created by the signed-in user.
+    # Imported progress columns may still be analysed elsewhere, but they must not
+    # be presented as saved goals or generate goal-status recommendations.
+    goals: list[dict[str, Any]] = []
 
     recommendations = []
     if financial["has_data"] and financial["expense_change_percent"] > 3:
@@ -258,9 +264,6 @@ def forecast_analysis(rows: list[dict[str, Any]]) -> dict[str, Any]:
     at_risk = next((habit for habit in habits if habit["likelihood"] < 70), None)
     if at_risk:
         recommendations.append({"area": "Habit", "message": f"{at_risk['name']} has a {at_risk['likelihood']}% continuation likelihood. Reduce the next action and attach it to an existing routine."})
-    behind = next((goal for goal in goals if goal["probability"] < 85), None)
-    if behind:
-        recommendations.append({"area": "Goal", "message": f"{behind['title']} is {behind['status'].lower()}. Adjust the plan before the current period ends."})
     if not recommendations and rows:
         recommendations.append({"area": "Data", "message": "The imported trend is stable. Continue adding dated records to improve forecast quality."})
 

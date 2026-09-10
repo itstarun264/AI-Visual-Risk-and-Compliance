@@ -235,4 +235,6 @@ def test_dataset_import_is_separate_and_drives_analytics():
     assert result["source"] == "dataset"
     assert result["data_points"] == 3
     assert result["financial"]["next_month_expenses"] > 58000
-    assert result["goals"][0]["probability"] == 84
+    assert [point["label"] for point in result["financial"]["series"] if point["actual"] is None] == ["Next month"]
+    assert [point["label"] for point in result["productivity"]["series"] if point["actual"] is None] == ["Next week"]
+    assert result["goals"] == []
